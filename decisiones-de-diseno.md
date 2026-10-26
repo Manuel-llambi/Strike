@@ -89,7 +89,7 @@ Nota: "propios" se usó para dos cosas distintas (del ejercicio y del asset). Co
   - Ruta "Ejercicios / nombre"; título y badge de estado con tooltip.
   - Acciones según el estado: Activo, "Editar ejercicio", "Pausar" y "Corrida manual"; Pausado, "Editar ejercicio" y "Reanudar"; Borrador, solo "Editar ejercicio". Sin botón "Activar".
   - En Activo y Pausado: "Última ejecución · Próxima · Historial de corridas" ("En pausa" como próxima si está pausado).
-  - En Borrador: aviso "N assets pendientes: faltan credenciales." (y "Faltan las fechas." si corresponde) "El ejercicio pasa a Activo cuando esté completo.", con "Ver pendientes", que aplica el filtro.
+  - En Borrador: aviso que dice qué hacer para activarlo: "Para que el ejercicio pase a Activo, cargá las credenciales de N assets pendientes y definí las fechas." (solo la parte que corresponda), con "Ver pendientes", que aplica el filtro.
   - Configuración en una grilla de cinco elementos (Objetivo, Fechas y recurrencia, Hacker humano; Profundidad y Franjas horarias con planeta y tooltip "Valor global: se aplica a todos los assets. Un asset que lo cambia queda como Modificado."). Sin enlace "Editar" y sin línea divisoria.
   - "Editar ejercicio" abre el panel lateral del ejercicio, el mismo componente que el del asset: Título, Objetivo, Fechas y recurrencia, hacker humano y, debajo de una línea, Profundidad y Franjas horarias con el planeta y el aviso de impacto (ver 2.4). Si algún asset tiene valor propio en lo cambiado, pide confirmación; si no, guarda directo. Al guardar actualiza encabezado, configuración y tabla. En la referencia visual, Objetivo y Fechas mostraban "vpn-corp" y Profundidad parecía un campo de fecha: eran marcadores de posición y se reemplazaron por los campos reales del modal de creación (ver 9.4 de la fuente de verdad).
   - Assets: total, cambio Lista / Diagrama y "Agregar assets".
@@ -119,7 +119,7 @@ Nota: "propios" se usó para dos cosas distintas (del ejercicio y del asset). Co
 - **Decidido.** El tipo de asset lo infiere el sistema y el usuario puede modificarlo.
 - **Decidido.** La verificación de propiedad del asset no entra en este flujo.
 - **Decidido.** El modal de creación tiene dos pasos: (1) valores del ejercicio y valores globales (profundidad y franjas horarias), (2) solo assets: elección de existentes o importación de nuevos. Reemplaza a la división anterior, en la que los globales iban en el paso 2 (ver sección 4).
-- **Decidido.** Bajo el título del modal va una descripción corta de qué hacer en cada paso. Línea de pasos: "1 Valores del ejercicio y globales > 2 Assets".
+- **Decidido.** Bajo el título del modal va una descripción corta de qué hacer en cada paso. Línea de pasos: "1. Valores del ejercicio y globales > 2. Assets".
 - **Decidido.** Tamaño: paso 1 de 600px de ancho que crece hasta un alto máximo de 944px; paso 2 de 880px de ancho y alto fijo de 944px (en pantallas más bajas, el alto de la ventana menos 32px). Si el contenido no entra, scrollea por dentro.
 - **Decidido.** Descartado: la franja fija de globales al pie del paso 2 y la línea "Se aplica a N assets". El alcance lo explica el tooltip de la marca de global (hoy, el planeta junto a cada campo).
 - **Decidido.** "Confirmar assets" ocurre dentro del mismo paso, sin ventanas encima del modal: la tabla de assets hace de confirmación.

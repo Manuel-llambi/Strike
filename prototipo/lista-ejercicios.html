@@ -71,6 +71,7 @@
   /* Header */
   .page-head { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 32px; }
   h1 { font-size: 24px; line-height: 32px; font-weight: 500; margin: 0; }
+  .page-desc { margin: 4px 0 0; color: var(--ink-muted); }
 
   /* Buttons */
   .btn {
@@ -406,7 +407,10 @@
   <main>
     <div class="container">
       <div class="page-head">
-        <h1>Ejercicios</h1>
+        <div>
+          <h1>Ejercicios</h1>
+          <p class="page-desc">Creá ejercicios para testear tus assets y seguí su estado. Abrí uno para ver su configuración y editarlo.</p>
+        </div>
         <button class="btn btn-primary" type="button" id="openCreate" aria-haspopup="dialog"><i data-lucide="plus"></i>Crear ejercicio</button>
       </div>
 

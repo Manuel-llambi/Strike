@@ -187,7 +187,7 @@ Criterio usado: si la decisión depende del trabajo contratado es del ejercicio;
 ### 9.2 Creación del ejercicio
 - Se abre desde el botón "Crear ejercicio" en un **modal central** (overlay) de dos pasos. Es creación y no edición, y da más espacio para revisar assets (Decidido).
 - El modal solo configura el punto de partida; después se edita por asset o en lote (Decidido).
-- **Encabezado:** título "Crear ejercicio" y, debajo, una descripción corta de qué hacer en el paso actual. Abajo, la línea de pasos "1 Valores del ejercicio y globales > 2 Assets". Al pie, "Paso N de 2" y las acciones (Decidido).
+- **Encabezado:** título "Crear ejercicio" y, debajo, una descripción corta de qué hacer en el paso actual. Abajo, la línea de pasos "1. Valores del ejercicio y globales > 2. Assets". Al pie, "Paso N de 2" y las acciones (Decidido).
 - **Tamaño:** paso 1 de 600px de ancho que crece con el contenido hasta un alto máximo de 944px; paso 2 de 880px de ancho y alto fijo de 944px. En pantallas más bajas el tope es el alto de la ventana menos 32px. Si el contenido supera el tope, scrollea por dentro y el modal no crece (Decidido).
 
 **Paso 1: valores del ejercicio y globales**
@@ -219,7 +219,7 @@ Criterio usado: si la decisión depende del trabajo contratado es del ejercicio;
   - Las filas de las dos pestañas entran a la misma tabla. **La tabla cumple el rol de confirmación**: no hay pantalla ni ventana aparte.
   - Cada fila muestra el tipo (editable solo en los nuevos), un estado con tooltip y la acción de quitar. Estados: Existente, Nuevo · borrador, Ya existe (con la acción "Usar existente") o Error (formato no reconocido o repetido en la lista; se omite).
   - Una fila "Ya existe" no cuenta como asset del ejercicio hasta que se toca "Usar existente" (Decidido).
-  - Una línea de resumen cuenta las filas por estado. Debajo, el aviso de cuántos assets nuevos quedarán en borrador hasta cargar sus credenciales.
+  - Una línea de resumen cuenta las filas por estado. Debajo, el aviso "N assets quedarán en pendiente hasta que cargues sus credenciales. Podés crear el ejercicio, pero quedará en estado borrador."
   - La tabla crece hasta ocupar el espacio libre y después scrollea por dentro, con el encabezado fijo. Los tooltips de las filas se abren a la izquierda del badge para no cortarse.
   - Estado vacío: un bloque que llena el espacio disponible con ícono, "Todavía no hay assets" y "Buscá los que ya tenés cargados o importá nuevos desde un archivo o una lista."
 - Se puede crear un ejercicio sin assets: queda en borrador (Decidido). También queda en borrador si no tiene fechas o si tiene assets nuevos; si no, nace Activo (ver 7.1).
@@ -239,7 +239,7 @@ Construido en el prototipo HTML (`prototipo/detalle-ejercicio.html`). Todo lo qu
   - Borrador: solo "Editar ejercicio".
   - No hay botón "Activar": el ejercicio pasa a Activo al completarse (E8).
 - **Ejecuciones:** en Activo y Pausado, una línea "Última ejecución · Próxima · Historial de corridas". En Pausado, la próxima dice "En pausa". El contenido del historial sigue pendiente.
-- **Aviso en Borrador:** "N assets pendientes: faltan credenciales." y, si corresponde, "Faltan las fechas.", seguido de "El ejercicio pasa a Activo cuando esté completo." El enlace "Ver pendientes" aplica el filtro de Estado "Pendiente" y lleva a la tabla.
+- **Aviso en Borrador:** "Para que el ejercicio pase a Activo, cargá las credenciales de N assets pendientes y definí las fechas.", con solo la parte que corresponda según lo que falte. El enlace "Ver pendientes" aplica el filtro de Estado "Pendiente" y lleva a la tabla.
 - **Configuración:** tarjeta con una sola grilla de cinco elementos: Objetivo, Fechas y recurrencia, Hacker humano; abajo Profundidad y Franjas horarias, cada una con el ícono de planeta y el tooltip "Valor global: se aplica a todos los assets. Un asset que lo cambia queda como Modificado." Sin enlace "Editar" (se edita desde "Editar ejercicio") y sin línea divisoria entre las filas.
 - **Assets:** encabezado con el total, cambio de vista Lista / Diagrama y botón "Agregar assets".
   - Buscador por nombre, tipo o VPN.
