@@ -981,6 +981,13 @@
     return d > TODAY && (!end || d <= toDate(end)) ? fmtDate(d) : "";
   }
 
+  // Exercises created from the list in this session, with the configuration chosen there
+  try {
+    for (const e of JSON.parse(sessionStorage.getItem("strike.createdExercises")) || []) {
+      if (!(e.name in EXERCISES)) EXERCISES[e.name] = { ...e.detail, next: nextRun(e.detail) };
+    }
+  } catch {}
+
   const requested = new URLSearchParams(location.search).get("ej");
   let name = requested in EXERCISES ? requested : Object.keys(EXERCISES)[0];
   const ex = EXERCISES[name];
@@ -993,14 +1000,16 @@
   const exGlobals = () => ({ depth: ex.depth, window: ex.window });
   const GLOBAL_LABELS = { depth: "Profundidad", window: "Franjas horarias" };
 
-  const assets = ex.pick.map((i) => {
-    const a = { id: i, ...POOL[i], rate: RATE_BY_TYPE[POOL[i].type] };
-    a.overrides = ex.modified.includes(i) ? { depth: ex.depth === "Alta" ? "Media" : "Alta" } : {};
-    a.cred = ex.drafts.includes(i) ? null
+  // Sample exercises pick from POOL; created ones bring their own items
+  const sources = ex.items || ex.pick.map((i) => ({ ...POOL[i], draft: ex.drafts.includes(i), modified: ex.modified.includes(i) }));
+  const assets = sources.map(({ draft, modified, ...base }, i) => {
+    const a = { id: i, ...base, rate: RATE_BY_TYPE[base.type] };
+    a.overrides = modified ? { depth: ex.depth === "Alta" ? "Media" : "Alta" } : {};
+    a.cred = draft ? null
       : ["domain", "ip"].includes(a.type) ? { mode: "none" }
       : { mode: "load", source: "bunker", ref: BUNKER[i % BUNKER.length] };
-    a.status = ex.drafts.includes(i) ? "pendiente" : "listo";
-    a.inheritance = ex.modified.includes(i) ? "modificado" : "heredado";
+    a.status = draft ? "pendiente" : "listo";
+    a.inheritance = modified ? "modificado" : "heredado";
     return a;
   });
 
@@ -1038,11 +1047,11 @@
 
     const drafts = assets.filter((a) => a.status === "pendiente").length;
     const missing = [];
-    if (drafts) missing.push(`${plural(drafts, "asset pendiente", "assets pendientes")}: faltan credenciales.`);
-    if (!ex.dates) missing.push("Faltan las fechas.");
+    if (drafts) missing.push(`cargá las credenciales de ${plural(drafts, "asset pendiente", "assets pendientes")}`);
+    if (!ex.dates) missing.push("definí las fechas");
     $("draftNotice").hidden = ex.status !== "borrador" || !missing.length;
     $("draftNotice").querySelector("span").textContent =
-      `${missing.join(" ")} El ejercicio pasa a Activo cuando esté completo.`;
+      `Para que el ejercicio pase a Activo, ${missing.join(" y ")}.`;
     $("seeDrafts").hidden = !drafts;
   }
 

@@ -450,9 +450,9 @@
     </header>
 
     <ol class="steps" aria-label="Pasos">
-      <li id="stepLabel1" aria-current="step">1 Valores del ejercicio y globales</li>
+      <li id="stepLabel1" aria-current="step">1. Valores del ejercicio y globales</li>
       <li aria-hidden="true"><i data-lucide="chevron-right"></i></li>
-      <li id="stepLabel2">2 Assets</li>
+      <li id="stepLabel2">2. Assets</li>
     </ol>
 
     <div class="modal-body" id="step1">
@@ -680,8 +680,18 @@
     { name: "Portal de clientes", goal: "Revisión periódica", status: "activo", freq: "Mensual", last: "3 oct 2026", assets: 6 },
   ];
 
+  // Exercises created in this session survive navigation to the detail page and back
+  const STORE_KEY = "strike.createdExercises";
+  function loadCreated() {
+    try { return JSON.parse(sessionStorage.getItem(STORE_KEY)) || []; } catch { return []; }
+  }
+  function storeCreated(e) {
+    try { sessionStorage.setItem(STORE_KEY, JSON.stringify([e, ...loadCreated()])); } catch {}
+  }
+  EXERCISES.unshift(...loadCreated());
+
   const STATUS = {
-    activo:   { label: "Activo",   tab: "Activos",    tip: "Corre según sus fechas y recurrencia" },
+    activo:   { label: "Activo",   tab: "Activos",   tip: "Corre según sus fechas y recurrencia" },
     pausado:  { label: "Pausado",  tab: "Pausados",   tip: "Suspendido hasta que lo reanudes" },
     borrador: { label: "Borrador", tab: "Borradores", tip: "Faltan datos para activarlo" },
   };
@@ -1078,7 +1088,7 @@
     const notice = $("draftNotice");
     notice.hidden = !drafts;
     notice.querySelector("span").textContent =
-      `${plural(drafts, "asset nuevo quedará", "assets nuevos quedarán")} en pendiente hasta que cargues sus credenciales.`;
+      `${plural(drafts, "asset quedará", "assets quedarán")} en pendiente hasta que cargues sus credenciales. Podés crear el ejercicio, pero quedará en estado borrador.`;
 
     for (const [id, origin] of [["nExisting", "existing"], ["nImport", "import"]]) {
       const n = rows.filter((r) => r.origin === origin && isIncluded(r)).length;
@@ -1262,16 +1272,31 @@
     const drafts = included.filter((r) => r.status === "nuevo").length;
     const noDates = $("exSchedule").value === "despues" || !$("exStart").value;
     const goal = $("exGoal");
+    const goalText = goal.value === "otro" ? $("exGoalOther").value.trim() : goal.value ? goal.selectedOptions[0].text : "Sin objetivo";
+    const status = noDates || drafts || !included.length ? "borrador" : "activo";
     const exercise = {
       name: $("exTitle").value.trim(),
-      goal: goal.value === "otro" ? $("exGoalOther").value.trim() : goal.value ? goal.selectedOptions[0].text : "Sin objetivo",
-      status: noDates || drafts || !included.length ? "borrador" : "activo",
+      goal: goalText,
+      status,
       freq: noDates ? "Sin fechas" : $("exRepeat").value,
       last: "Sin ejecuciones",
       assets: included.length,
       pending: drafts,
+      // Configuration the detail page renders, in its own shape
+      detail: {
+        goal: goalText, status,
+        start: noDates ? "" : $("exStart").value,
+        end: noDates ? "" : $("exEnd").value,
+        repeat: $("exRepeat").value,
+        human: $("exHuman").getAttribute("aria-checked") === "true" ? "Sí" : "No",
+        depth: $("gDepth").selectedOptions[0].text,
+        window: $("gWindow").value === "range" ? `${$("gFrom").value} a ${$("gTo").value}` : "Cualquier horario",
+        last: "",
+        items: included.map((r) => ({ name: r.value, type: r.type, draft: r.status === "nuevo" })),
+      },
     };
     EXERCISES.unshift(exercise);
+    storeCreated(exercise);
     renderTabs();
     selectTab("todos");
     renderRows(); animateRows();
