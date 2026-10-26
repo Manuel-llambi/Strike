@@ -69,14 +69,8 @@
   .container { max-width: 1120px; margin: 0 auto; }
 
   /* Header */
-  .eyebrow {
-    font-family: "JetBrains Mono", monospace; font-size: 12px; line-height: 16px;
-    text-transform: uppercase; letter-spacing: .04em; color: var(--ink-muted); margin: 0 0 4px;
-  }
-  .page-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; margin-bottom: 24px; }
-  .page-title { display: flex; align-items: baseline; gap: 12px; }
+  .page-head { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 32px; }
   h1 { font-size: 24px; line-height: 32px; font-weight: 500; margin: 0; }
-  .count { color: var(--ink-muted); }
 
   /* Buttons */
   .btn {
@@ -91,7 +85,7 @@
   .btn-secondary:hover { background: var(--sunken); }
 
   /* Search */
-  .search-row { display: flex; gap: 8px; margin-bottom: 16px; }
+  .search-row { display: flex; gap: 8px; margin-bottom: 32px; }
   .search {
     flex: 1; display: flex; align-items: center; gap: 8px; padding: 0 12px;
     background: var(--card); border: 1px solid var(--border-strong); color: var(--ink-subtle);
@@ -114,7 +108,12 @@
   }
   .tab:hover { color: var(--ink); }
   .tab[aria-selected="true"] { color: var(--ink); }
-  .tab .n { color: var(--ink-subtle); margin-left: 4px; }
+  .tab .n {
+    display: inline-block; min-width: 20px; margin-left: 6px; padding: 0 6px;
+    font-size: 12px; line-height: 20px; text-align: center; font-variant-numeric: tabular-nums;
+    color: var(--ink-muted); background: var(--sunken); border-radius: 999px;
+  }
+  .tab[aria-selected="true"] .n { color: var(--ink); }
   .tab-indicator {
     position: absolute; left: 0; bottom: -1px; height: 2px; width: 1px;
     background: var(--ink); transform-origin: left;
@@ -258,7 +257,7 @@
   .step2 { display: flex; flex-direction: column; flex: 1; min-height: 0; }
   .step2 .modal-body { flex: 1; min-height: 0; overflow-x: hidden; }
   .assets-block { display: flex; flex-direction: column; flex: 1 1 auto; min-height: 0; }
-  .asset-table .tip { left: auto; right: calc(100% + 8px); top: 50%; transform: translate(4px, -50%); }
+  .asset-table .tip { left: calc(100% + 8px); top: 50%; transform: translate(-4px, -50%); }
   .asset-table .badge:hover .tip, .asset-table .badge:focus-visible .tip { transform: translate(0, -50%); }
   .asset-table thead th { position: sticky; top: 0; z-index: 1; }
   .btn:disabled { opacity: .48; cursor: not-allowed; }
@@ -406,12 +405,8 @@
 
   <main>
     <div class="container">
-      <p class="eyebrow">Pentesting continuo</p>
       <div class="page-head">
-        <div class="page-title">
-          <h1>Ejercicios</h1>
-          <span class="count" id="total"></span>
-        </div>
+        <h1>Ejercicios</h1>
         <button class="btn btn-primary" type="button" id="openCreate" aria-haspopup="dialog"><i data-lucide="plus"></i>Crear ejercicio</button>
       </div>
 
@@ -708,7 +703,6 @@
       <button class="tab" role="tab" type="button" data-k="${k}" aria-selected="${k === filter}">
         ${label}<span class="n">${counts[k] || 0}</span>
       </button>`).join(""));
-    $("total").textContent = `${EXERCISES.length} en total`;
     moveIndicator();
   }
 
@@ -920,7 +914,7 @@
 
   const ROW_STATUS = {
     existente: { cls: "existente", label: "Existente", tip: "Ya estaba cargado y conserva sus datos" },
-    nuevo: { cls: "borrador", label: "Nuevo · borrador", tip: "Nace con valores por defecto y credenciales pendientes" },
+    nuevo: { cls: "borrador", label: "Nuevo · Pendiente", tip: "Configuración de asset incompleta" },
     "ya-existe": { cls: "ya-existe", label: "Ya existe", tip: "Ya está en tus assets: usá el existente para conservar sus datos" },
     error: { cls: "error", label: "Error" },
   };
@@ -1084,7 +1078,7 @@
     const notice = $("draftNotice");
     notice.hidden = !drafts;
     notice.querySelector("span").textContent =
-      `${plural(drafts, "asset nuevo quedará", "assets nuevos quedarán")} en borrador hasta que cargues sus credenciales.`;
+      `${plural(drafts, "asset nuevo quedará", "assets nuevos quedarán")} en pendiente hasta que cargues sus credenciales.`;
 
     for (const [id, origin] of [["nExisting", "existing"], ["nImport", "import"]]) {
       const n = rows.filter((r) => r.origin === origin && isIncluded(r)).length;
@@ -1107,7 +1101,7 @@
     addLines(lines);
     $("dropzone").hidden = $("pasteBox").hidden = true;
     $("compactBox").hidden = false;
-    $("compactText").textContent = `${plural(lines.length, "línea agregada", "líneas agregadas")} ${origin}`;
+    $("compactText").textContent = `${plural(lines.length, "asset agregado", "assets agregados")} ${origin}`;
     renderAssets();
   }
 

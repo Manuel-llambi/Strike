@@ -1,0 +1,361 @@
+- generic [ref=f1e1]:
+  - generic [ref=f1e2]:
+    - navigation "Navegación principal" [ref=f1e3]:
+      - generic "Strike" [ref=f1e4]: S
+      - link "Ejercicios" [ref=f1e5] [cursor=pointer]:
+        - /url: lista-ejercicios.html
+      - link "Assets" [ref=f1e8] [cursor=pointer]:
+        - /url: "#"
+      - link "Hallazgos" [ref=f1e12] [cursor=pointer]:
+        - /url: "#"
+      - link "Reportes" [ref=f1e15] [cursor=pointer]:
+        - /url: "#"
+      - link "Configuración" [ref=f1e19] [cursor=pointer]:
+        - /url: "#"
+    - main [ref=f1e23]:
+      - generic [ref=f1e24]:
+        - navigation "Ruta" [ref=f1e25]:
+          - paragraph [ref=f1e26]:
+            - link "Ejercicios" [ref=f1e27] [cursor=pointer]:
+              - /url: lista-ejercicios.html
+            - generic [aria-hidden] [ref=f1e28]: /
+            - generic [ref=f1e29]: Revisión plataforma e-commerce
+        - generic [ref=f1e30]:
+          - generic [ref=f1e31]:
+            - heading "Revisión plataforma e-commerce" [level=1] [ref=f1e32]
+            - generic [ref=f1e34]:
+              - text: Activo
+              - tooltip "Corre según sus fechas y recurrencia"
+          - generic [ref=f1e35]:
+            - button "Pausar" [ref=f1e36] [cursor=pointer]
+            - button "Editar ejercicio" [ref=f1e40] [cursor=pointer]
+            - button "Corrida manual" [ref=f1e44] [cursor=pointer]
+        - paragraph [ref=f1e47]:
+          - generic [ref=f1e48]:
+            - text: Última ejecución
+            - strong [ref=f1e49]: 14 ago 2026
+          - generic [aria-hidden] [ref=f1e50]: ·
+          - generic [ref=f1e51]:
+            - text: Próxima
+            - strong [ref=f1e52]: 14 nov 2026
+          - generic [aria-hidden] [ref=f1e53]: ·
+          - button "Historial de corridas" [ref=f1e54] [cursor=pointer]
+        - region [ref=f1e55]:
+          - heading "Configuración" [level=2] [ref=f1e57]
+          - generic [ref=f1e58]:
+            - generic [ref=f1e59]:
+              - term [ref=f1e60]: Objetivo
+              - definition [ref=f1e61]: Antes de un lanzamiento
+            - generic [ref=f1e62]:
+              - term [ref=f1e63]: Fechas y recurrencia
+              - definition [ref=f1e64]: Desde 14 ago 2026 · Trimestral
+            - generic [ref=f1e65]:
+              - term [ref=f1e66]: Hacker humano
+              - definition [ref=f1e67]: Sí
+            - generic [ref=f1e68]:
+              - term [ref=f1e69]:
+                - generic [ref=f1e70]:
+                  - generic [ref=f1e74]: Valor global.
+                  - 'tooltip "Valor global: se aplica a todos los assets. Un asset que lo cambia queda como Modificado."'
+                - text: Profundidad
+              - definition [ref=f1e75]: Alta
+            - generic [ref=f1e76]:
+              - term [ref=f1e77]:
+                - generic [ref=f1e78]:
+                  - generic [ref=f1e82]: Valor global.
+                  - 'tooltip "Valor global: se aplica a todos los assets. Un asset que lo cambia queda como Modificado."'
+                - text: Franjas horarias
+              - definition [ref=f1e83]: 22:00 a 06:00
+        - region [ref=f1e84]:
+          - heading "Assets12" [level=2] [ref=f1e85]
+        - generic [ref=f1e86]:
+          - searchbox "Buscar assets" [ref=f1e91]
+          - button "Filtrar" [ref=f1e93] [cursor=pointer]
+        - generic [ref=f1e95]:
+          - group "Vista" [ref=f1e96]:
+            - button "Lista" [pressed] [ref=f1e97] [cursor=pointer]
+            - button "Diagrama" [ref=f1e99] [cursor=pointer]
+          - button "Agregar assets" [ref=f1e105] [cursor=pointer]
+        - generic [ref=f1e107]:
+          - table [ref=f1e108]:
+            - rowgroup [ref=f1e109]:
+              - row [ref=f1e110]:
+                - columnheader [ref=f1e111]:
+                  - checkbox "Seleccionar todos los assets visibles" [ref=f1e112] [cursor=pointer]
+                - columnheader "Asset" [ref=f1e113]
+                - columnheader "Tipo" [ref=f1e114]
+                - columnheader "Estado" [ref=f1e115]
+                - columnheader "Herencia" [ref=f1e116]
+                - columnheader "Editar" [ref=f1e117]
+            - rowgroup [ref=f1e119]:
+              - row [ref=f1e120]:
+                - cell [ref=f1e121]:
+                  - checkbox "Seleccionar tienda.ejemplo.com" [ref=f1e122] [cursor=pointer]
+                - cell "tienda.ejemplo.com" [ref=f1e123]
+                - cell "Web app" [ref=f1e125]
+                - cell [ref=f1e129]:
+                  - generic [ref=f1e130]:
+                    - text: Listo
+                    - tooltip "Tiene todo lo necesario para testearse"
+                - cell [ref=f1e131]:
+                  - generic [ref=f1e132]:
+                    - text: Heredado
+                    - tooltip "Usa todos los valores globales del ejercicio"
+                - cell [ref=f1e133]:
+                  - button "Editar tienda.ejemplo.com" [ref=f1e134] [cursor=pointer]
+              - row [ref=f1e138]:
+                - cell [ref=f1e139]:
+                  - checkbox "Seleccionar api.ejemplo.com/v1" [ref=f1e140] [cursor=pointer]
+                - cell "api.ejemplo.com/v1 VPN vpn-corp" [ref=f1e141]:
+                  - generic [ref=f1e142]: api.ejemplo.com/v1
+                  - generic [ref=f1e143]: VPN vpn-corp
+                - cell "API" [ref=f1e144]
+                - cell [ref=f1e149]:
+                  - generic [ref=f1e150]:
+                    - text: Listo
+                    - tooltip "Tiene todo lo necesario para testearse"
+                - cell [ref=f1e151]:
+                  - generic [ref=f1e152]:
+                    - text: Modificado
+                    - tooltip "Cambió al menos un valor global del ejercicio"
+                - cell [ref=f1e153]:
+                  - button "Editar api.ejemplo.com/v1" [ref=f1e154] [cursor=pointer]
+              - row [ref=f1e158]:
+                - cell [ref=f1e159]:
+                  - checkbox "Seleccionar App ejemplo (iOS)" [ref=f1e160] [cursor=pointer]
+                - cell "App ejemplo (iOS)" [ref=f1e161]
+                - cell "App móvil" [ref=f1e163]
+                - cell [ref=f1e167]:
+                  - generic [ref=f1e168]:
+                    - text: Listo
+                    - tooltip "Tiene todo lo necesario para testearse"
+                - cell [ref=f1e169]:
+                  - generic [ref=f1e170]:
+                    - text: Heredado
+                    - tooltip "Usa todos los valores globales del ejercicio"
+                - cell [ref=f1e171]:
+                  - button "Editar App ejemplo (iOS)" [ref=f1e172] [cursor=pointer]
+              - row [ref=f1e176]:
+                - cell [ref=f1e177]:
+                  - checkbox "Seleccionar pagos.ejemplo.com" [ref=f1e178] [cursor=pointer]
+                - cell "pagos.ejemplo.com VPN vpn-pagos" [ref=f1e179]:
+                  - generic [ref=f1e180]: pagos.ejemplo.com
+                  - generic [ref=f1e181]: VPN vpn-pagos
+                - cell "API" [ref=f1e182]
+                - cell [ref=f1e187]:
+                  - generic [ref=f1e188]:
+                    - text: Listo
+                    - tooltip "Tiene todo lo necesario para testearse"
+                - cell [ref=f1e189]:
+                  - generic [ref=f1e190]:
+                    - text: Heredado
+                    - tooltip "Usa todos los valores globales del ejercicio"
+                - cell [ref=f1e191]:
+                  - button "Editar pagos.ejemplo.com" [ref=f1e192] [cursor=pointer]
+              - row [ref=f1e196]:
+                - cell [ref=f1e197]:
+                  - checkbox "Seleccionar admin.ejemplo.com" [ref=f1e198] [cursor=pointer]
+                - cell "admin.ejemplo.com VPN vpn-corp" [ref=f1e199]:
+                  - generic [ref=f1e200]: admin.ejemplo.com
+                  - generic [ref=f1e201]: VPN vpn-corp
+                - cell "Web app" [ref=f1e202]
+                - cell [ref=f1e206]:
+                  - generic [ref=f1e207]:
+                    - text: Listo
+                    - tooltip "Tiene todo lo necesario para testearse"
+                - cell [ref=f1e208]:
+                  - generic [ref=f1e209]:
+                    - text: Modificado
+                    - tooltip "Cambió al menos un valor global del ejercicio"
+                - cell [ref=f1e210]:
+                  - button "Editar admin.ejemplo.com" [ref=f1e211] [cursor=pointer]
+              - row [ref=f1e215]:
+                - cell [ref=f1e216]:
+                  - checkbox "Seleccionar blog.ejemplo.com" [ref=f1e217] [cursor=pointer]
+                - cell "blog.ejemplo.com" [ref=f1e218]
+                - cell "Web app" [ref=f1e220]
+                - cell [ref=f1e224]:
+                  - generic [ref=f1e225]:
+                    - text: Listo
+                    - tooltip "Tiene todo lo necesario para testearse"
+                - cell [ref=f1e226]:
+                  - generic [ref=f1e227]:
+                    - text: Heredado
+                    - tooltip "Usa todos los valores globales del ejercicio"
+                - cell [ref=f1e228]:
+                  - button "Editar blog.ejemplo.com" [ref=f1e229] [cursor=pointer]
+              - row [ref=f1e233]:
+                - cell [ref=f1e234]:
+                  - checkbox "Seleccionar App ejemplo (Android)" [ref=f1e235] [cursor=pointer]
+                - cell "App ejemplo (Android)" [ref=f1e236]
+                - cell "App móvil" [ref=f1e238]
+                - cell [ref=f1e242]:
+                  - generic [ref=f1e243]:
+                    - text: Listo
+                    - tooltip "Tiene todo lo necesario para testearse"
+                - cell [ref=f1e244]:
+                  - generic [ref=f1e245]:
+                    - text: Heredado
+                    - tooltip "Usa todos los valores globales del ejercicio"
+                - cell [ref=f1e246]:
+                  - button "Editar App ejemplo (Android)" [ref=f1e247] [cursor=pointer]
+              - row [ref=f1e251]:
+                - cell [ref=f1e252]:
+                  - checkbox "Seleccionar checkout.ejemplo.com" [ref=f1e253] [cursor=pointer]
+                - cell "checkout.ejemplo.com" [ref=f1e254]
+                - cell "Web app" [ref=f1e256]
+                - cell [ref=f1e260]:
+                  - generic [ref=f1e261]:
+                    - text: Listo
+                    - tooltip "Tiene todo lo necesario para testearse"
+                - cell [ref=f1e262]:
+                  - generic [ref=f1e263]:
+                    - text: Heredado
+                    - tooltip "Usa todos los valores globales del ejercicio"
+                - cell [ref=f1e264]:
+                  - button "Editar checkout.ejemplo.com" [ref=f1e265] [cursor=pointer]
+              - row [ref=f1e269]:
+                - cell [ref=f1e270]:
+                  - checkbox "Seleccionar cdn.ejemplo.com" [ref=f1e271] [cursor=pointer]
+                - cell "cdn.ejemplo.com" [ref=f1e272]
+                - cell "Dominio" [ref=f1e274]
+                - cell [ref=f1e279]:
+                  - generic [ref=f1e280]:
+                    - text: Listo
+                    - tooltip "Tiene todo lo necesario para testearse"
+                - cell [ref=f1e281]:
+                  - generic [ref=f1e282]:
+                    - text: Heredado
+                    - tooltip "Usa todos los valores globales del ejercicio"
+                - cell [ref=f1e283]:
+                  - button "Editar cdn.ejemplo.com" [ref=f1e284] [cursor=pointer]
+              - row [ref=f1e288]:
+                - cell [ref=f1e289]:
+                  - checkbox "Seleccionar api.ejemplo.com/v2" [ref=f1e290] [cursor=pointer]
+                - cell "api.ejemplo.com/v2 VPN vpn-corp" [ref=f1e291]:
+                  - generic [ref=f1e292]: api.ejemplo.com/v2
+                  - generic [ref=f1e293]: VPN vpn-corp
+                - cell "API" [ref=f1e294]
+                - cell [ref=f1e299]:
+                  - generic [ref=f1e300]:
+                    - text: Listo
+                    - tooltip "Tiene todo lo necesario para testearse"
+                - cell [ref=f1e301]:
+                  - generic [ref=f1e302]:
+                    - text: Modificado
+                    - tooltip "Cambió al menos un valor global del ejercicio"
+                - cell [ref=f1e303]:
+                  - button "Editar api.ejemplo.com/v2" [ref=f1e304] [cursor=pointer]
+              - row [ref=f1e308]:
+                - cell [ref=f1e309]:
+                  - checkbox "Seleccionar 203.0.113.10" [ref=f1e310] [cursor=pointer]
+                - cell "203.0.113.10 VPN vpn-infra" [ref=f1e311]:
+                  - generic [ref=f1e312]: 203.0.113.10
+                  - generic [ref=f1e313]: VPN vpn-infra
+                - cell "IP o red" [ref=f1e314]
+                - cell [ref=f1e321]:
+                  - generic [ref=f1e322]:
+                    - text: Listo
+                    - tooltip "Tiene todo lo necesario para testearse"
+                - cell [ref=f1e323]:
+                  - generic [ref=f1e324]:
+                    - text: Heredado
+                    - tooltip "Usa todos los valores globales del ejercicio"
+                - cell [ref=f1e325]:
+                  - button "Editar 203.0.113.10" [ref=f1e326] [cursor=pointer]
+              - row [ref=f1e330]:
+                - cell [ref=f1e331]:
+                  - checkbox "Seleccionar soporte.ejemplo.com" [ref=f1e332] [cursor=pointer]
+                - cell "soporte.ejemplo.com" [ref=f1e333]
+                - cell "Web app" [ref=f1e335]
+                - cell [ref=f1e339]:
+                  - generic [ref=f1e340]:
+                    - text: Listo
+                    - tooltip "Tiene todo lo necesario para testearse"
+                - cell [ref=f1e341]:
+                  - generic [ref=f1e342]:
+                    - text: Heredado
+                    - tooltip "Usa todos los valores globales del ejercicio"
+                - cell [ref=f1e343]:
+                  - button "Editar soporte.ejemplo.com" [ref=f1e344] [cursor=pointer]
+          - generic [ref=f1e348]: Mostrando 12 de 12 assets
+  - dialog [ref=f1e349]:
+    - generic [ref=f1e350]:
+      - banner [ref=f1e351]:
+        - generic [ref=f1e352]:
+          - paragraph [ref=f1e353]: Editar ejercicio
+          - heading "Revisión plataforma e-commerce" [level=2] [ref=f1e354]
+        - button "Cerrar" [ref=f1e355] [cursor=pointer]
+      - generic [ref=f1e359]:
+        - region "Datos del ejercicio" [ref=f1e360]:
+          - generic [ref=f1e361]:
+            - generic [ref=f1e362]: Título
+            - generic [ref=f1e363]:
+              - textbox "Título" [active] [ref=f1e364]: Revisión plataforma e-commerce
+              - button "Borrar título" [ref=f1e365] [cursor=pointer]
+          - generic [ref=f1e369]:
+            - generic [ref=f1e370]: Objetivo
+            - combobox "Objetivo" [ref=f1e372] [cursor=pointer]:
+              - option "Antes de un lanzamiento" [selected]
+              - option "Auditoría o cumplimiento"
+              - option "Revisión periódica"
+              - option "Cambio importante en el sistema"
+              - option "Otro"
+          - generic [ref=f1e373]:
+            - generic [ref=f1e374]: Fechas y recurrencia
+            - combobox "Fechas y recurrencia" [ref=f1e376] [cursor=pointer]:
+              - option "Elegir fechas" [selected]
+              - option "Definir después"
+            - generic [ref=f1e377]:
+              - generic [ref=f1e378]:
+                - generic [ref=f1e379]: Inicio
+                - textbox "Inicio" [ref=f1e380]: 2026-08-14
+              - generic [ref=f1e381]:
+                - generic [ref=f1e382]: Fin
+                - textbox "Fin" [ref=f1e383]
+              - generic [ref=f1e384]:
+                - generic [ref=f1e385]: Repetir
+                - combobox "Repetir" [ref=f1e387] [cursor=pointer]:
+                  - option "Una vez"
+                  - option "Semanal"
+                  - option "Mensual"
+                  - option "Trimestral" [selected]
+                  - option "Semestral"
+                  - option "Anual"
+          - generic [ref=f1e388]:
+            - switch "Sumar validación con hacker humano" [checked] [ref=f1e389] [cursor=pointer]
+            - generic [ref=f1e390]:
+              - generic [ref=f1e391] [cursor=pointer]: Sumar validación con hacker humano
+              - paragraph [ref=f1e392]: Opcional. Un especialista revisa los hallazgos.
+        - region "Valores globales" [ref=f1e393]:
+          - generic [ref=f1e394]:
+            - generic [ref=f1e395]:
+              - generic [ref=f1e396]:
+                - generic [ref=f1e397]:
+                  - generic [ref=f1e401]: Valor global.
+                  - 'tooltip "Valor global: se aplica a todos los assets. Un asset que lo cambia queda como Modificado."'
+                - text: Profundidad
+              - 'combobox "Valor global. Valor global: se aplica a todos los assets. Un asset que lo cambia queda como Modificado. Profundidad" [ref=f1e403] [cursor=pointer]':
+                - option "Baja"
+                - option "Media" [selected]
+                - option "Alta"
+              - paragraph [ref=f1e423]: No afecta a 3 assets con valor propio.
+            - generic [ref=f1e404]:
+              - generic [ref=f1e405]:
+                - generic [ref=f1e406]:
+                  - generic [ref=f1e410]: Valor global.
+                  - 'tooltip "Valor global: se aplica a todos los assets. Un asset que lo cambia queda como Modificado."'
+                - text: Franjas horarias
+              - 'combobox "Valor global. Valor global: se aplica a todos los assets. Un asset que lo cambia queda como Modificado. Franjas horarias" [ref=f1e412] [cursor=pointer]':
+                - option "Cualquier horario"
+                - option "Elegir rango" [selected]
+              - generic [ref=f1e413]:
+                - generic [ref=f1e414]:
+                  - generic [ref=f1e415]: Desde
+                  - textbox "Desde" [ref=f1e416]: 22:00
+                - generic [ref=f1e417]:
+                  - generic [ref=f1e418]: Hasta
+                  - textbox "Hasta" [ref=f1e419]: 06:00
+      - contentinfo [ref=f1e420]:
+        - button "Cancelar" [ref=f1e421] [cursor=pointer]
+        - button "Guardar cambios" [ref=f1e422] [cursor=pointer]

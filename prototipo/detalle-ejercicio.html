@@ -294,7 +294,7 @@
   .zoom { display: flex; align-items: center; gap: 4px; }
   .zoom output { min-width: 48px; text-align: center; font-variant-numeric: tabular-nums; }
 
-  /* Side panel: edit asset */
+  /* Side panel: one component, used to edit an asset or the exercise */
   body:has(dialog[open]) { overflow: hidden; }
   .panel {
     width: min(480px, 100%); max-width: 100%; height: 100%; max-height: 100%;
@@ -398,15 +398,48 @@
   .changes dd { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin: 4px 0 0; font-weight: 500; }
   .changes .old { color: var(--ink-muted); font-weight: 400; text-decoration: line-through; }
   .changes dd svg.lucide { color: var(--ink-muted); }
+  .confirm p strong { color: var(--ink); font-weight: 500; }
+  .kept { display: flex; flex-direction: column; gap: 8px; }
+  .kept-list { margin: 0; padding: 0; list-style: none; border: 1px solid var(--border); }
+  .kept-list li { padding: 8px 12px; overflow-wrap: anywhere; }
+  .kept-list li + li { border-top: 1px solid var(--border); }
+  .kept-list .kept-name { font-weight: 500; }
+  .confirm .confirm-note { font-size: 12px; line-height: 16px; }
   .confirm-foot { display: flex; justify-content: flex-end; gap: 8px; padding: 16px 24px; border-top: 1px solid var(--border); }
-  .pw { position: relative; }
-  .pw .control { padding-right: 44px; }
-  .pw .icon-btn { position: absolute; right: 4px; top: 4px; }
+  .pw, .input-clear { position: relative; }
+  .pw .control, .input-clear .control { padding-right: 44px; }
+  .pw .icon-btn, .input-clear .icon-btn { position: absolute; right: 4px; top: 4px; }
   .check-row { display: flex; align-items: center; gap: 8px; cursor: pointer; }
   .check-row input { width: 16px; height: 16px; margin: 0; accent-color: var(--ink); }
   .secure-note { display: flex; gap: 8px; margin: 0; font-size: 12px; line-height: 16px; color: var(--ink-muted); }
   .secure-note svg.lucide { width: 14px; height: 14px; margin-top: 1px; }
   .panel .notice p span { flex: 1; }
+  .panel .notice strong { font-weight: 500; }
+
+  /* Exercise content of the side panel (fields match the create modal) */
+  #exercisePanel .panel-head h2 { word-break: normal; overflow-wrap: anywhere; }
+  textarea.control { height: auto; min-height: 80px; padding: 10px 12px; resize: vertical; }
+  input[type="date"].control::-webkit-calendar-picker-indicator { cursor: pointer; opacity: .7; }
+  .date-row { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+  .switch-row { display: flex; align-items: flex-start; gap: 12px; }
+  .switch {
+    position: relative; flex: none; width: 40px; height: 24px; margin-top: -2px; padding: 0; cursor: pointer;
+    background: var(--sunken); border: 1px solid var(--border-strong); border-radius: 999px;
+    transition: background var(--t-hover) var(--ease), border-color var(--t-hover) var(--ease);
+  }
+  .switch::after {
+    content: ""; position: absolute; top: 3px; left: 3px; width: 16px; height: 16px; background: var(--ink-muted); border-radius: 999px;
+    transition: transform var(--t-hover) var(--ease), background var(--t-hover) var(--ease);
+  }
+  .switch[aria-checked="true"] { background: var(--cyan); border-color: var(--ink); }
+  .switch[aria-checked="true"]::after { transform: translateX(16px); background: var(--ink); }
+  .switch-text label { font-weight: 500; cursor: pointer; display: block; }
+  .switch-text p { margin: 2px 0 0; color: var(--ink-muted); }
+  .globals-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px 12px; align-items: start; }
+  /* Tooltips anchor to the label so the right column opens leftward and stays inside the panel */
+  .globals-row .global-mark { position: static; }
+  .globals-row .field-label { position: relative; }
+  .globals-row .field + .field .tip { left: auto; right: 0; }
 
   .toast {
     position: fixed; left: 50%; bottom: 24px; z-index: 20; display: flex; align-items: center; gap: 8px;
@@ -425,6 +458,12 @@
     .table-wrap { overflow-x: auto; }
     table { min-width: 680px; }
     .search { min-width: 100%; }
+  }
+  @media (max-width: 560px) {
+    .panel-head, .panel-body, .panel-foot { padding-left: 16px; padding-right: 16px; }
+    .date-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .date-row > :last-child { grid-column: 1 / -1; }
+    .globals-row { grid-template-columns: 1fr; }
   }
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { transition: none !important; animation: none !important; }
@@ -687,6 +726,126 @@
   </form>
 </dialog>
 
+<dialog class="panel" id="exercisePanel" aria-labelledby="exPanelTitle">
+  <form id="exerciseForm" novalidate>
+    <header class="panel-head">
+      <div>
+        <p class="panel-eyebrow">Editar ejercicio</p>
+        <h2 id="exPanelTitle"></h2>
+      </div>
+      <button class="icon-btn" type="button" data-close-panel aria-label="Cerrar"><i data-lucide="x"></i></button>
+    </header>
+
+    <div class="panel-body">
+      <section class="panel-section" aria-label="Datos del ejercicio">
+        <div class="field">
+          <label class="field-label" for="eTitle">Título</label>
+          <div class="input-clear">
+            <input class="control" id="eTitle" type="text" autocomplete="off" aria-describedby="eTitleError">
+            <button class="icon-btn" type="button" id="eTitleClear" aria-label="Borrar título"><i data-lucide="x"></i></button>
+          </div>
+          <p class="field-error" id="eTitleError" hidden><i data-lucide="circle-alert"></i>Ingresá un título.</p>
+        </div>
+
+        <div class="field">
+          <label class="field-label" for="eGoal">Objetivo</label>
+          <div class="select">
+            <select class="control" id="eGoal">
+              <option>Antes de un lanzamiento</option>
+              <option>Auditoría o cumplimiento</option>
+              <option>Revisión periódica</option>
+              <option>Cambio importante en el sistema</option>
+              <option>Otro</option>
+            </select>
+            <i data-lucide="chevron-down"></i>
+          </div>
+          <div id="eGoalOtherField" hidden>
+            <label class="sub-label" for="eGoalOther">Describí el objetivo</label>
+            <textarea class="control" id="eGoalOther" rows="3" aria-describedby="eGoalOtherError"
+                      placeholder="Ej.: Validar la integración con el nuevo proveedor de pagos"></textarea>
+          </div>
+          <p class="field-error" id="eGoalOtherError" hidden><i data-lucide="circle-alert"></i>Describí el objetivo.</p>
+        </div>
+
+        <div class="field">
+          <label class="field-label" for="eSchedule">Fechas y recurrencia</label>
+          <div class="select">
+            <select class="control" id="eSchedule">
+              <option value="fechas">Elegir fechas</option>
+              <option value="despues">Definir después</option>
+            </select>
+            <i data-lucide="chevron-down"></i>
+          </div>
+          <div class="date-row" id="eDateRow">
+            <div><label class="sub-label" for="eStart">Inicio</label><input class="control" id="eStart" type="date" aria-describedby="eStartError"></div>
+            <div><label class="sub-label" for="eEnd">Fin</label><input class="control" id="eEnd" type="date" aria-describedby="eEndError"></div>
+            <div>
+              <label class="sub-label" for="eRepeat">Repetir</label>
+              <div class="select">
+                <select class="control" id="eRepeat">
+                  <option>Una vez</option><option>Semanal</option><option>Mensual</option>
+                  <option>Trimestral</option><option>Semestral</option><option>Anual</option>
+                </select>
+                <i data-lucide="chevron-down"></i>
+              </div>
+            </div>
+          </div>
+          <p class="field-error" id="eStartError" hidden><i data-lucide="circle-alert"></i>Elegí una fecha de inicio.</p>
+          <p class="field-error" id="eEndError" hidden><i data-lucide="circle-alert"></i>Elegí una fecha de fin posterior al inicio.</p>
+        </div>
+
+        <div class="switch-row">
+          <button class="switch" id="eHuman" type="button" role="switch" aria-checked="false" aria-labelledby="eHumanLabel" aria-describedby="eHumanDesc"></button>
+          <div class="switch-text">
+            <label id="eHumanLabel" for="eHuman">Sumar validación con hacker humano</label>
+            <p id="eHumanDesc">Opcional. Un especialista revisa los hallazgos.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel-section" aria-label="Valores globales">
+        <div class="globals-row">
+          <div class="field">
+            <label class="field-label" for="eDepth"><span data-global-mark></span>Profundidad</label>
+            <div class="select">
+              <select class="control" id="eDepth">
+                <option>Baja</option><option>Media</option><option>Alta</option>
+              </select>
+              <i data-lucide="chevron-down"></i>
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="field-label" for="eWindowMode"><span data-global-mark></span>Franjas horarias</label>
+            <div class="select">
+              <select class="control" id="eWindowMode">
+                <option value="any">Cualquier horario</option>
+                <option value="range">Elegir rango</option>
+              </select>
+              <i data-lucide="chevron-down"></i>
+            </div>
+            <div class="row-2" id="eWindowRange" hidden>
+              <div><label class="sub-label" for="eFrom">Desde</label><input class="control" id="eFrom" type="time"></div>
+              <div><label class="sub-label" for="eTo">Hasta</label><input class="control" id="eTo" type="time" aria-describedby="eWindowError"></div>
+            </div>
+            <p class="field-error" id="eWindowError" hidden><i data-lucide="circle-alert"></i>Elegí un horario de fin distinto al de inicio.</p>
+          </div>
+        </div>
+        <div role="status" aria-live="polite">
+          <div class="notice warning" id="exImpact" hidden>
+            <p><i data-lucide="triangle-alert"></i><span></span></p>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <footer class="panel-foot">
+      <button class="btn btn-secondary" type="button" data-close-panel>Cancelar</button>
+      <button class="btn btn-primary" type="submit">Guardar cambios</button>
+    </footer>
+  </form>
+</dialog>
+
 <dialog class="confirm" id="confirmGlobal" aria-labelledby="confirmTitle" aria-describedby="confirmDesc">
   <div class="confirm-body">
     <h2 id="confirmTitle">Modificaste un valor global</h2>
@@ -696,6 +855,22 @@
   <div class="confirm-foot">
     <button class="btn btn-secondary" type="button" id="confirmBack">Volver</button>
     <button class="btn btn-primary" type="button" id="confirmOk">Confirmar y guardar</button>
+  </div>
+</dialog>
+
+<dialog class="confirm" id="confirmExercise" aria-labelledby="confirmExTitle" aria-describedby="confirmExDesc">
+  <div class="confirm-body">
+    <h2 id="confirmExTitle">Cambiaste un valor global</h2>
+    <dl class="changes" id="confirmExChanges"></dl>
+    <div class="kept">
+      <p id="confirmExDesc"></p>
+      <ul class="kept-list" id="confirmExKept"></ul>
+    </div>
+    <p class="confirm-note">Si querés que tomen el nuevo valor, editalos desde la tabla y elegí "Volver a valor original".</p>
+  </div>
+  <div class="confirm-foot">
+    <button class="btn btn-secondary" type="button" id="confirmExBack">Volver</button>
+    <button class="btn btn-primary" type="button" id="confirmExOk">Confirmar y guardar</button>
   </div>
 </dialog>
 
@@ -719,37 +894,37 @@
 
   const EXERCISES = {
     "Revisión plataforma e-commerce": {
-      goal: "Antes de un lanzamiento", status: "activo", dates: "Desde 14 ago 2026 · Trimestral", human: "Sí",
+      goal: "Antes de un lanzamiento", status: "activo", start: "2026-08-14", end: "", repeat: "Trimestral", human: "Sí",
       depth: "Alta", window: "22:00 a 06:00",
       last: "14 ago 2026", next: "14 nov 2026",
       pick: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], modified: [1, 4, 9], drafts: [],
     },
     "Auditoría SOC 2": {
-      goal: "Auditoría o cumplimiento", status: "pausado", dates: "Desde 2 mar 2026 · Anual", human: "No",
+      goal: "Auditoría o cumplimiento", status: "pausado", start: "2026-03-02", end: "", repeat: "Anual", human: "No",
       depth: "Alta", window: "Cualquier horario",
       last: "2 mar 2026", next: "",
       pick: [0, 1, 3, 4, 7, 9, 10, 11], modified: [10], drafts: [],
     },
     "Lanzamiento app móvil": {
-      goal: "Antes de un lanzamiento", status: "borrador", dates: "", human: "No",
+      goal: "Antes de un lanzamiento", status: "borrador", start: "", end: "", repeat: "Una vez", human: "No",
       depth: "Alta", window: "Cualquier horario",
       last: "", next: "",
       pick: [2, 6, 1, 9, 0], modified: [], drafts: [6, 9],
     },
     "Revisión mensual de APIs": {
-      goal: "Revisión periódica", status: "activo", dates: "Desde 20 ene 2026 · Mensual", human: "No",
+      goal: "Revisión periódica", status: "activo", start: "2026-01-20", end: "", repeat: "Mensual", human: "No",
       depth: "Media", window: "09:00 a 18:00",
       last: "20 oct 2026", next: "20 nov 2026",
       pick: [1, 3, 9, 10], modified: [3], drafts: [],
     },
     "Migración a nube híbrida": {
-      goal: "Cambio importante en el sistema", status: "borrador", dates: "Desde 1 dic 2026 · Semestral", human: "Sí",
+      goal: "Cambio importante en el sistema", status: "borrador", start: "2026-12-01", end: "", repeat: "Semestral", human: "Sí",
       depth: "Alta", window: "22:00 a 06:00",
       last: "", next: "",
       pick: [10, 1, 9, 3, 4, 8, 0, 11, 7], modified: [8], drafts: [10, 3, 4, 11],
     },
     "Portal de clientes": {
-      goal: "Revisión periódica", status: "activo", dates: "Desde 3 ene 2026 · Mensual", human: "No",
+      goal: "Revisión periódica", status: "activo", start: "2026-01-03", end: "", repeat: "Mensual", human: "No",
       depth: "Media", window: "Cualquier horario",
       last: "3 oct 2026", next: "3 nov 2026",
       pick: [11, 0, 5, 7, 2, 6], modified: [], drafts: [],
@@ -783,9 +958,33 @@
   const badge = (cls, label, tip) =>
     `<span class="badge ${cls}" tabindex="0">${label}<span class="tip" role="tooltip">${tip}</span></span>`;
 
+  // Dates: stored as ISO (yyyy-mm-dd), shown as "14 ago 2026"
+  const MONTHS = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"];
+  const TODAY = new Date(2026, 9, 26); // Reference date of the prototype, consistent with the sample runs
+  const STEP_MONTHS = { Mensual: 1, Trimestral: 3, Semestral: 6, Anual: 12 };
+  const toDate = (iso) => new Date(`${iso}T00:00`);
+  const fmtDate = (d) => `${d.getDate()} ${MONTHS[d.getMonth()]} ${d.getFullYear()}`;
+
+  function scheduleLabel({ start, end, repeat }) {
+    if (!start) return "";
+    const from = fmtDate(toDate(start));
+    return `${end ? `Del ${from} al ${fmtDate(toDate(end))}` : `Desde ${from}`} · ${repeat}`;
+  }
+
+  // First run after today inside the range; empty when nothing is left to run
+  function nextRun({ start, end, repeat }) {
+    if (!start) return "";
+    const d = toDate(start);
+    while (d <= TODAY && repeat !== "Una vez") {
+      if (repeat === "Semanal") d.setDate(d.getDate() + 7); else d.setMonth(d.getMonth() + STEP_MONTHS[repeat]);
+    }
+    return d > TODAY && (!end || d <= toDate(end)) ? fmtDate(d) : "";
+  }
+
   const requested = new URLSearchParams(location.search).get("ej");
-  const name = requested in EXERCISES ? requested : Object.keys(EXERCISES)[0];
+  let name = requested in EXERCISES ? requested : Object.keys(EXERCISES)[0];
   const ex = EXERCISES[name];
+  ex.dates = scheduleLabel(ex);
   const VPNS = ["vpn-corp", "vpn-pagos", "vpn-infra"];
   const BUNKER = ["QA tienda · usuario de prueba", "Admin staging", "API key de integración", "Tester móvil"];
   const RATE_BY_TYPE = { web: 10, api: 20, mobile: 10, domain: 5, ip: 5 };
@@ -833,7 +1032,7 @@
     $("runs").innerHTML = ex.last ? `
       <span>Última ejecución <strong>${ex.last}</strong></span>
       <span class="dot" aria-hidden="true">·</span>
-      <span>Próxima <strong>${ex.status === "pausado" ? "En pausa" : ex.next}</strong></span>
+      <span>Próxima <strong>${ex.status === "pausado" ? "En pausa" : ex.next || "Sin programar"}</strong></span>
       <span class="dot" aria-hidden="true">·</span>
       <button class="link" type="button">Historial de corridas</button>` : "";
 
@@ -1081,6 +1280,7 @@
   $("q").addEventListener("input", (ev) => { query = ev.target.value; renderRows(); });
 
   $("headActions").addEventListener("click", (ev) => {
+    if (ev.target.closest("[data-edit-exercise]")) return openExercisePanel();
     if (!ev.target.closest("[data-toggle-pause]")) return;
     ex.status = ex.status === "activo" ? "pausado" : "activo";
     renderHeader();
@@ -1103,19 +1303,22 @@
   const credReady = (c) => !!c && (c.mode === "none" ||
     (c.mode === "load" && (c.source === "bunker" ? !!c.ref : !!(c.user && c.pass))));
 
-  function setWindow(value) {
+  // Global fields live in both panels; p is the id prefix ("a" asset, "e" exercise)
+  function setWindow(value, p = "a") {
     const m = value.match(/(\d\d:\d\d) a (\d\d:\d\d)/);
-    $("aWindowMode").value = m ? "range" : "any";
-    $("aFrom").value = m ? m[1] : "09:00";
-    $("aTo").value = m ? m[2] : "18:00";
+    $(`${p}WindowMode`).value = m ? "range" : "any";
+    $(`${p}From`).value = m ? m[1] : "09:00";
+    $(`${p}To`).value = m ? m[2] : "18:00";
   }
 
-  function readGlobals() {
+  function readGlobals(p = "a") {
     return {
-      depth: $("aDepth").value,
-      window: $("aWindowMode").value === "any" ? "Cualquier horario" : `${$("aFrom").value} a ${$("aTo").value}`,
+      depth: $(`${p}Depth`).value,
+      window: $(`${p}WindowMode`).value === "any" ? "Cualquier horario" : `${$(`${p}From`).value} a ${$(`${p}To`).value}`,
     };
   }
+
+  const badWindow = (p) => $(`${p}WindowMode`).value === "range" && (!$(`${p}From`).value || $(`${p}From`).value === $(`${p}To`).value);
 
   function readCred() {
     const mode = form.elements.credMode.value;
@@ -1167,7 +1370,7 @@
     const rate = Number($("rateLimit").value);
     const checks = [
       setError($("rateLimit"), "rateError", !Number.isInteger(rate) || rate < 1),
-      setError($("aTo"), "windowError", $("aWindowMode").value === "range" && (!$("aFrom").value || $("aFrom").value === $("aTo").value)),
+      setError($("aTo"), "windowError", badWindow("a")),
     ];
     const firstInvalid = form.querySelector('[aria-invalid="true"]');
     if (firstInvalid) firstInvalid.focus();
@@ -1204,13 +1407,13 @@
     if (a.status === "pendiente") form.querySelector('input[name="credMode"]:checked, input[name="credMode"]').focus();
   }
 
-  function closePanel() {
-    const panel = $("assetPanel");
+  // Slides the panel out, then returns focus to whatever opened it
+  function closeDialog(panel, focusBack) {
     if (!panel.open || panel.classList.contains("is-closing")) return;
     const done = () => {
       panel.classList.remove("is-closing");
       panel.close();
-      [...document.querySelectorAll(`[data-edit-asset="${editing.id}"]`)].find((el) => el.offsetParent)?.focus();
+      focusBack();
     };
     if (reducedMotion.matches) return done();
     panel.classList.add("is-closing");
@@ -1220,6 +1423,9 @@
       done();
     });
   }
+
+  const closePanel = () => closeDialog($("assetPanel"), () =>
+    [...document.querySelectorAll(`[data-edit-asset="${editing.id}"]`)].find((el) => el.offsetParent)?.focus());
 
   function setPassVisible(show) {
     $("credPass").type = show ? "text" : "password";
@@ -1316,13 +1522,16 @@
     return Object.keys(cur).filter((k) => cur[k] !== before[k]).map((k) => [k, before[k], cur[k]]);
   }
 
-  function openConfirm(changes) {
-    const g = exGlobals();
-    $("confirmChanges").innerHTML = changes.map(([k, from, to]) => `
+  // One block per changed global: label, old value struck through, new value (both confirmations)
+  const changeRows = (changes) => changes.map(([k, from, to]) => `
       <div>
         <dt><i data-lucide="globe"></i>${GLOBAL_LABELS[k]}</dt>
         <dd><span class="old">${from}</span><i data-lucide="arrow-right"></i><span>${to}</span></dd>
       </div>`).join("");
+
+  function openConfirm(changes) {
+    const g = exGlobals();
+    $("confirmChanges").innerHTML = changeRows(changes);
     const stillModified = Object.keys(g).some((k) => readGlobals()[k] !== g[k]);
     $("confirmDesc").textContent = stillModified
       ? `${editing.name} deja de usar el valor del ejercicio y queda como Modificado. El resto de los assets no cambia.`
@@ -1350,17 +1559,145 @@
     a.status = credReady(a.cred) ? "listo" : "pendiente";
     a.inheritance = Object.keys(a.overrides).length ? "modificado" : "heredado";
 
-    let message = `Guardaste los cambios de ${a.name}.`;
-    // E8: a draft becomes Active on its own once nothing is missing
-    if (ex.status === "borrador" && ex.dates && !assets.some((x) => x.status === "pendiente")) {
-      ex.status = "activo";
-      message += " El ejercicio pasó a Activo.";
-    }
+    const message = `Guardaste los cambios de ${a.name}.${activateIfComplete()}`;
     renderHeader();
     renderRows();
     closePanel();
     toast(message);
   }
+
+  // E8: a draft becomes Active on its own once nothing is missing; returns the toast suffix
+  function activateIfComplete() {
+    if (ex.status !== "borrador" || !ex.dates || assets.some((a) => a.status === "pendiente")) return "";
+    ex.status = "activo";
+    return " El ejercicio pasó a Activo.";
+  }
+
+  /* Side panel: edit the exercise. Same component as the asset panel, other content */
+  const exForm = $("exerciseForm");
+  for (const el of exForm.querySelectorAll("[data-global-mark]")) el.outerHTML = globalMark;
+
+  function syncExercise() {
+    $("eTitleClear").hidden = !$("eTitle").value;
+    $("eGoalOtherField").hidden = $("eGoal").value !== "Otro";
+    $("eDateRow").hidden = $("eSchedule").value !== "fechas";
+    $("eWindowRange").hidden = $("eWindowMode").value === "any";
+    $("eEnd").min = $("eStart").value;
+
+    // Impact summary (M4): one alert for the assets that keep their own value
+    const { kept, fields } = exerciseImpact(), n = kept.length;
+    $("exImpact").hidden = !n;
+    if (n) $("exImpact").querySelector("span").innerHTML =
+      `<strong>${plural(n, "asset", "assets")}</strong> ${n === 1 ? "tiene" : "tienen"} su propio valor ` +
+      `${fields.length > 1 ? `en ${fields.join(" o ")}` : `de ${fields[0]}`} y no ${n === 1 ? "va" : "van"} a tomar este cambio.`;
+  }
+
+  // Globals edited in the panel, the assets that keep their own value for any of them, and those fields' labels
+  function exerciseImpact() {
+    const g = exGlobals(), cur = readGlobals("e");
+    const changes = Object.keys(g).filter((k) => cur[k] !== g[k]).map((k) => [k, g[k], cur[k]]);
+    const kept = assets.filter((a) => changes.some(([k]) => k in a.overrides));
+    const fields = changes.filter(([k]) => kept.some((a) => k in a.overrides)).map(([k]) => GLOBAL_LABELS[k]);
+    return { changes, kept, fields };
+  }
+
+  // Confirmation before saving (9.4): which assets take the new value and which keep their own
+  const KEPT_SHOWN = 3;
+  function openExerciseConfirm({ changes, kept }) {
+    const n = kept.length;
+    $("confirmExChanges").innerHTML = changeRows(changes);
+    $("confirmExDesc").innerHTML = `Se aplica a <strong>${plural(assets.length - n, "asset", "assets")}</strong>. ` +
+      (n === 1 ? "Este asset mantiene su propio valor:" : `Estos ${n} mantienen su propio valor:`);
+    const own = (a) => changes.filter(([k]) => k in a.overrides).map(([k]) => `${GLOBAL_LABELS[k]} ${a.overrides[k]}`).join(" · ");
+    $("confirmExKept").innerHTML = kept.slice(0, KEPT_SHOWN)
+      .map((a) => `<li><span class="kept-name">${a.name}</span> <span class="muted">· ${own(a)}</span></li>`).join("") +
+      (n > KEPT_SHOWN ? `<li class="muted">+${n - KEPT_SHOWN} más</li>` : "");
+    $("confirmExercise").showModal();
+    lucide.createIcons();
+    $("confirmExBack").focus();
+  }
+
+  function backToExercisePanel() {
+    $("confirmExercise").close();
+    exForm.querySelector('[type="submit"]').focus();
+  }
+
+  $("confirmExBack").addEventListener("click", backToExercisePanel);
+  $("confirmExercise").addEventListener("cancel", (ev) => { ev.preventDefault(); backToExercisePanel(); });
+  $("confirmExOk").addEventListener("click", () => { $("confirmExercise").close(); saveExercise(); });
+
+  function validateExercise() {
+    const dated = $("eSchedule").value === "fechas", start = $("eStart").value, end = $("eEnd").value;
+    const checks = [
+      setError($("eTitle"), "eTitleError", !$("eTitle").value.trim()),
+      setError($("eGoalOther"), "eGoalOtherError", $("eGoal").value === "Otro" && !$("eGoalOther").value.trim()),
+      setError($("eStart"), "eStartError", dated && !start),
+      setError($("eEnd"), "eEndError", dated && !!start && !!end && end <= start),
+      setError($("eTo"), "eWindowError", badWindow("e")),
+    ];
+    exForm.querySelector('[aria-invalid="true"]')?.focus();
+    return checks.every(Boolean);
+  }
+
+  function openExercisePanel() {
+    const listed = [...$("eGoal").options].some((o) => o.value === ex.goal);
+    $("exPanelTitle").textContent = $("eTitle").value = name;
+    $("eGoal").value = listed ? ex.goal : "Otro";
+    $("eGoalOther").value = listed ? "" : ex.goal;
+    $("eSchedule").value = ex.start ? "fechas" : "despues";
+    $("eStart").value = ex.start;
+    $("eEnd").value = ex.end;
+    $("eRepeat").value = ex.repeat;
+    $("eHuman").setAttribute("aria-checked", ex.human === "Sí");
+    $("eDepth").value = ex.depth;
+    setWindow(ex.window, "e");
+    for (const input of exForm.querySelectorAll("[aria-invalid]")) input.removeAttribute("aria-invalid");
+    for (const err of exForm.querySelectorAll(".field-error")) err.hidden = true;
+
+    exForm.querySelector(".panel-body").scrollTop = 0;
+    $("exercisePanel").showModal();
+    syncExercise();
+    $("eTitle").focus();
+  }
+
+  const closeExercisePanel = () => closeDialog($("exercisePanel"), () => $("headActions").querySelector("[data-edit-exercise]").focus());
+
+  function saveExercise() {
+    name = $("eTitle").value.trim();
+    ex.goal = $("eGoal").value === "Otro" ? $("eGoalOther").value.trim() : $("eGoal").value;
+    // "Definir después" clears the dates; the state does not change (a draft stays a draft)
+    const dated = $("eSchedule").value === "fechas";
+    Object.assign(ex, { start: dated ? $("eStart").value : "", end: dated ? $("eEnd").value : "", repeat: $("eRepeat").value });
+    ex.dates = scheduleLabel(ex);
+    ex.next = nextRun(ex);
+    ex.human = $("eHuman").getAttribute("aria-checked") === "true" ? "Sí" : "No";
+    // Live link (H3): assets without their own value read the new globals; overrides stay
+    Object.assign(ex, readGlobals("e"));
+
+    const message = `Guardaste los cambios del ejercicio.${activateIfComplete()}`;
+    renderHeader();
+    renderConfig();
+    renderRows();
+    closeExercisePanel();
+    toast(message);
+  }
+
+  exForm.addEventListener("input", syncExercise);
+  exForm.addEventListener("change", syncExercise);
+  exForm.addEventListener("click", (ev) => { if (ev.target.closest("[data-close-panel]")) closeExercisePanel(); });
+  exForm.addEventListener("submit", (ev) => {
+    ev.preventDefault();
+    if (!validateExercise()) return;
+    const impact = exerciseImpact();
+    if (impact.kept.length) openExerciseConfirm(impact); else saveExercise();
+  });
+  $("eTitleClear").addEventListener("click", () => { $("eTitle").value = ""; syncExercise(); $("eTitle").focus(); });
+  $("eHuman").addEventListener("click", (ev) => {
+    const btn = ev.currentTarget;
+    btn.setAttribute("aria-checked", btn.getAttribute("aria-checked") !== "true");
+  });
+  $("exercisePanel").addEventListener("cancel", (ev) => { ev.preventDefault(); closeExercisePanel(); });
+  $("exercisePanel").addEventListener("click", (ev) => { if (ev.target === $("exercisePanel")) closeExercisePanel(); });
 
   renderHeader();
   renderConfig();

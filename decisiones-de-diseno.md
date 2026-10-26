@@ -74,7 +74,8 @@ Nota: "propios" se usó para dos cosas distintas (del ejercicio y del asset). Co
 ### 2.4 Edición de valores globales desde el ejercicio
 - **Decidido.** Mientras se edita un campo global, el panel muestra un resumen de impacto en vivo. Ese resumen solo dice a cuántos assets no afecta (los que tienen valor propio).
 - **Decidido.** El resumen cumple el rol de advertencia.
-- **Decidido.** Al guardar aparece una confirmación breve que menciona cuántos assets no se verán afectados y una lista corta de sus nombres. Todavía no está construida. El resumen de impacto y esta confirmación son del panel del ejercicio; el panel de un asset no los usa.
+- **Decidido.** Al guardar aparece una confirmación breve que menciona cuántos assets no se verán afectados y una lista corta de sus nombres. El resumen de impacto y esta confirmación son del panel del ejercicio; el panel de un asset no los usa.
+- **Decidido.** Construidos en `prototipo/detalle-ejercicio.html`. El resumen de impacto es un único aviso de advertencia debajo de los campos globales ("N assets tienen su propio valor de Profundidad y no van a tomar este cambio."), en lugar de una línea por campo. La confirmación ("Cambiaste un valor global") muestra el cambio, "Se aplica a N assets. Estos M mantienen su propio valor:", hasta tres assets con su valor y "+N más", y cómo hacer que tomen el nuevo valor. Solo aparece si algún asset tiene valor propio en lo cambiado; si no, se guarda directo.
 
 ### 2.5 Edición en lote
 - **Decidido.** Cada fila de asset se puede seleccionar. Al seleccionar aparece la opción de editar.
@@ -90,6 +91,7 @@ Nota: "propios" se usó para dos cosas distintas (del ejercicio y del asset). Co
   - En Activo y Pausado: "Última ejecución · Próxima · Historial de corridas" ("En pausa" como próxima si está pausado).
   - En Borrador: aviso "N assets pendientes: faltan credenciales." (y "Faltan las fechas." si corresponde) "El ejercicio pasa a Activo cuando esté completo.", con "Ver pendientes", que aplica el filtro.
   - Configuración en una grilla de cinco elementos (Objetivo, Fechas y recurrencia, Hacker humano; Profundidad y Franjas horarias con planeta y tooltip "Valor global: se aplica a todos los assets. Un asset que lo cambia queda como Modificado."). Sin enlace "Editar" y sin línea divisoria.
+  - "Editar ejercicio" abre el panel lateral del ejercicio, el mismo componente que el del asset: Título, Objetivo, Fechas y recurrencia, hacker humano y, debajo de una línea, Profundidad y Franjas horarias con el planeta y el aviso de impacto (ver 2.4). Si algún asset tiene valor propio en lo cambiado, pide confirmación; si no, guarda directo. Al guardar actualiza encabezado, configuración y tabla. En la referencia visual, Objetivo y Fechas mostraban "vpn-corp" y Profundidad parecía un campo de fecha: eran marcadores de posición y se reemplazaron por los campos reales del modal de creación (ver 9.4 de la fuente de verdad).
   - Assets: total, cambio Lista / Diagrama y "Agregar assets".
   - Botón "Filtrar" con ícono que abre un menú: Estado (Listo, Pendiente) y Herencia (Heredado, Modificado), con conteos; se suman dentro de un grupo y se combinan entre grupos; contador en el botón, "Limpiar filtros", cierre con Esc o clic afuera. Reemplaza a los filtros separados "Modificados" y "Borradores".
   - Casillas con "seleccionar todos" sobre lo visible y barra "N seleccionados · Quitar selección · Editar". La barra y las filas seleccionadas quedan en `global-bg` (se probó junto al planeta y se mantiene).
