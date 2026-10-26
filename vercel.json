@@ -1,0 +1,5 @@
+{
+  "redirects": [
+    { "source": "/", "destination": "/prototipo/lista-ejercicios.html", "permanent": false }
+  ]
+}
