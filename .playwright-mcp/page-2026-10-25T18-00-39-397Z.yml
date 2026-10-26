@@ -1,0 +1,149 @@
+- generic [ref=f4e2]:
+  - navigation "Navegación principal" [ref=f4e3]:
+    - generic "Strike" [ref=f4e4]: S
+    - link "Ejercicios" [ref=f4e5] [cursor=pointer]:
+      - /url: lista-ejercicios.html
+    - link "Assets" [ref=f4e8] [cursor=pointer]:
+      - /url: "#"
+    - link "Hallazgos" [ref=f4e12] [cursor=pointer]:
+      - /url: "#"
+    - link "Reportes" [ref=f4e15] [cursor=pointer]:
+      - /url: "#"
+    - link "Configuración" [ref=f4e19] [cursor=pointer]:
+      - /url: "#"
+  - main [ref=f4e23]:
+    - generic [ref=f4e24]:
+      - navigation "Ruta" [ref=f4e25]:
+        - paragraph [ref=f4e26]:
+          - link "Ejercicios" [ref=f4e27] [cursor=pointer]:
+            - /url: lista-ejercicios.html
+          - generic [aria-hidden] [ref=f4e28]: /
+          - generic [ref=f4e29]: Revisión plataforma e-commerce
+      - generic [ref=f4e30]:
+        - generic [ref=f4e31]:
+          - heading "Revisión plataforma e-commerce" [level=1] [ref=f4e32]
+          - generic [ref=f4e366]:
+            - text: Activo
+            - tooltip "Corre según sus fechas y recurrencia"
+        - generic [ref=f4e35]:
+          - button "Editar ejercicio" [ref=f4e367] [cursor=pointer]
+          - button "Pausar" [ref=f4e371] [cursor=pointer]
+          - button "Corrida manual" [ref=f4e375] [cursor=pointer]
+      - paragraph [ref=f4e47]:
+        - generic [ref=f4e378]:
+          - text: Última ejecución
+          - strong [ref=f4e379]: 14 ago 2026
+        - generic [aria-hidden] [ref=f4e380]: ·
+        - generic [ref=f4e381]:
+          - text: Próxima
+          - strong [ref=f4e382]: 14 nov 2026
+        - generic [aria-hidden] [ref=f4e383]: ·
+        - button "Historial de corridas" [ref=f4e384] [cursor=pointer]
+      - region [ref=f4e55]:
+        - generic [ref=f4e56]:
+          - heading "Configuración" [level=2] [ref=f4e57]
+          - button "Editar" [ref=f4e58] [cursor=pointer]
+        - generic [ref=f4e59]:
+          - generic [ref=f4e60]:
+            - term [ref=f4e61]: Objetivo
+            - definition [ref=f4e62]: Antes de un lanzamiento
+          - generic [ref=f4e63]:
+            - term [ref=f4e64]: Fechas y recurrencia
+            - definition [ref=f4e65]: Desde 14 ago 2026 · Trimestral
+          - generic [ref=f4e66]:
+            - term [ref=f4e67]: Hacker humano
+            - definition [ref=f4e68]: Sí
+        - generic [ref=f4e69]:
+          - generic [ref=f4e70]:
+            - text: Global
+            - tooltip "Estos valores se aplican a todos los assets. Un asset que cambia alguno queda como Modificado."
+          - generic [ref=f4e71]:
+            - generic [ref=f4e72]:
+              - term [ref=f4e73]: Profundidad
+              - definition [ref=f4e74]: Alta
+            - generic [ref=f4e75]:
+              - term [ref=f4e76]: Franjas horarias
+              - definition [ref=f4e77]: 22:00 a 06:00
+            - generic [ref=f4e78]:
+              - term [ref=f4e79]: Exclusiones
+              - definition [ref=f4e80]: /logout, /checkout
+      - region [ref=f4e81]:
+        - generic [ref=f4e82]:
+          - generic [ref=f4e83]:
+            - heading "Assets12" [level=2] [ref=f4e84]
+            - group "Vista" [ref=f4e85]:
+              - button "Lista" [pressed] [ref=f4e86] [cursor=pointer]
+              - button "Diagrama" [ref=f4e88] [cursor=pointer]
+          - button "Agregar assets" [ref=f4e94] [cursor=pointer]
+      - generic [ref=f4e96]:
+        - searchbox "Buscar assets" [ref=f4e101]
+        - button "Modificados 3" [pressed] [ref=f4e102] [cursor=pointer]:
+          - text: Modificados
+          - generic [ref=f4e103]: "3"
+        - button "Borradores 0" [ref=f4e104] [cursor=pointer]:
+          - text: Borradores
+          - generic [ref=f4e105]: "0"
+      - generic [ref=f4e106]:
+        - table [ref=f4e107]:
+          - rowgroup [ref=f4e108]:
+            - row [ref=f4e109]:
+              - columnheader [ref=f4e110]:
+                - checkbox "Seleccionar todos los assets visibles" [ref=f4e111] [cursor=pointer]
+              - columnheader "Asset" [ref=f4e112]
+              - columnheader "Tipo" [ref=f4e113]
+              - columnheader "Estado" [ref=f4e114]
+              - columnheader "Herencia" [ref=f4e115]
+              - columnheader "Editar" [ref=f4e116]
+          - rowgroup [ref=f4e118]:
+            - row [ref=f4e395]:
+              - cell [ref=f4e396]:
+                - checkbox "Seleccionar api.ejemplo.com/v1" [ref=f4e397] [cursor=pointer]
+              - cell "api.ejemplo.com/v1 VPN vpn-corp" [ref=f4e398]:
+                - generic [ref=f4e399]: api.ejemplo.com/v1
+                - generic [ref=f4e400]: VPN vpn-corp
+              - cell "API" [ref=f4e401]
+              - cell [ref=f4e406]:
+                - generic [ref=f4e407]:
+                  - text: Listo
+                  - tooltip "Tiene todo lo necesario para testearse"
+              - cell [ref=f4e408]:
+                - generic [ref=f4e409]:
+                  - text: Modificado
+                  - tooltip "Cambió al menos un valor global del ejercicio"
+              - cell [ref=f4e410]:
+                - button "Editar api.ejemplo.com/v1" [ref=f4e411] [cursor=pointer]
+            - row [ref=f4e415]:
+              - cell [ref=f4e416]:
+                - checkbox "Seleccionar admin.ejemplo.com" [ref=f4e417] [cursor=pointer]
+              - cell "admin.ejemplo.com VPN vpn-corp" [ref=f4e418]:
+                - generic [ref=f4e419]: admin.ejemplo.com
+                - generic [ref=f4e420]: VPN vpn-corp
+              - cell "Web app" [ref=f4e421]
+              - cell [ref=f4e426]:
+                - generic [ref=f4e427]:
+                  - text: Listo
+                  - tooltip "Tiene todo lo necesario para testearse"
+              - cell [ref=f4e428]:
+                - generic [ref=f4e429]:
+                  - text: Modificado
+                  - tooltip "Cambió al menos un valor global del ejercicio"
+              - cell [ref=f4e430]:
+                - button "Editar admin.ejemplo.com" [ref=f4e431] [cursor=pointer]
+            - row [ref=f4e435]:
+              - cell [ref=f4e436]:
+                - checkbox "Seleccionar api.ejemplo.com/v2" [ref=f4e437] [cursor=pointer]
+              - cell "api.ejemplo.com/v2 VPN vpn-corp" [ref=f4e438]:
+                - generic [ref=f4e439]: api.ejemplo.com/v2
+                - generic [ref=f4e440]: VPN vpn-corp
+              - cell "API" [ref=f4e441]
+              - cell [ref=f4e446]:
+                - generic [ref=f4e447]:
+                  - text: Listo
+                  - tooltip "Tiene todo lo necesario para testearse"
+              - cell [ref=f4e448]:
+                - generic [ref=f4e449]:
+                  - text: Modificado
+                  - tooltip "Cambió al menos un valor global del ejercicio"
+              - cell [ref=f4e450]:
+                - button "Editar api.ejemplo.com/v2" [ref=f4e451] [cursor=pointer]
+        - generic [ref=f4e352]: Mostrando 3 de 12 assets

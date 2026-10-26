@@ -1,0 +1,33 @@
+- generic [ref=f3e2]:
+  - navigation "Navegación principal" [ref=f3e3]:
+    - generic "Strike" [ref=f3e4]: S
+    - link "Ejercicios" [ref=f3e5] [cursor=pointer]:
+      - /url: "#"
+    - link "Assets" [ref=f3e6] [cursor=pointer]:
+      - /url: "#"
+    - link "Hallazgos" [ref=f3e7] [cursor=pointer]:
+      - /url: "#"
+    - link "Reportes" [ref=f3e8] [cursor=pointer]:
+      - /url: "#"
+    - link "Configuración" [ref=f3e9] [cursor=pointer]:
+      - /url: "#"
+  - main [ref=f3e10]:
+    - generic [ref=f3e11]:
+      - paragraph [ref=f3e12]: Pentesting continuo
+      - generic [ref=f3e13]:
+        - heading "Ejercicios" [level=1] [ref=f3e15]
+        - button "Crear ejercicio" [ref=f3e16] [cursor=pointer]
+      - search [ref=f3e17]:
+        - searchbox "Buscar ejercicios" [ref=f3e19]
+        - button "Buscar" [ref=f3e20] [cursor=pointer]
+      - tablist [ref=f3e21]
+      - table [ref=f3e24]:
+        - rowgroup [ref=f3e25]:
+          - row [ref=f3e26]:
+            - columnheader "Ejercicio" [ref=f3e27]
+            - columnheader "Estado" [ref=f3e28]
+            - columnheader "Frecuencia" [ref=f3e29]
+            - columnheader "Última ejecución" [ref=f3e30]
+            - columnheader "Assets" [ref=f3e31]
+            - columnheader "Abrir" [ref=f3e32]
+        - rowgroup

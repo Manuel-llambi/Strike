@@ -1,0 +1,205 @@
+- generic [ref=f9e1]:
+  - generic [ref=f9e2]:
+    - navigation "Navegación principal" [ref=f9e3]:
+      - generic "Strike" [ref=f9e4]: S
+      - link "Ejercicios" [ref=f9e5] [cursor=pointer]:
+        - /url: "#"
+      - link "Assets" [ref=f9e8] [cursor=pointer]:
+        - /url: "#"
+      - link "Hallazgos" [ref=f9e12] [cursor=pointer]:
+        - /url: "#"
+      - link "Reportes" [ref=f9e15] [cursor=pointer]:
+        - /url: "#"
+      - link "Configuración" [ref=f9e19] [cursor=pointer]:
+        - /url: "#"
+    - main [ref=f9e23]:
+      - generic [ref=f9e24]:
+        - paragraph [ref=f9e25]: Pentesting continuo
+        - generic [ref=f9e26]:
+          - generic [ref=f9e27]:
+            - heading "Ejercicios" [level=1] [ref=f9e28]
+            - generic [ref=f9e29]: 6 en total
+          - button "Crear ejercicio" [ref=f9e30] [cursor=pointer]
+        - search [ref=f9e32]:
+          - searchbox "Buscar ejercicios" [ref=f9e37]
+          - button "Buscar" [ref=f9e38] [cursor=pointer]
+        - tablist [ref=f9e39]:
+          - tab "Todos6" [selected] [ref=f9e40] [cursor=pointer]
+          - tab "Activos3" [ref=f9e41] [cursor=pointer]
+          - tab "Pausados1" [ref=f9e42] [cursor=pointer]
+          - tab "Borradores2" [ref=f9e43] [cursor=pointer]
+        - table [ref=f9e46]:
+          - rowgroup [ref=f9e47]:
+            - row [ref=f9e48]:
+              - columnheader "Ejercicio" [ref=f9e49]
+              - columnheader "Estado" [ref=f9e50]
+              - columnheader "Frecuencia" [ref=f9e51]
+              - columnheader "Última ejecución" [ref=f9e52]
+              - columnheader "Assets" [ref=f9e53]
+              - columnheader "Abrir" [ref=f9e54]
+          - rowgroup [ref=f9e56]:
+            - row "Abrir Revisión plataforma e-commerce" [ref=f9e57] [cursor=pointer]:
+              - cell "Revisión plataforma e-commerce Antes de un lanzamiento" [ref=f9e58]:
+                - generic [ref=f9e59]: Revisión plataforma e-commerce
+                - generic [ref=f9e60]: Antes de un lanzamiento
+              - cell [ref=f9e61]:
+                - generic [ref=f9e62]:
+                  - text: Activo
+                  - tooltip "Corre según sus fechas y recurrencia"
+              - cell "Trimestral" [ref=f9e63]
+              - cell "14 ago 2026" [ref=f9e64]
+              - cell "12 assets" [ref=f9e65]
+              - cell [ref=f9e67]
+            - row "Abrir Auditoría SOC 2" [ref=f9e71] [cursor=pointer]:
+              - cell "Auditoría SOC 2 Auditoría o cumplimiento" [ref=f9e72]:
+                - generic [ref=f9e73]: Auditoría SOC 2
+                - generic [ref=f9e74]: Auditoría o cumplimiento
+              - cell [ref=f9e75]:
+                - generic [ref=f9e76]:
+                  - text: Pausado
+                  - tooltip "Suspendido hasta que lo reanudes"
+              - cell "Anual" [ref=f9e77]
+              - cell "2 mar 2026" [ref=f9e78]
+              - cell "8 assets" [ref=f9e79]
+              - cell [ref=f9e81]
+            - row "Abrir Lanzamiento app móvil" [ref=f9e85] [cursor=pointer]:
+              - cell "Lanzamiento app móvil Antes de un lanzamiento" [ref=f9e86]:
+                - generic [ref=f9e87]: Lanzamiento app móvil
+                - generic [ref=f9e88]: Antes de un lanzamiento
+              - cell [ref=f9e89]:
+                - generic [ref=f9e90]:
+                  - text: Borrador
+                  - tooltip "Faltan datos para activarlo"
+              - cell "Sin fechas" [ref=f9e91]
+              - cell "Sin ejecuciones" [ref=f9e92]
+              - cell [ref=f9e93]:
+                - generic [ref=f9e94]:
+                  - text: 5 assets
+                  - generic [ref=f9e95]:
+                    - text: 2 pendientes
+                    - 'tooltip "Assets en borrador: les faltan datos para poder testearse"'
+              - cell [ref=f9e96]
+            - row "Abrir Revisión mensual de APIs" [ref=f9e100] [cursor=pointer]:
+              - cell "Revisión mensual de APIs Revisión periódica" [ref=f9e101]:
+                - generic [ref=f9e102]: Revisión mensual de APIs
+                - generic [ref=f9e103]: Revisión periódica
+              - cell [ref=f9e104]:
+                - generic [ref=f9e105]:
+                  - text: Activo
+                  - tooltip "Corre según sus fechas y recurrencia"
+              - cell "Mensual" [ref=f9e106]
+              - cell "20 oct 2026" [ref=f9e107]
+              - cell "4 assets" [ref=f9e108]
+              - cell [ref=f9e110]
+            - row "Abrir Migración a nube híbrida" [ref=f9e114] [cursor=pointer]:
+              - cell "Migración a nube híbrida Cambio de infraestructura" [ref=f9e115]:
+                - generic [ref=f9e116]: Migración a nube híbrida
+                - generic [ref=f9e117]: Cambio de infraestructura
+              - cell [ref=f9e118]:
+                - generic [ref=f9e119]:
+                  - text: Borrador
+                  - tooltip "Faltan datos para activarlo"
+              - cell "Semestral" [ref=f9e120]
+              - cell "Sin ejecuciones" [ref=f9e121]
+              - cell [ref=f9e122]:
+                - generic [ref=f9e123]:
+                  - text: 9 assets
+                  - generic [ref=f9e124]:
+                    - text: 4 pendientes
+                    - 'tooltip "Assets en borrador: les faltan datos para poder testearse"'
+              - cell [ref=f9e125]
+            - row "Abrir Portal de clientes" [ref=f9e129] [cursor=pointer]:
+              - cell "Portal de clientes Revisión periódica" [ref=f9e130]:
+                - generic [ref=f9e131]: Portal de clientes
+                - generic [ref=f9e132]: Revisión periódica
+              - cell [ref=f9e133]:
+                - generic [ref=f9e134]:
+                  - text: Activo
+                  - tooltip "Corre según sus fechas y recurrencia"
+              - cell "Mensual" [ref=f9e135]
+              - cell "3 oct 2026" [ref=f9e136]
+              - cell "6 assets" [ref=f9e137]
+              - cell [ref=f9e139]
+  - dialog [ref=f9e143]:
+    - generic [ref=f9e144]:
+      - banner [ref=f9e145]:
+        - generic [ref=f9e146]:
+          - heading "Crear ejercicio" [level=2] [ref=f9e147]
+          - paragraph [ref=f9e148]: Definí qué es el ejercicio, cuándo corre y los valores globales que van a heredar sus assets.
+        - button "Cerrar" [ref=f9e149] [cursor=pointer]
+      - list "Pasos" [ref=f9e153]:
+        - listitem [ref=f9e154]: 1 Valores del ejercicio y globales
+        - listitem [aria-hidden] [ref=f9e155]
+        - listitem [ref=f9e158]: 2 Assets
+      - generic [ref=f9e159]:
+        - generic [ref=f9e160]:
+          - generic [ref=f9e161]: Título*
+          - textbox "Título" [active] [ref=f9e162]:
+            - /placeholder: "Ej.: Revisión plataforma e-commerce"
+        - generic [ref=f9e163]:
+          - generic [ref=f9e164]: Objetivo
+          - combobox "Objetivo" [ref=f9e166] [cursor=pointer]:
+            - option "Elegir objetivo" [disabled]
+            - option "Antes de un lanzamiento" [selected]
+            - option "Auditoría o cumplimiento"
+            - option "Revisión periódica"
+            - option "Cambio importante en el sistema"
+            - option "Otro"
+          - status [ref=f9e167]:
+            - generic [ref=f9e171]: Para este objetivo sugerimos una profundidad alta. La podés ajustar abajo, en Profundidad.
+        - generic [ref=f9e172]:
+          - generic [ref=f9e173]: Fechas y recurrencia
+          - combobox "Fechas y recurrencia" [ref=f9e175] [cursor=pointer]:
+            - option "Elegir fechas" [selected]
+            - option "Definir después"
+          - generic [ref=f9e176]:
+            - generic [ref=f9e177]:
+              - generic [ref=f9e178]: Inicio
+              - textbox "Inicio" [ref=f9e179]
+            - generic [ref=f9e180]:
+              - generic [ref=f9e181]: Fin
+              - textbox "Fin" [ref=f9e182]
+            - generic [ref=f9e183]:
+              - generic [ref=f9e184]: Repetir
+              - combobox "Repetir" [ref=f9e186] [cursor=pointer]:
+                - option "Una vez" [selected]
+                - option "Semanal"
+                - option "Mensual"
+                - option "Trimestral"
+                - option "Semestral"
+                - option "Anual"
+        - generic [ref=f9e187]:
+          - switch "Sumar validación con hacker humano" [ref=f9e188] [cursor=pointer]
+          - generic [ref=f9e189]:
+            - generic [ref=f9e190] [cursor=pointer]: Sumar validación con hacker humano
+            - paragraph [ref=f9e191]: Opcional. Un especialista revisa los hallazgos.
+        - group "Valores globales" [ref=f9e192]:
+          - generic [ref=f9e193]:
+            - generic [ref=f9e194]:
+              - generic [ref=f9e195]:
+                - generic [ref=f9e196]:
+                  - generic [ref=f9e200]: Valor global.
+                  - 'tooltip "Valor global: se aplica a todos los assets que agregues. Después podés modificarlo desde cada asset."'
+                - generic [ref=f9e201]: Profundidad
+              - combobox "Profundidad" [ref=f9e203] [cursor=pointer]:
+                - option "Baja"
+                - option "Media"
+                - option "Alta" [selected]
+              - generic [ref=f9e204]:
+                - text: Sugerida por el sistema
+                - 'tooltip "Se infirió a partir del objetivo: Antes de un lanzamiento"'
+            - generic [ref=f9e205]:
+              - generic [ref=f9e206]:
+                - generic [ref=f9e207]:
+                  - generic [ref=f9e211]: Valor global.
+                  - 'tooltip "Valor global: se aplica a todos los assets que agregues. Después podés modificarlo desde cada asset."'
+                - generic [ref=f9e212]: Franjas horarias
+              - combobox "Franjas horarias" [ref=f9e214] [cursor=pointer]:
+                - option "Cualquier horario" [selected]
+                - option "Elegir rango"
+      - contentinfo [ref=f9e215]:
+        - generic [ref=f9e216]: Paso 1 de 2
+        - generic [ref=f9e217]:
+          - button "Cancelar" [ref=f9e218] [cursor=pointer]
+          - button "Siguiente" [ref=f9e219] [cursor=pointer]
+  - status

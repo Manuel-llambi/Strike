@@ -1,0 +1,1293 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Strike · Ejercicios</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+  :root {
+    --rail: #050a0f;
+    --rail-ink: #f5f5f8;
+    --page: #f5f5f8;
+    --card: #ffffff;
+    --sunken: #eceef3;
+    --ink: #050a0f;
+    --ink-muted: #46515c;
+    --ink-subtle: #5a6570;
+    --border: #dfe2e8;
+    --border-strong: #7d8791;
+    --focus: #00697a;
+    --cyan: #80edfa;
+    --cyan-hover: #76dae6;
+
+    --success-bg: #dff5e6; --success-ink: #0b5a2a; --success-border: #1d8a48;
+    --warning-bg: #fff1cc; --warning-ink: #6b4400; --warning-border: #b36b00;
+    --paused-bg: #eceef3;  --paused-ink: #46515c;  --paused-border: #7d8791;
+
+    --ease: cubic-bezier(0.4, 0, 0.2, 1);
+    --t-hover: 250ms;
+  }
+
+  * { box-sizing: border-box; border-radius: 0; }
+  html, body { margin: 0; }
+  html { scrollbar-gutter: stable; }
+  body {
+    font-family: "DM Sans", system-ui, sans-serif;
+    font-size: 14px; line-height: 20px;
+    color: var(--ink);
+    background: var(--page);
+    -webkit-font-smoothing: antialiased;
+  }
+  svg.lucide { width: 16px; height: 16px; stroke-width: 1.5; flex: none; }
+
+  :focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+
+  /* Layout */
+  .app { display: flex; min-height: 100vh; }
+  .rail {
+    width: 64px; flex: none; background: var(--rail); color: var(--rail-ink);
+    display: flex; flex-direction: column; align-items: center; padding: 16px 0; gap: 8px;
+    position: sticky; top: 0; height: 100vh;
+  }
+  .rail-logo {
+    width: 32px; height: 32px; display: grid; place-items: center; margin-bottom: 16px;
+    font-family: "JetBrains Mono", monospace; font-size: 12px; font-weight: 500;
+    background: var(--cyan); color: var(--rail);
+  }
+  .rail a {
+    width: 40px; height: 40px; display: grid; place-items: center; color: var(--rail-ink);
+    opacity: .64; transition: opacity var(--t-hover) var(--ease), background var(--t-hover) var(--ease);
+  }
+  .rail a:hover { opacity: 1; background: #101a22; }
+  .rail a[aria-current="page"] { opacity: 1; background: #16222c; box-shadow: inset 2px 0 0 var(--cyan); }
+  .rail .spacer { flex: 1; }
+
+  main { flex: 1; min-width: 0; padding: 32px 40px 64px; }
+  .container { max-width: 1120px; margin: 0 auto; }
+
+  /* Header */
+  .eyebrow {
+    font-family: "JetBrains Mono", monospace; font-size: 12px; line-height: 16px;
+    text-transform: uppercase; letter-spacing: .04em; color: var(--ink-muted); margin: 0 0 4px;
+  }
+  .page-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; margin-bottom: 24px; }
+  .page-title { display: flex; align-items: baseline; gap: 12px; }
+  h1 { font-size: 24px; line-height: 32px; font-weight: 500; margin: 0; }
+  .count { color: var(--ink-muted); }
+
+  /* Buttons */
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    font: 500 14px/20px "DM Sans", sans-serif; padding: 9px 14px;
+    border: 1px solid transparent; cursor: pointer; white-space: nowrap;
+    transition: background var(--t-hover) var(--ease), border-color var(--t-hover) var(--ease), color var(--t-hover) var(--ease);
+  }
+  .btn-primary { background: var(--cyan); color: var(--ink); }
+  .btn-primary:hover { background: var(--cyan-hover); }
+  .btn-secondary { background: var(--card); color: var(--ink); border-color: var(--border-strong); }
+  .btn-secondary:hover { background: var(--sunken); }
+
+  /* Search */
+  .search-row { display: flex; gap: 8px; margin-bottom: 16px; }
+  .search {
+    flex: 1; display: flex; align-items: center; gap: 8px; padding: 0 12px;
+    background: var(--card); border: 1px solid var(--border-strong); color: var(--ink-subtle);
+    transition: border-color var(--t-hover) var(--ease);
+  }
+  .search:hover { border-color: var(--ink-muted); }
+  .search:focus-within { outline: 2px solid var(--focus); outline-offset: 2px; }
+  .search input {
+    flex: 1; border: 0; outline: 0; background: transparent; height: 38px;
+    font: 14px/20px "DM Sans", sans-serif; color: var(--ink);
+  }
+  .search input::placeholder { color: var(--ink-subtle); }
+
+  /* Tabs (sliding indicator) */
+  .tabs { position: relative; display: flex; gap: 24px; border-bottom: 1px solid var(--border); margin-bottom: 16px; }
+  .tab {
+    background: none; border: 0; padding: 8px 0 10px; cursor: pointer;
+    font: 14px/20px "DM Sans", sans-serif; color: var(--ink-muted);
+    transition: color var(--t-hover) var(--ease);
+  }
+  .tab:hover { color: var(--ink); }
+  .tab[aria-selected="true"] { color: var(--ink); }
+  .tab .n { color: var(--ink-subtle); margin-left: 4px; }
+  .tab-indicator {
+    position: absolute; left: 0; bottom: -1px; height: 2px; width: 1px;
+    background: var(--ink); transform-origin: left;
+    transition: transform 320ms var(--ease);
+  }
+  #rows.is-entering { animation: rows-in 280ms var(--ease); }
+  @keyframes rows-in { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+
+  /* Table */
+  .table-wrap { background: var(--card); border: 1px solid var(--border); }
+  table { width: 100%; border-collapse: collapse; min-width: 760px; }
+  th {
+    text-align: left; font-size: 12px; line-height: 16px; font-weight: 500; color: var(--ink-muted);
+    background: var(--sunken); padding: 12px 16px; border-bottom: 1px solid var(--border);
+  }
+  td { padding: 12px 16px; border-bottom: 1px solid var(--border); vertical-align: middle; height: 48px; }
+  tbody tr:last-child td { border-bottom: 0; }
+  tbody tr { cursor: pointer; transition: background var(--t-hover) var(--ease); }
+  tbody tr:hover { background: var(--sunken); }
+  tbody tr:hover .chev { color: var(--ink); transform: translateX(2px); }
+  .name { font-weight: 500; }
+  .goal { color: var(--ink-muted); }
+  .muted { color: var(--ink-muted); }
+  .chev-cell { width: 48px; text-align: right; }
+  .chev { color: var(--ink-subtle); display: inline-flex; transition: color var(--t-hover) var(--ease), transform var(--t-hover) var(--ease); }
+  .assets { display: flex; align-items: center; gap: 8px; white-space: nowrap; }
+
+  .tip {
+    position: absolute; left: 0; top: calc(100% + 8px); z-index: 2;
+    background: var(--ink); color: var(--rail-ink); font-size: 12px; line-height: 16px;
+    padding: 6px 8px; white-space: nowrap; pointer-events: none;
+    opacity: 0; transform: translateY(-4px);
+    transition: opacity var(--t-hover) var(--ease), transform var(--t-hover) var(--ease);
+  }
+  .badge:hover, .badge:focus-visible { z-index: 3; }
+  .badge:hover .tip, .badge:focus-visible .tip { opacity: 1; transform: none; }
+
+  /* Badge (word only, tooltip on hover/focus) */
+  .badge {
+    position: relative; display: inline-flex; align-items: center; padding: 2px 8px; cursor: help;
+    font-size: 12px; line-height: 16px; font-weight: 500; border: 1px solid;
+  }
+  .badge.activo { background: var(--success-bg); color: var(--success-ink); border-color: var(--success-border); }
+  .badge.borrador,
+  .badge.pending { background: var(--warning-bg); color: var(--warning-ink); border-color: var(--warning-border); }
+  .badge.pausado { background: var(--paused-bg); color: var(--paused-ink); border-color: var(--paused-border); }
+
+  .empty { padding: 40px 16px; text-align: center; color: var(--ink-muted); }
+
+
+  /* Modal: crear ejercicio */
+  .modal {
+    width: min(600px, calc(100vw - 32px)); max-height: min(944px, calc(100vh - 32px));
+    padding: 0; border: 1px solid var(--border); background: var(--card); color: var(--ink);
+    box-shadow: 0 8px 24px rgba(5, 10, 15, 0.18);
+  }
+  .modal[open] { display: flex; flex-direction: column; animation: modal-in 400ms cubic-bezier(0.22, 1, 0.36, 1); }
+  .modal::backdrop { background: rgba(5, 10, 15, 0.48); animation: fade-in 400ms cubic-bezier(0.22, 1, 0.36, 1); }
+  .modal.is-closing { animation: modal-out 200ms var(--ease) forwards; }
+  .modal.is-closing::backdrop { animation: fade-out 200ms var(--ease) forwards; }
+  @keyframes modal-in { from { opacity: 0; transform: translateY(8px) scale(.98); } to { opacity: 1; transform: none; } }
+  @keyframes modal-out { to { opacity: 0; transform: translateY(4px) scale(.99); } }
+  @keyframes fade-in { from { opacity: 0; } }
+  @keyframes fade-out { to { opacity: 0; } }
+
+  .modal-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; padding: 20px 32px; border-bottom: 1px solid var(--border); }
+  .modal-head h2 { font-size: 18px; line-height: 24px; font-weight: 500; margin: 0; }
+  .icon-btn {
+    width: 32px; height: 32px; display: grid; place-items: center; margin-right: -8px;
+    background: none; border: 0; color: var(--ink-muted); cursor: pointer;
+    transition: background var(--t-hover) var(--ease), color var(--t-hover) var(--ease);
+  }
+  .icon-btn:hover { background: var(--sunken); color: var(--ink); }
+  .icon-btn svg.lucide { width: 20px; height: 20px; }
+
+  .steps { display: flex; align-items: center; gap: 8px; margin: 0; padding: 12px 32px; list-style: none; border-bottom: 1px solid var(--border); color: var(--ink-subtle); }
+  .steps li { display: flex; align-items: center; gap: 8px; }
+  .steps [aria-current="step"] { color: var(--ink); font-weight: 500; }
+
+  .modal-body { padding: 24px 32px; display: flex; flex-direction: column; gap: 20px; overflow-y: auto; }
+  .field { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+  .field-label { font-weight: 500; }
+  .req { color: #c62828; margin-left: 2px; }
+  .goal-other[hidden] { display: none; }
+  .sub-label { font-size: 12px; line-height: 16px; color: var(--ink-muted); }
+
+  .control {
+    width: 100%; height: 40px; padding: 0 12px; background: var(--card); color: var(--ink);
+    border: 1px solid var(--border-strong); font: 14px/20px "DM Sans", sans-serif;
+    transition: border-color var(--t-hover) var(--ease);
+  }
+  .control:hover { border-color: var(--ink-muted); }
+  .control:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+  .control::placeholder { color: var(--ink-subtle); }
+  .control[aria-invalid="true"] { border-color: #c62828; }
+  .select { position: relative; }
+  .select select { appearance: none; padding-right: 36px; cursor: pointer; }
+  .select select:invalid { color: var(--ink-subtle); }
+  .select svg.lucide { position: absolute; right: 12px; top: 12px; pointer-events: none; color: var(--ink-muted); }
+  textarea.control { height: auto; min-height: 80px; padding: 10px 12px; resize: vertical; }
+  input[type="date"].control::-webkit-calendar-picker-indicator { cursor: pointer; opacity: .7; }
+
+  .field-error { display: flex; align-items: center; gap: 6px; margin: 0; font-size: 12px; line-height: 16px; color: #8c1414; }
+  .field-error[hidden] { display: none; }
+
+  .hint {
+    display: flex; gap: 8px; padding: 10px 12px; margin: 4px 0 0;
+    background: #dff9fd; color: #00596a; border: 1px solid #00697a;
+    animation: hint-in 250ms var(--ease);
+  }
+  .hint svg.lucide { margin-top: 2px; }
+  .hint[hidden] { display: none; }
+  @keyframes hint-in { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
+
+  .date-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-top: 4px; }
+  .date-row[hidden] { display: none; }
+
+  .switch-row { display: flex; align-items: flex-start; gap: 12px; }
+  .switch {
+    position: relative; flex: none; width: 40px; height: 24px; margin-top: -2px; padding: 0; cursor: pointer;
+    background: var(--sunken); border: 1px solid var(--border-strong); border-radius: 999px;
+    transition: background var(--t-hover) var(--ease), border-color var(--t-hover) var(--ease);
+  }
+  .switch::after {
+    content: ""; position: absolute; top: 3px; left: 3px; width: 16px; height: 16px; background: var(--ink-muted); border-radius: 999px;
+    transition: transform var(--t-hover) var(--ease), background var(--t-hover) var(--ease);
+  }
+  .switch[aria-checked="true"] { background: var(--cyan); border-color: var(--ink); }
+  .switch[aria-checked="true"]::after { transform: translateX(16px); background: var(--ink); }
+  .switch-text label { font-weight: 500; cursor: pointer; display: block; }
+  .switch-text p { margin: 2px 0 0; color: var(--ink-muted); }
+
+  .modal-foot { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 16px 32px; border-top: 1px solid var(--border); }
+  .modal-foot .actions { display: flex; gap: 8px; }
+
+
+  /* Modal: paso 2 */
+  .modal { transition: width 400ms cubic-bezier(0.22, 1, 0.36, 1); }
+  .modal.is-wide { width: min(880px, calc(100vw - 32px)); height: min(944px, calc(100vh - 32px)); }
+  .modal [hidden] { display: none !important; }
+  .step2 { display: flex; flex-direction: column; flex: 1; min-height: 0; }
+  .step2 .modal-body { flex: 1; min-height: 0; overflow-x: hidden; }
+  .assets-block { display: flex; flex-direction: column; flex: 1 1 auto; min-height: 0; }
+  .asset-table .tip { left: auto; right: calc(100% + 8px); top: 50%; transform: translate(4px, -50%); }
+  .asset-table .badge:hover .tip, .asset-table .badge:focus-visible .tip { transform: translate(0, -50%); }
+  .asset-table thead th { position: sticky; top: 0; z-index: 1; }
+  .btn:disabled { opacity: .48; cursor: not-allowed; }
+
+  .src-tabs { margin: 0; }
+
+  .combo { position: relative; }
+  .combo-list {
+    position: absolute; left: 0; right: 0; top: calc(100% + 4px); z-index: 3;
+    margin: 0; padding: 4px 0; list-style: none; max-height: 240px; overflow-y: auto;
+    background: var(--card); border: 1px solid var(--border-strong);
+    animation: hint-in 250ms var(--ease);
+  }
+  .combo-opt { display: flex; align-items: center; gap: 12px; padding: 8px 12px; cursor: pointer; transition: background var(--t-hover) var(--ease); }
+  .combo-opt:hover, .combo-opt.is-active { background: var(--sunken); }
+  .combo-name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .combo-empty { padding: 8px 12px; color: var(--ink-muted); }
+
+  .dropzone {
+    display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 24px 16px; text-align: center; cursor: pointer;
+    border: 1px dashed var(--border-strong); background: var(--page);
+    transition: background var(--t-hover) var(--ease), border-color var(--t-hover) var(--ease);
+  }
+  .dropzone:hover, .dropzone.is-over { background: #dff9fd; border-color: #00697a; }
+  .dropzone p { margin: 0; }
+  .dropzone > svg.lucide { width: 24px; height: 24px; color: var(--ink-muted); margin-bottom: 4px; }
+  .dz-links { display: flex; gap: 8px; margin-top: 8px; color: var(--ink-subtle); }
+  .link {
+    background: none; border: 0; padding: 0; cursor: pointer;
+    font: 500 14px/20px "DM Sans", sans-serif; color: #00697a; text-decoration: underline; text-underline-offset: 2px;
+    transition: color var(--t-hover) var(--ease);
+  }
+  .link:hover { color: var(--ink); }
+  .sr-file { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+
+  .paste { display: flex; flex-direction: column; gap: 8px; }
+  .paste-foot, .compact { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+  .paste-foot .actions { display: flex; gap: 8px; }
+  .compact { padding: 8px 8px 8px 12px; border: 1px solid var(--border); background: var(--page); }
+
+  .block-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-bottom: 8px; }
+  .block-head h3 { font-size: 14px; line-height: 20px; font-weight: 500; margin: 0; }
+  .asset-table-wrap { flex: 0 1 auto; min-height: 120px; overflow: auto; border: 1px solid var(--border); }
+  .asset-table-wrap.is-empty { flex: 1 1 auto; display: flex; }
+  .assets-empty {
+    flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;
+    padding: 24px 16px; text-align: center; color: var(--ink-muted); background: var(--page);
+  }
+  .assets-empty p { margin: 0; max-width: 360px; }
+  .assets-empty > svg.lucide { width: 24px; height: 24px; margin-bottom: 8px; }
+  .assets-empty-title { color: var(--ink); font-weight: 500; }
+  table.asset-table { min-width: 0; }
+  .asset-table th, .asset-table td { padding: 8px 12px; }
+  .asset-table tbody tr { cursor: default; }
+  .asset-value { font-weight: 500; word-break: break-all; }
+  .actions-cell { width: 1%; white-space: nowrap; }
+  .row-actions { display: flex; align-items: center; justify-content: flex-end; gap: 8px; }
+  .row-actions .icon-btn { margin-right: -4px; }
+  .select-sm { min-width: 128px; }
+  .select-sm .control { height: 32px; }
+  .select-sm svg.lucide { top: 8px; }
+  .badge.existente { background: var(--card); color: var(--ink-muted); border-color: var(--border-strong); }
+  .badge.ya-existe { background: var(--paused-bg); color: var(--paused-ink); border-color: var(--paused-border); }
+  .badge.error { background: #fde4e4; color: #8c1414; border-color: #c62828; }
+  .notice { display: flex; gap: 8px; margin: 12px 0 0; padding: 10px 12px; border: 1px solid; }
+  .notice svg.lucide { margin-top: 2px; }
+  .notice.warning { background: var(--warning-bg); color: var(--warning-ink); border-color: var(--warning-border); }
+
+  .step-intro { margin: 4px 0 0; color: var(--ink-muted); }
+  .globals { display: flex; flex-direction: column; gap: 12px; padding-top: 20px; border-top: 1px solid var(--border); }
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .label-row { display: flex; align-items: center; gap: 6px; }
+  .global-mark { position: relative; display: inline-flex; color: #00596a; cursor: help; }
+  .global-mark:hover, .global-mark:focus-visible { z-index: 3; }
+  .global-mark .tip { width: 280px; white-space: normal; }
+  .global-mark:hover .tip, .global-mark:focus-visible .tip { opacity: 1; transform: none; }
+  .globals-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .depth-note {
+    position: relative; width: fit-content; cursor: help;
+    font-size: 12px; line-height: 16px; color: #00697a;
+    text-decoration: underline dotted; text-underline-offset: 3px;
+  }
+  .depth-note:hover .tip, .depth-note:focus-visible .tip { opacity: 1; transform: none; }
+  .time-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+
+  /* Toast (success feedback after creating an exercise) */
+  .toast-region {
+    position: fixed; left: 64px; right: 24px; bottom: 24px; z-index: 10;
+    display: flex; justify-content: flex-end; pointer-events: none;
+  }
+  .toast {
+    display: flex; align-items: flex-start; gap: 12px; width: min(400px, 100%);
+    padding: 12px 8px 12px 16px; background: var(--success-bg); color: var(--success-ink);
+    border: 1px solid var(--success-border);
+    pointer-events: auto; animation: toast-in 400ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .toast[hidden] { display: none; }
+  .toast.is-closing { animation: toast-out 200ms var(--ease) forwards; }
+  .toast > svg.lucide { margin-top: 2px; }
+  .toast-body { flex: 1; min-width: 0; }
+  .toast-title { margin: 0; font-weight: 500; }
+  .toast-text { margin: 2px 0 0; }
+  .toast-close {
+    flex: none; width: 32px; height: 32px; margin-top: -6px; display: grid; place-items: center;
+    background: none; border: 0; color: var(--success-ink); cursor: pointer;
+    transition: background var(--t-hover) var(--ease);
+  }
+  .toast-close:hover { background: #c6ebd2; }
+  @keyframes toast-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+  @keyframes toast-out { to { opacity: 0; transform: translateY(4px); } }
+
+  @media (max-width: 560px) {
+    .modal-head, .steps, .modal-body, .modal-foot { padding-left: 16px; padding-right: 16px; }
+    .steps { flex-wrap: wrap; }
+    .date-row { grid-template-columns: 1fr 1fr; }
+    .date-row .field:last-child { grid-column: 1 / -1; }
+    .globals-grid { grid-template-columns: 1fr; }
+    .asset-table-wrap { overflow-x: auto; }
+    table.asset-table { min-width: 560px; }
+  }
+
+  @media (max-width: 720px) {
+    main { padding: 24px 16px 40px; }
+    .table-wrap { overflow-x: auto; }
+    .page-head { flex-direction: column; align-items: stretch; }
+    .rail { display: none; }
+    .toast-region { left: 16px; right: 16px; bottom: 16px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { transition: none !important; animation: none !important; }
+  }
+</style>
+</head>
+<body>
+<div class="app">
+  <nav class="rail" aria-label="Navegación principal">
+    <div class="rail-logo" aria-label="Strike">S</div>
+    <a href="#" aria-current="page" aria-label="Ejercicios"><i data-lucide="crosshair"></i></a>
+    <a href="#" aria-label="Assets"><i data-lucide="server"></i></a>
+    <a href="#" aria-label="Hallazgos"><i data-lucide="shield-alert"></i></a>
+    <a href="#" aria-label="Reportes"><i data-lucide="file-text"></i></a>
+    <div class="spacer"></div>
+    <a href="#" aria-label="Configuración"><i data-lucide="settings"></i></a>
+  </nav>
+
+  <main>
+    <div class="container">
+      <p class="eyebrow">Pentesting continuo</p>
+      <div class="page-head">
+        <div class="page-title">
+          <h1>Ejercicios</h1>
+          <span class="count" id="total"></span>
+        </div>
+        <button class="btn btn-primary" type="button" id="openCreate" aria-haspopup="dialog"><i data-lucide="plus"></i>Crear ejercicio</button>
+      </div>
+
+      <form class="search-row" role="search" id="searchForm">
+        <label class="search">
+          <i data-lucide="search"></i>
+          <input id="q" type="search" placeholder="Buscar por nombre u objetivo" aria-label="Buscar ejercicios">
+        </label>
+        <button class="btn btn-secondary" type="submit">Buscar</button>
+      </form>
+
+      <div class="tabs" role="tablist" id="tabs"><span class="tab-indicator" id="indicator" aria-hidden="true"></span></div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Ejercicio</th>
+              <th>Estado</th>
+              <th>Frecuencia</th>
+              <th>Última ejecución</th>
+              <th>Assets</th>
+              <th class="chev-cell"><span class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Abrir</span></th>
+            </tr>
+          </thead>
+          <tbody id="rows"></tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+</div>
+
+<dialog class="modal" id="createModal" aria-labelledby="createTitle" aria-describedby="stepDesc">
+  <form id="createForm" novalidate style="display:contents">
+    <header class="modal-head">
+      <div>
+        <h2 id="createTitle">Crear ejercicio</h2>
+        <p class="step-intro" id="stepDesc"></p>
+      </div>
+      <button class="icon-btn" type="button" data-close aria-label="Cerrar"><i data-lucide="x"></i></button>
+    </header>
+
+    <ol class="steps" aria-label="Pasos">
+      <li id="stepLabel1" aria-current="step">1 Valores del ejercicio y globales</li>
+      <li aria-hidden="true"><i data-lucide="chevron-right"></i></li>
+      <li id="stepLabel2">2 Assets</li>
+    </ol>
+
+    <div class="modal-body" id="step1">
+      <div class="field">
+        <label class="field-label" for="exTitle">Título<span class="req" aria-hidden="true">*</span></label>
+        <input class="control" id="exTitle" name="title" type="text" autocomplete="off"
+               placeholder="Ej.: Revisión plataforma e-commerce" aria-describedby="exTitleError" required>
+        <p class="field-error" id="exTitleError" hidden><i data-lucide="circle-alert"></i>Escribí un título para el ejercicio.</p>
+      </div>
+
+      <div class="field">
+        <label class="field-label" for="exGoal">Objetivo</label>
+        <div class="select">
+          <select class="control" id="exGoal" name="goal" required>
+            <option value="" disabled selected>Elegir objetivo</option>
+            <option value="lanzamiento">Antes de un lanzamiento</option>
+            <option value="auditoria">Auditoría o cumplimiento</option>
+            <option value="periodica">Revisión periódica</option>
+            <option value="cambio">Cambio importante en el sistema</option>
+            <option value="otro">Otro</option>
+          </select>
+          <i data-lucide="chevron-down"></i>
+        </div>
+        <p class="hint" id="goalHint" role="status" hidden><i data-lucide="sparkles"></i><span></span></p>
+        <div class="field goal-other" id="goalOther" hidden>
+          <label class="sub-label" for="exGoalOther">Describí el objetivo<span class="req" aria-hidden="true">*</span></label>
+          <textarea class="control" id="exGoalOther" name="goalOther" rows="3" aria-describedby="exGoalOtherError"
+                    placeholder="Ej.: Validar la integración con el nuevo proveedor de pagos"></textarea>
+          <p class="field-error" id="exGoalOtherError" hidden><i data-lucide="circle-alert"></i>Describí el objetivo para continuar.</p>
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="field-label" for="exSchedule">Fechas y recurrencia</label>
+        <div class="select">
+          <select class="control" id="exSchedule" name="schedule">
+            <option value="fechas" selected>Elegir fechas</option>
+            <option value="despues">Definir después</option>
+          </select>
+          <i data-lucide="chevron-down"></i>
+        </div>
+        <div class="date-row" id="dateRow">
+          <div class="field">
+            <label class="sub-label" for="exStart">Inicio</label>
+            <input class="control" id="exStart" name="start" type="date">
+          </div>
+          <div class="field">
+            <label class="sub-label" for="exEnd">Fin</label>
+            <input class="control" id="exEnd" name="end" type="date" aria-describedby="exEndError">
+          </div>
+          <div class="field">
+            <label class="sub-label" for="exRepeat">Repetir</label>
+            <div class="select">
+              <select class="control" id="exRepeat" name="repeat">
+                <option selected>Una vez</option>
+                <option>Semanal</option>
+                <option>Mensual</option>
+                <option>Trimestral</option>
+                <option>Semestral</option>
+                <option>Anual</option>
+              </select>
+              <i data-lucide="chevron-down"></i>
+            </div>
+          </div>
+        </div>
+        <p class="field-error" id="exEndError" hidden><i data-lucide="circle-alert"></i>La fecha de fin tiene que ser igual o posterior al inicio.</p>
+        <p class="hint" id="scheduleHint" role="status" hidden><i data-lucide="info"></i><span>Sin fechas, el ejercicio queda en borrador hasta que las definas.</span></p>
+      </div>
+
+      <div class="switch-row">
+        <button class="switch" id="exHuman" type="button" role="switch" aria-checked="false" aria-labelledby="exHumanLabel" aria-describedby="exHumanDesc"></button>
+        <div class="switch-text">
+          <label id="exHumanLabel" for="exHuman">Sumar validación con hacker humano</label>
+          <p id="exHumanDesc">Opcional. Un especialista revisa los hallazgos.</p>
+        </div>
+      </div>
+
+      <div class="globals" role="group" aria-label="Valores globales">
+        <div class="globals-grid">
+          <div class="field">
+            <div class="label-row"><span class="global-mark" tabindex="0"><i data-lucide="globe"></i><span class="sr-only">Valor global.</span><span class="tip" role="tooltip">Valor global: se aplica a todos los assets que agregues. Después podés modificarlo desde cada asset.</span></span><label class="sub-label" for="gDepth">Profundidad</label></div>
+            <div class="select">
+              <select class="control" id="gDepth" name="depth">
+                <option value="baja">Baja</option>
+                <option value="media" selected>Media</option>
+                <option value="alta">Alta</option>
+              </select>
+              <i data-lucide="chevron-down"></i>
+            </div>
+            <span class="depth-note" id="depthNote" tabindex="0" aria-describedby="depthTip" hidden>Sugerida por el sistema<span class="tip" role="tooltip" id="depthTip"></span></span>
+          </div>
+          <div class="field">
+            <div class="label-row"><span class="global-mark" tabindex="0"><i data-lucide="globe"></i><span class="sr-only">Valor global.</span><span class="tip" role="tooltip">Valor global: se aplica a todos los assets que agregues. Después podés modificarlo desde cada asset.</span></span><label class="sub-label" for="gWindow">Franjas horarias</label></div>
+            <div class="select">
+              <select class="control" id="gWindow" name="window">
+                <option value="any" selected>Cualquier horario</option>
+                <option value="range">Elegir rango</option>
+              </select>
+              <i data-lucide="chevron-down"></i>
+            </div>
+            <div class="time-row" id="timeRow" hidden>
+              <div class="field">
+                <label class="sub-label" for="gFrom">Desde</label>
+                <input class="control" id="gFrom" name="windowFrom" type="time" value="09:00">
+              </div>
+              <div class="field">
+                <label class="sub-label" for="gTo">Hasta</label>
+                <input class="control" id="gTo" name="windowTo" type="time" value="18:00" aria-describedby="gWindowError">
+              </div>
+            </div>
+            <p class="field-error" id="gWindowError" hidden><i data-lucide="circle-alert"></i><span></span></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step2" id="step2" hidden>
+      <div class="modal-body">
+        <div class="tabs src-tabs" role="tablist" aria-label="Origen de los assets" id="srcTabs">
+          <button class="tab" role="tab" type="button" id="srcExisting" data-src="existing" aria-selected="true" aria-controls="panelExisting">Elegir existentes<span class="n" id="nExisting" hidden></span></button>
+          <button class="tab" role="tab" type="button" id="srcImport" data-src="import" aria-selected="false" aria-controls="panelImport">Importar nuevos<span class="n" id="nImport" hidden></span></button>
+          <span class="tab-indicator" id="srcIndicator" aria-hidden="true"></span>
+        </div>
+
+        <section id="panelExisting" role="tabpanel" aria-labelledby="srcExisting">
+          <div class="combo">
+            <label class="search">
+              <i data-lucide="search"></i>
+              <input id="existingQ" type="text" role="combobox" autocomplete="off" aria-autocomplete="list"
+                     aria-expanded="false" aria-controls="existingList" placeholder="Buscar en tus assets" aria-label="Buscar en tus assets">
+            </label>
+            <ul class="combo-list" id="existingList" role="listbox" aria-label="Assets disponibles" hidden></ul>
+          </div>
+        </section>
+
+        <section id="panelImport" role="tabpanel" aria-labelledby="srcImport" hidden>
+          <input class="sr-file" id="fileInput" type="file" accept=".csv,.txt,text/csv,text/plain" tabindex="-1" aria-hidden="true">
+          <div class="dropzone" id="dropzone">
+            <i data-lucide="upload"></i>
+            <p><button class="link" type="button" data-pick-file>Elegí un archivo</button> o soltalo acá</p>
+            <p class="muted">CSV o TXT, un asset por línea</p>
+            <div class="dz-links">
+              <button class="link" type="button" data-show-paste>Escribir o pegar una lista</button>
+              <span aria-hidden="true">·</span>
+              <button class="link" type="button" data-template>Descargar plantilla</button>
+            </div>
+          </div>
+
+          <div class="paste" id="pasteBox" hidden>
+            <label class="sub-label" for="pasteInput">Un asset por línea: dominios, URLs o enlaces de tiendas</label>
+            <textarea class="control" id="pasteInput" rows="5"
+                      placeholder="tienda.ejemplo.com&#10;https://api.tienda.ejemplo.com&#10;https://apps.apple.com/app/tienda-ejemplo"></textarea>
+            <div class="paste-foot">
+              <span class="muted" id="lineCount" aria-live="polite">0 líneas detectadas</span>
+              <div class="actions">
+                <button class="btn btn-secondary" type="button" data-pick-file><i data-lucide="upload"></i>Subir archivo</button>
+                <button class="btn btn-secondary" type="button" id="addLines" disabled>Agregar a la lista</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="compact" id="compactBox" hidden>
+            <span class="muted" id="compactText"></span>
+            <button class="btn btn-secondary" type="button" data-show-paste><i data-lucide="plus"></i>Agregar más</button>
+          </div>
+        </section>
+
+        <section class="assets-block" aria-labelledby="assetsTitle">
+          <div class="block-head">
+            <h3 id="assetsTitle">Assets del ejercicio</h3>
+            <span class="muted" id="assetSummary" aria-live="polite"></span>
+          </div>
+          <div class="asset-table-wrap">
+            <table class="asset-table">
+              <thead>
+                <tr>
+                  <th>Asset</th>
+                  <th>Tipo</th>
+                  <th>Estado</th>
+                  <th class="actions-cell"><span class="sr-file">Acciones</span></th>
+                </tr>
+              </thead>
+              <tbody id="assetRows"></tbody>
+            </table>
+            <div class="assets-empty" id="assetsEmpty">
+              <i data-lucide="server"></i>
+              <p class="assets-empty-title">Todavía no hay assets</p>
+              <p>Buscá los que ya tenés cargados o importá nuevos desde un archivo o una lista.</p>
+            </div>
+          </div>
+          <p class="notice warning" id="draftNotice" hidden><i data-lucide="triangle-alert"></i><span></span></p>
+        </section>
+      </div>
+    </div>
+
+    <footer class="modal-foot">
+      <span class="muted" id="stepCount">Paso 1 de 2</span>
+      <div class="actions">
+        <button class="btn btn-secondary" type="button" id="btnCancel" data-close>Cancelar</button>
+        <button class="btn btn-secondary" type="button" id="btnBack" hidden>Volver</button>
+        <button class="btn btn-primary" type="submit" id="btnNext">Siguiente</button>
+      </div>
+    </footer>
+  </form>
+</dialog>
+
+<div class="toast-region" role="status" aria-live="polite" aria-atomic="true">
+  <div class="toast" id="toast" hidden>
+    <i data-lucide="circle-check"></i>
+    <div class="toast-body">
+      <p class="toast-title" id="toastTitle"></p>
+      <p class="toast-text" id="toastText"></p>
+    </div>
+    <button class="toast-close" type="button" id="toastClose" aria-label="Cerrar aviso"><i data-lucide="x"></i></button>
+  </div>
+</div>
+
+<script>
+  const EXERCISES = [
+    { name: "Revisión plataforma e-commerce", goal: "Antes de un lanzamiento", status: "activo", freq: "Trimestral", last: "14 ago 2026", assets: 12 },
+    { name: "Auditoría SOC 2", goal: "Auditoría o cumplimiento", status: "pausado", freq: "Anual", last: "2 mar 2026", assets: 8 },
+    { name: "Lanzamiento app móvil", goal: "Antes de un lanzamiento", status: "borrador", freq: "Sin fechas", last: "Sin ejecuciones", assets: 5, pending: 2 },
+    { name: "Revisión mensual de APIs", goal: "Revisión periódica", status: "activo", freq: "Mensual", last: "20 oct 2026", assets: 4 },
+    { name: "Migración a nube híbrida", goal: "Cambio de infraestructura", status: "borrador", freq: "Semestral", last: "Sin ejecuciones", assets: 9, pending: 4 },
+    { name: "Portal de clientes", goal: "Revisión periódica", status: "activo", freq: "Mensual", last: "3 oct 2026", assets: 6 },
+  ];
+
+  const STATUS = {
+    activo:   { label: "Activo",   tab: "Activos",    tip: "Corre según sus fechas y recurrencia" },
+    pausado:  { label: "Pausado",  tab: "Pausados",   tip: "Suspendido hasta que lo reanudes" },
+    borrador: { label: "Borrador", tab: "Borradores", tip: "Faltan datos para activarlo" },
+  };
+
+  let filter = "todos";
+  let query = "";
+
+  const $ = (id) => document.getElementById(id);
+  const norm = (s) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
+
+  const PENDING_TIP = "Assets en borrador: les faltan datos para poder testearse";
+
+  function renderTabs() {
+    for (const t of $("tabs").querySelectorAll(".tab")) t.remove();
+    const counts = { todos: EXERCISES.length };
+    for (const e of EXERCISES) counts[e.status] = (counts[e.status] || 0) + 1;
+    const tabs = [["todos", "Todos"], ...Object.entries(STATUS).map(([k, v]) => [k, v.tab])];
+    $("tabs").insertAdjacentHTML("afterbegin", tabs.map(([k, label]) => `
+      <button class="tab" role="tab" type="button" data-k="${k}" aria-selected="${k === filter}">
+        ${label}<span class="n">${counts[k] || 0}</span>
+      </button>`).join(""));
+    $("total").textContent = `${EXERCISES.length} en total`;
+    moveIndicator();
+  }
+
+  function selectTab(k) {
+    filter = k;
+    for (const t of $("tabs").querySelectorAll(".tab")) t.setAttribute("aria-selected", t.dataset.k === k);
+    moveIndicator();
+  }
+
+  function moveIndicator() {
+    const active = $("tabs").querySelector('.tab[aria-selected="true"]');
+    $("indicator").style.transform = `translateX(${active.offsetLeft}px) scaleX(${active.offsetWidth})`;
+  }
+
+  function animateRows() {
+    const rows = $("rows");
+    rows.classList.remove("is-entering");
+    void rows.offsetWidth;
+    rows.classList.add("is-entering");
+  }
+
+  const badge = (cls, label, tip) =>
+    `<span class="badge ${cls}" tabindex="0">${label}<span class="tip" role="tooltip">${tip}</span></span>`;
+
+  function renderRows() {
+    const q = norm(query.trim());
+    const list = EXERCISES.filter((e) =>
+      (filter === "todos" || e.status === filter) &&
+      (!q || norm(e.name + " " + e.goal).includes(q)));
+
+    if (!list.length) {
+      $("rows").innerHTML = `<tr><td colspan="6" class="empty">No hay ejercicios que coincidan con la búsqueda.</td></tr>`;
+      return;
+    }
+
+    $("rows").innerHTML = list.map((e) => {
+      const s = STATUS[e.status];
+      const pending = e.status === "borrador" && e.pending
+        ? badge("pending", `${e.pending} ${e.pending === 1 ? "pendiente" : "pendientes"}`, PENDING_TIP) : "";
+      return `
+        <tr tabindex="0" data-name="${e.name}" aria-label="Abrir ${e.name}">
+          <td><div class="name">${e.name}</div><div class="goal">${e.goal}</div></td>
+          <td>${badge(e.status, s.label, s.tip)}</td>
+          <td class="${e.freq === "Sin fechas" ? "muted" : ""}">${e.freq}</td>
+          <td class="${e.last === "Sin ejecuciones" ? "muted" : ""}">${e.last}</td>
+          <td><div class="assets">${e.assets} assets ${pending}</div></td>
+          <td class="chev-cell"><span class="chev"><i data-lucide="chevron-right"></i></span></td>
+        </tr>`;
+    }).join("");
+    lucide.createIcons();
+  }
+
+  $("tabs").addEventListener("click", (ev) => {
+    const btn = ev.target.closest(".tab");
+    if (!btn) return;
+    if (btn.dataset.k === filter) return;
+    selectTab(btn.dataset.k);
+    renderRows(); animateRows();
+  });
+  window.addEventListener("resize", moveIndicator);
+  document.fonts.ready.then(moveIndicator);
+  $("searchForm").addEventListener("submit", (ev) => { ev.preventDefault(); query = $("q").value; renderRows(); });
+  $("q").addEventListener("input", (ev) => { if (!ev.target.value) { query = ""; renderRows(); } });
+
+  function openDetail(ev) {
+    const row = ev.target.closest("tr[data-name]");
+    if (!row || ev.target.closest(".badge")) return;
+    if (ev.type === "keydown" && ev.key !== "Enter") return;
+    location.href = `detalle-ejercicio.html?ej=${encodeURIComponent(row.dataset.name)}`;
+  }
+  $("rows").addEventListener("click", openDetail);
+  $("rows").addEventListener("keydown", openDetail);
+
+
+  const GOAL_DEPTH = { lanzamiento: "alta", auditoria: "alta", periodica: "media", cambio: "alta" };
+
+  const modal = $("createModal");
+  const form = $("createForm");
+
+  function setError(input, errorId, show) {
+    $(errorId).hidden = !show;
+    if (show) input.setAttribute("aria-invalid", "true"); else input.removeAttribute("aria-invalid");
+  }
+
+  function openCreate() {
+    form.reset();
+    $("exHuman").setAttribute("aria-checked", "false");
+    $("goalHint").hidden = $("goalOther").hidden = $("scheduleHint").hidden = $("depthNote").hidden = true;
+    $("dateRow").hidden = false;
+    setError($("exTitle"), "exTitleError", false);
+    setError($("exGoalOther"), "exGoalOtherError", false);
+    setError($("exEnd"), "exEndError", false);
+    resetAssets();
+    modal.classList.remove("is-closing");
+    modal.showModal();
+    goStep(1);
+  }
+
+  function closeCreate() {
+    if (!modal.open || modal.classList.contains("is-closing")) return;
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches) { modal.close(); return; }
+    modal.classList.add("is-closing");
+    modal.addEventListener("animationend", function done(ev) {
+      if (ev.target !== modal) return;
+      modal.removeEventListener("animationend", done);
+      modal.classList.remove("is-closing");
+      modal.close();
+    });
+  }
+
+  function validateDates() {
+    const start = $("exStart").value, end = $("exEnd").value;
+    const bad = $("exSchedule").value === "fechas" && !!start && !!end && end < start;
+    setError($("exEnd"), "exEndError", bad);
+    return !bad;
+  }
+
+  $("openCreate").addEventListener("click", openCreate);
+  modal.addEventListener("click", (ev) => { if (ev.target.closest("[data-close]")) closeCreate(); });
+  modal.addEventListener("cancel", (ev) => { ev.preventDefault(); closeCreate(); });
+
+  $("exGoal").addEventListener("change", (ev) => {
+    const depth = GOAL_DEPTH[ev.target.value];
+    const hint = $("goalHint");
+    hint.hidden = !depth;
+    $("goalOther").hidden = ev.target.value !== "otro";
+    if (depth) hint.querySelector("span").textContent =
+      `Para este objetivo sugerimos una profundidad ${depth}. La podés ajustar abajo, en Profundidad.`;
+    else $("exGoalOther").focus();
+    syncDepth();
+  });
+
+  $("exSchedule").addEventListener("change", (ev) => {
+    const later = ev.target.value === "despues";
+    $("dateRow").hidden = later;
+    $("scheduleHint").hidden = !later;
+    validateDates();
+  });
+
+  $("exStart").addEventListener("change", (ev) => { $("exEnd").min = ev.target.value; validateDates(); });
+  $("exEnd").addEventListener("change", validateDates);
+  $("exTitle").addEventListener("input", (ev) => { if (ev.target.value.trim()) setError(ev.target, "exTitleError", false); });
+
+  $("exHuman").addEventListener("click", (ev) => {
+    const btn = ev.currentTarget;
+    btn.setAttribute("aria-checked", btn.getAttribute("aria-checked") !== "true");
+  });
+
+  $("exGoalOther").addEventListener("input", (ev) => { if (ev.target.value.trim()) setError(ev.target, "exGoalOtherError", false); });
+
+  function validateStep1() {
+    const title = $("exTitle"), other = $("exGoalOther");
+    const titleOk = !!title.value.trim();
+    const otherOk = $("exGoal").value !== "otro" || !!other.value.trim();
+    setError(title, "exTitleError", !titleOk);
+    setError(other, "exGoalOtherError", !otherOk);
+    const datesOk = validateDates();
+    const windowOk = validateWindow();
+    const firstBad = [[titleOk, title], [otherOk, other], [datesOk, $("exEnd")], [windowOk, $("gTo")]].find(([ok]) => !ok);
+    if (firstBad) firstBad[1].focus();
+    return !firstBad;
+  }
+
+  let step = 1;
+
+  const STEP_DESC = {
+    1: "Definí qué es el ejercicio, cuándo corre y los valores globales que van a heredar sus assets.",
+    2: "Sumá los assets que vas a testear. Heredan los valores globales del paso anterior; después podés ajustarlos uno por uno.",
+  };
+
+  function goStep(n) {
+    step = n;
+    const two = n === 2;
+    $("step1").hidden = two;
+    $("step2").hidden = !two;
+    modal.classList.toggle("is-wide", two);
+    for (const [id, on] of [["stepLabel1", !two], ["stepLabel2", two]]) {
+      if (on) $(id).setAttribute("aria-current", "step"); else $(id).removeAttribute("aria-current");
+    }
+    $("stepCount").textContent = `Paso ${n} de 2`;
+    $("stepDesc").textContent = STEP_DESC[n];
+    $("btnCancel").hidden = two;
+    $("btnBack").hidden = !two;
+    $("btnNext").textContent = two ? "Crear ejercicio" : "Siguiente";
+    if (two) { renderAssets(); $(source === "existing" ? "srcExisting" : "srcImport").focus(); }
+    else $("exTitle").focus();
+  }
+
+  $("btnBack").addEventListener("click", () => goStep(1));
+
+  form.addEventListener("submit", (ev) => {
+    ev.preventDefault();
+    if (step === 1) { if (validateStep1()) goStep(2); return; }
+    createExercise();
+  });
+
+  // Crear ejercicio: paso 2
+  const EXISTING_ASSETS = [
+    { id: "a1", value: "tienda.ejemplo.com", type: "web" },
+    { id: "a2", value: "api.tienda.ejemplo.com", type: "api" },
+    { id: "a3", value: "admin.tienda.ejemplo.com", type: "web" },
+    { id: "a4", value: "pagos.ejemplo.com", type: "api" },
+    { id: "a5", value: "portal.clientes.ejemplo.com", type: "web" },
+    { id: "a6", value: "https://apps.apple.com/app/tienda-ejemplo", type: "mobile" },
+    { id: "a7", value: "203.0.113.10", type: "ip" },
+  ];
+
+  const ASSET_TYPES = { web: "Web app", api: "API", mobile: "App móvil", domain: "Dominio", ip: "IP o red" };
+
+  const ROW_STATUS = {
+    existente: { cls: "existente", label: "Existente", tip: "Ya estaba cargado y conserva sus datos" },
+    nuevo: { cls: "borrador", label: "Nuevo · borrador", tip: "Nace con valores por defecto y credenciales pendientes" },
+    "ya-existe": { cls: "ya-existe", label: "Ya existe", tip: "Ya está en tus assets: usá el existente para conservar sus datos" },
+    error: { cls: "error", label: "Error" },
+  };
+
+  let rows = [];
+  let seq = 0;
+  let source = "existing";
+  let depthTouched = false;
+
+  const esc = (v) => v.replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
+  const keyOf = (v) => v.trim().toLowerCase().replace(/^https?:\/\//, "").replace(/^www\./, "").replace(/\/+$/, "");
+  const isValid = (v) => /^(https?:\/\/)?[^\s\/]+\.[^\s\/.]{2,}(\/\S*)?$/i.test(v) || /^\d{1,3}(\.\d{1,3}){3}(\/\d{1,2})?$/.test(v);
+  const plural = (n, one, many) => `${n} ${n === 1 ? one : many}`;
+  const isIncluded = (r) => r.status === "existente" || r.status === "nuevo";
+
+  function inferType(raw) {
+    const v = raw.toLowerCase();
+    if (/(apps\.apple\.com|play\.google\.com)/.test(v)) return "mobile";
+    if (/^\d{1,3}(\.\d{1,3}){3}(\/\d{1,2})?$/.test(v)) return "ip";
+    if (/^(https?:\/\/)?api\./.test(v) || /\/api(\/|$)/.test(v)) return "api";
+    if (/^https?:\/\//.test(v)) return "web";
+    return "domain";
+  }
+
+  function parseLines(text) {
+    return text.split(/\r?\n/)
+      .map((line) => line.split(/[,;\t]/)[0].trim().replace(/^["']|["']$/g, ""))
+      .filter((line, i) => line && !(i === 0 && /^(assets?|url|dominio)$/i.test(line)));
+  }
+
+  function addLines(lines) {
+    for (const value of lines) {
+      const key = keyOf(value);
+      const row = { id: `r${++seq}`, value, type: inferType(value), origin: "import" };
+      const match = EXISTING_ASSETS.find((a) => keyOf(a.value) === key);
+      if (!isValid(value)) Object.assign(row, { status: "error", reason: "Formato no reconocido" });
+      else if (rows.some((r) => r.status !== "error" && keyOf(r.value) === key)) Object.assign(row, { status: "error", reason: "Repetido en la lista" });
+      else if (match) Object.assign(row, { status: "ya-existe", existingId: match.id, type: match.type });
+      else row.status = "nuevo";
+      rows.push(row);
+    }
+  }
+
+  function pickExisting(id) {
+    const asset = EXISTING_ASSETS.find((a) => a.id === id);
+    const pending = rows.find((r) => r.existingId === id && r.status === "ya-existe");
+    if (pending) pending.status = "existente";
+    else rows.push({ id: `r${++seq}`, value: asset.value, type: asset.type, status: "existente", existingId: id, origin: "existing" });
+  }
+
+  function resetAssets() {
+    rows = []; seq = 0; depthTouched = false;
+    $("timeRow").hidden = true;
+    setError($("gTo"), "gWindowError", false);
+    $("existingQ").value = "";
+    closeCombo();
+    $("pasteInput").value = "";
+    $("dropzone").hidden = false;
+    $("pasteBox").hidden = $("compactBox").hidden = true;
+    selectSource("existing");
+    updateLineCount();
+  }
+
+  function selectSource(k) {
+    source = k;
+    for (const t of $("srcTabs").querySelectorAll(".tab")) t.setAttribute("aria-selected", t.dataset.src === k);
+    $("panelExisting").hidden = k !== "existing";
+    $("panelImport").hidden = k !== "import";
+    moveSrcIndicator();
+  }
+
+  function moveSrcIndicator() {
+    const active = $("srcTabs").querySelector('.tab[aria-selected="true"]');
+    if (active.offsetWidth) $("srcIndicator").style.transform = `translateX(${active.offsetLeft}px) scaleX(${active.offsetWidth})`;
+  }
+
+  function syncDepth() {
+    if (depthTouched) return;
+    const depth = GOAL_DEPTH[$("exGoal").value];
+    $("gDepth").value = depth || "media";
+    $("depthNote").hidden = !depth;
+    if (depth) $("depthTip").textContent = `Se infirió a partir del objetivo: ${$("exGoal").selectedOptions[0].text}`;
+  }
+
+  let activeOpt = -1;
+
+  function availableAssets() {
+    const q = norm($("existingQ").value.trim());
+    const picked = new Set(rows.filter((r) => r.status === "existente").map((r) => r.existingId));
+    return EXISTING_ASSETS.filter((a) => !picked.has(a.id) && (!q || norm(a.value + " " + ASSET_TYPES[a.type]).includes(q)));
+  }
+
+  function renderCombo() {
+    if ($("existingList").hidden) return;
+    const list = availableAssets();
+    activeOpt = Math.min(activeOpt, list.length - 1);
+    const input = $("existingQ");
+    $("existingList").innerHTML = list.length ? list.map((a, i) => `
+      <li class="combo-opt${i === activeOpt ? " is-active" : ""}" role="option" id="opt-${a.id}" data-id="${a.id}" aria-selected="${i === activeOpt}">
+        <span class="combo-name">${esc(a.value)}</span>
+        <span class="muted">${ASSET_TYPES[a.type]}</span>
+      </li>`).join("") : `<li class="combo-empty">${input.value.trim() ? "No hay assets que coincidan con la búsqueda." : "Ya agregaste todos tus assets."}</li>`;
+    if (activeOpt >= 0) {
+      input.setAttribute("aria-activedescendant", `opt-${list[activeOpt].id}`);
+      $(`opt-${list[activeOpt].id}`).scrollIntoView({ block: "nearest" });
+    } else input.removeAttribute("aria-activedescendant");
+  }
+
+  function openCombo() {
+    $("existingList").hidden = false;
+    $("existingQ").setAttribute("aria-expanded", "true");
+    renderCombo();
+  }
+
+  function closeCombo() {
+    activeOpt = -1;
+    $("existingList").hidden = true;
+    $("existingQ").setAttribute("aria-expanded", "false");
+    $("existingQ").removeAttribute("aria-activedescendant");
+  }
+
+  function typeCell(r) {
+    if (r.status !== "nuevo") return `<span class="muted">${r.status === "error" ? "Sin tipo" : ASSET_TYPES[r.type]}</span>`;
+    const options = Object.entries(ASSET_TYPES).map(([k, label]) =>
+      `<option value="${k}" ${k === r.type ? "selected" : ""}>${label}</option>`).join("");
+    return `<div class="select select-sm"><select class="control" data-type="${r.id}" aria-label="Tipo de ${esc(r.value)}">${options}</select><i data-lucide="chevron-down"></i></div>`;
+  }
+
+  function renderAssets() {
+    const count = (status) => rows.filter((r) => r.status === status).length;
+    const included = rows.filter(isIncluded).length;
+    const drafts = count("nuevo");
+
+    $("assetRows").innerHTML = rows.length ? rows.map((r) => {
+      const st = ROW_STATUS[r.status];
+      const tip = r.status === "error" ? `${r.reason}: esta fila se omite` : st.tip;
+      const use = r.status === "ya-existe" ? `<button class="link" type="button" data-use="${r.id}">Usar existente</button>` : "";
+      return `
+        <tr>
+          <td class="asset-value">${esc(r.value)}</td>
+          <td>${typeCell(r)}</td>
+          <td>${badge(st.cls, st.label, tip)}</td>
+          <td class="actions-cell"><div class="row-actions">${use}
+            <button class="icon-btn" type="button" data-remove="${r.id}" aria-label="Quitar ${esc(r.value)}"><i data-lucide="trash-2"></i></button>
+          </div></td>
+        </tr>`;
+    }).join("") : "";
+    const empty = !rows.length;
+    modal.querySelector(".asset-table-wrap").classList.toggle("is-empty", empty);
+    modal.querySelector(".asset-table").hidden = empty;
+    $("assetsEmpty").hidden = !empty;
+
+    const parts = [
+      [count("existente"), "existente", "existentes"],
+      [drafts, "nuevo", "nuevos"],
+      [count("ya-existe"), "ya existe", "ya existen"],
+      [count("error"), "con error (se omite)", "con error (se omiten)"],
+    ].filter(([n]) => n).map(([n, one, many]) => plural(n, one, many));
+    $("assetSummary").textContent = parts.join(" · ");
+
+    const notice = $("draftNotice");
+    notice.hidden = !drafts;
+    notice.querySelector("span").textContent =
+      `${plural(drafts, "asset nuevo quedará", "assets nuevos quedarán")} en borrador hasta que cargues sus credenciales.`;
+
+    for (const [id, origin] of [["nExisting", "existing"], ["nImport", "import"]]) {
+      const n = rows.filter((r) => r.origin === origin && isIncluded(r)).length;
+      $(id).textContent = n;
+      $(id).hidden = !n;
+    }
+    moveSrcIndicator();
+    renderCombo();
+    lucide.createIcons();
+  }
+
+  function updateLineCount() {
+    const n = parseLines($("pasteInput").value).length;
+    $("lineCount").textContent = plural(n, "línea detectada", "líneas detectadas");
+    $("addLines").disabled = !n;
+  }
+
+  function importLines(lines, origin) {
+    if (!lines.length) return;
+    addLines(lines);
+    $("dropzone").hidden = $("pasteBox").hidden = true;
+    $("compactBox").hidden = false;
+    $("compactText").textContent = `${plural(lines.length, "línea agregada", "líneas agregadas")} ${origin}`;
+    renderAssets();
+  }
+
+  function showPaste() {
+    $("dropzone").hidden = $("compactBox").hidden = true;
+    $("pasteBox").hidden = false;
+    $("pasteInput").focus();
+  }
+
+  async function readFile(file) {
+    if (!file) return;
+    importLines(parseLines(await file.text()), `desde ${file.name}`);
+    $("fileInput").value = "";
+  }
+
+  function downloadTemplate() {
+    const csv = "asset\ntienda.ejemplo.com\nhttps://api.tienda.ejemplo.com\nhttps://apps.apple.com/app/tienda-ejemplo\n";
+    const a = Object.assign(document.createElement("a"), {
+      href: URL.createObjectURL(new Blob([csv], { type: "text/csv" })),
+      download: "plantilla-assets.csv",
+    });
+    a.click();
+    URL.revokeObjectURL(a.href);
+  }
+
+  $("srcTabs").addEventListener("click", (ev) => {
+    const tab = ev.target.closest(".tab");
+    if (tab) selectSource(tab.dataset.src);
+  });
+
+  function pickOption(id) {
+    pickExisting(id);
+    $("existingQ").value = "";
+    activeOpt = -1;
+    renderAssets();
+  }
+
+  const combo = $("existingQ");
+  combo.addEventListener("focus", openCombo);
+  combo.addEventListener("input", () => { activeOpt = -1; openCombo(); });
+  combo.addEventListener("blur", closeCombo);
+  combo.addEventListener("keydown", (ev) => {
+    const list = availableAssets();
+    if (ev.key === "ArrowDown" || ev.key === "ArrowUp") {
+      ev.preventDefault();
+      if ($("existingList").hidden) openCombo();
+      if (!list.length) return;
+      activeOpt = ev.key === "ArrowDown" ? (activeOpt + 1) % list.length : (activeOpt <= 0 ? list.length : activeOpt) - 1;
+      renderCombo();
+    } else if (ev.key === "Enter") {
+      ev.preventDefault();
+      if (!$("existingList").hidden && list[activeOpt]) pickOption(list[activeOpt].id);
+    } else if (ev.key === "Escape" && !$("existingList").hidden) {
+      ev.preventDefault();
+      ev.stopPropagation();
+      closeCombo();
+    }
+  });
+  $("existingList").addEventListener("mousedown", (ev) => {
+    ev.preventDefault();
+    const opt = ev.target.closest(".combo-opt");
+    if (opt) pickOption(opt.dataset.id);
+  });
+
+  $("panelImport").addEventListener("click", (ev) => {
+    if (ev.target.closest("[data-show-paste]")) return showPaste();
+    if (ev.target.closest("[data-template]")) return downloadTemplate();
+    if (ev.target.closest("[data-pick-file]") || ev.target.closest(".dropzone")) $("fileInput").click();
+  });
+  $("fileInput").addEventListener("change", (ev) => readFile(ev.target.files[0]));
+  $("dropzone").addEventListener("dragover", (ev) => { ev.preventDefault(); $("dropzone").classList.add("is-over"); });
+  $("dropzone").addEventListener("dragleave", () => $("dropzone").classList.remove("is-over"));
+  $("dropzone").addEventListener("drop", (ev) => {
+    ev.preventDefault();
+    $("dropzone").classList.remove("is-over");
+    readFile(ev.dataTransfer.files[0]);
+  });
+
+  $("pasteInput").addEventListener("input", updateLineCount);
+  $("addLines").addEventListener("click", () => {
+    const lines = parseLines($("pasteInput").value);
+    $("pasteInput").value = "";
+    updateLineCount();
+    importLines(lines, "a la lista");
+  });
+
+  $("assetRows").addEventListener("click", (ev) => {
+    const remove = ev.target.closest("[data-remove]");
+    const use = ev.target.closest("[data-use]");
+    if (remove) rows = rows.filter((r) => r.id !== remove.dataset.remove);
+    else if (use) rows.find((r) => r.id === use.dataset.use).status = "existente";
+    else return;
+    renderAssets();
+  });
+  $("assetRows").addEventListener("change", (ev) => {
+    const row = rows.find((r) => r.id === ev.target.dataset.type);
+    if (row) row.type = ev.target.value;
+  });
+  $("gDepth").addEventListener("change", () => { depthTouched = true; $("depthNote").hidden = true; });
+
+  function validateWindow() {
+    const from = $("gFrom").value, to = $("gTo").value;
+    const msg = $("gWindow").value !== "range" ? ""
+      : !from || !to ? "Elegí el horario de inicio y de fin."
+      : from === to ? "El horario de fin tiene que ser distinto del de inicio." : "";
+    $("gWindowError").querySelector("span").textContent = msg;
+    setError($("gTo"), "gWindowError", !!msg);
+    return !msg;
+  }
+
+  $("gWindow").addEventListener("change", (ev) => {
+    $("timeRow").hidden = ev.target.value !== "range";
+    validateWindow();
+  });
+  $("gFrom").addEventListener("change", validateWindow);
+  $("gTo").addEventListener("change", validateWindow);
+
+  const TOAST_MS = 6000;
+  let toastTimer = null;
+
+  function showToast(e) {
+    const toast = $("toast");
+    $("toastTitle").textContent = "Ejercicio creado con éxito";
+    $("toastText").textContent = e.status === "activo"
+      ? `El ejercicio ${e.name} ya está activo y corre según sus fechas`
+      : `El ejercicio ${e.name} quedó en borrador: faltan definir campos de algunos assets`;
+    toast.classList.remove("is-closing");
+    toast.hidden = false;
+    lucide.createIcons();
+    startToastTimer();
+  }
+
+  function startToastTimer() {
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(hideToast, TOAST_MS);
+  }
+
+  function hideToast() {
+    const toast = $("toast");
+    clearTimeout(toastTimer);
+    if (toast.hidden || toast.classList.contains("is-closing")) return;
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches) { toast.hidden = true; return; }
+    toast.classList.add("is-closing");
+    toast.addEventListener("animationend", () => {
+      toast.classList.remove("is-closing");
+      toast.hidden = true;
+    }, { once: true });
+  }
+
+  $("toastClose").addEventListener("click", hideToast);
+  // Pause auto-dismiss while the user reads or interacts with the toast
+  for (const ev of ["mouseenter", "focusin"]) $("toast").addEventListener(ev, () => clearTimeout(toastTimer));
+  $("toast").addEventListener("mouseleave", () => { if (!$("toast").contains(document.activeElement)) startToastTimer(); });
+  $("toast").addEventListener("focusout", (ev) => { if (!$("toast").contains(ev.relatedTarget)) startToastTimer(); });
+
+  function createExercise() {
+    const included = rows.filter(isIncluded);
+    const drafts = included.filter((r) => r.status === "nuevo").length;
+    const noDates = $("exSchedule").value === "despues" || !$("exStart").value;
+    const goal = $("exGoal");
+    const exercise = {
+      name: $("exTitle").value.trim(),
+      goal: goal.value === "otro" ? $("exGoalOther").value.trim() : goal.value ? goal.selectedOptions[0].text : "Sin objetivo",
+      status: noDates || drafts || !included.length ? "borrador" : "activo",
+      freq: noDates ? "Sin fechas" : $("exRepeat").value,
+      last: "Sin ejecuciones",
+      assets: included.length,
+      pending: drafts,
+    };
+    EXERCISES.unshift(exercise);
+    renderTabs();
+    selectTab("todos");
+    renderRows(); animateRows();
+    closeCreate();
+    showToast(exercise);
+  }
+
+  renderTabs();
+  renderRows();
+  lucide.createIcons();
+</script>
+</body>
+</html>

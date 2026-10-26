@@ -1,0 +1,280 @@
+- generic [ref=e2]:
+  - navigation "Navegación principal" [ref=e3]:
+    - generic "Strike" [ref=e4]: S
+    - link "Ejercicios" [ref=e5] [cursor=pointer]:
+      - /url: lista-ejercicios.html
+    - link "Assets" [ref=e8] [cursor=pointer]:
+      - /url: "#"
+    - link "Hallazgos" [ref=e12] [cursor=pointer]:
+      - /url: "#"
+    - link "Reportes" [ref=e15] [cursor=pointer]:
+      - /url: "#"
+    - link "Configuración" [ref=e19] [cursor=pointer]:
+      - /url: "#"
+  - main [ref=e23]:
+    - generic [ref=e24]:
+      - navigation "Ruta" [ref=e25]:
+        - paragraph [ref=e26]:
+          - link "Ejercicios" [ref=e27] [cursor=pointer]:
+            - /url: lista-ejercicios.html
+          - generic [aria-hidden] [ref=e28]: /
+          - generic [ref=e29]: Revisión plataforma e-commerce
+      - generic [ref=e30]:
+        - generic [ref=e31]:
+          - heading "Revisión plataforma e-commerce" [level=1] [ref=e32]
+          - generic [ref=e34]:
+            - text: Activo
+            - tooltip "Corre según sus fechas y recurrencia"
+        - generic [ref=e35]:
+          - button "Pausar" [ref=e36] [cursor=pointer]
+          - button "Editar ejercicio" [ref=e40] [cursor=pointer]
+          - button "Corrida manual" [ref=e44] [cursor=pointer]
+      - paragraph [ref=e47]:
+        - generic [ref=e48]:
+          - text: Última ejecución
+          - strong [ref=e49]: 14 ago 2026
+        - generic [aria-hidden] [ref=e50]: ·
+        - generic [ref=e51]:
+          - text: Próxima
+          - strong [ref=e52]: 14 nov 2026
+        - generic [aria-hidden] [ref=e53]: ·
+        - button "Historial de corridas" [ref=e54] [cursor=pointer]
+      - region [ref=e55]:
+        - heading "Configuración" [level=2] [ref=e57]
+        - generic [ref=e58]:
+          - generic [ref=e59]:
+            - term [ref=e60]: Objetivo
+            - definition [ref=e61]: Antes de un lanzamiento
+          - generic [ref=e62]:
+            - term [ref=e63]: Fechas y recurrencia
+            - definition [ref=e64]: Desde 14 ago 2026 · Trimestral
+          - generic [ref=e65]:
+            - term [ref=e66]: Hacker humano
+            - definition [ref=e67]: Sí
+          - generic [ref=e68]:
+            - term [ref=e69]:
+              - generic [ref=e70]:
+                - generic [ref=e74]: Valor global.
+                - 'tooltip "Valor global: se aplica a todos los assets. Un asset que lo cambia queda como Modificado."'
+              - text: Profundidad
+            - definition [ref=e75]: Alta
+          - generic [ref=e76]:
+            - term [ref=e77]:
+              - generic [ref=e78]:
+                - generic [ref=e82]: Valor global.
+                - 'tooltip "Valor global: se aplica a todos los assets. Un asset que lo cambia queda como Modificado."'
+              - text: Franjas horarias
+            - definition [ref=e83]: 22:00 a 06:00
+      - region [ref=e84]:
+        - heading "Assets12" [level=2] [ref=e85]
+      - generic [ref=e86]:
+        - searchbox "Buscar assets" [ref=e91]
+        - button "Filtrar" [ref=e93] [cursor=pointer]
+      - generic [ref=e95]:
+        - group "Vista" [ref=e96]:
+          - button "Lista" [pressed] [ref=e97] [cursor=pointer]
+          - button "Diagrama" [ref=e99] [cursor=pointer]
+        - button "Agregar assets" [ref=e105] [cursor=pointer]
+      - generic [ref=e107]:
+        - table [ref=e108]:
+          - rowgroup [ref=e109]:
+            - row [ref=e110]:
+              - columnheader [ref=e111]:
+                - checkbox "Seleccionar todos los assets visibles" [ref=e112] [cursor=pointer]
+              - columnheader "Asset" [ref=e113]
+              - columnheader "Tipo" [ref=e114]
+              - columnheader "Estado" [ref=e115]
+              - columnheader "Herencia" [ref=e116]
+              - columnheader "Editar" [ref=e117]
+          - rowgroup [ref=e119]:
+            - row [ref=e120]:
+              - cell [ref=e121]:
+                - checkbox "Seleccionar tienda.ejemplo.com" [ref=e122] [cursor=pointer]
+              - cell "tienda.ejemplo.com" [ref=e123]
+              - cell "Web app" [ref=e125]
+              - cell [ref=e129]:
+                - generic [ref=e130]:
+                  - text: Listo
+                  - tooltip "Tiene todo lo necesario para testearse"
+              - cell [ref=e131]:
+                - generic [ref=e132]:
+                  - text: Heredado
+                  - tooltip "Usa todos los valores globales del ejercicio"
+              - cell [ref=e133]:
+                - button "Editar tienda.ejemplo.com" [ref=e134] [cursor=pointer]
+            - row [ref=e138]:
+              - cell [ref=e139]:
+                - checkbox "Seleccionar api.ejemplo.com/v1" [ref=e140] [cursor=pointer]
+              - cell "api.ejemplo.com/v1 VPN vpn-corp" [ref=e141]:
+                - generic [ref=e142]: api.ejemplo.com/v1
+                - generic [ref=e143]: VPN vpn-corp
+              - cell "API" [ref=e144]
+              - cell [ref=e149]:
+                - generic [ref=e150]:
+                  - text: Listo
+                  - tooltip "Tiene todo lo necesario para testearse"
+              - cell [ref=e151]:
+                - generic [ref=e152]:
+                  - text: Modificado
+                  - tooltip "Cambió al menos un valor global del ejercicio"
+              - cell [ref=e153]:
+                - button "Editar api.ejemplo.com/v1" [ref=e154] [cursor=pointer]
+            - row [ref=e158]:
+              - cell [ref=e159]:
+                - checkbox "Seleccionar App ejemplo (iOS)" [ref=e160] [cursor=pointer]
+              - cell "App ejemplo (iOS)" [ref=e161]
+              - cell "App móvil" [ref=e163]
+              - cell [ref=e167]:
+                - generic [ref=e168]:
+                  - text: Listo
+                  - tooltip "Tiene todo lo necesario para testearse"
+              - cell [ref=e169]:
+                - generic [ref=e170]:
+                  - text: Heredado
+                  - tooltip "Usa todos los valores globales del ejercicio"
+              - cell [ref=e171]:
+                - button "Editar App ejemplo (iOS)" [ref=e172] [cursor=pointer]
+            - row [ref=e176]:
+              - cell [ref=e177]:
+                - checkbox "Seleccionar pagos.ejemplo.com" [ref=e178] [cursor=pointer]
+              - cell "pagos.ejemplo.com VPN vpn-pagos" [ref=e179]:
+                - generic [ref=e180]: pagos.ejemplo.com
+                - generic [ref=e181]: VPN vpn-pagos
+              - cell "API" [ref=e182]
+              - cell [ref=e187]:
+                - generic [ref=e188]:
+                  - text: Listo
+                  - tooltip "Tiene todo lo necesario para testearse"
+              - cell [ref=e189]:
+                - generic [ref=e190]:
+                  - text: Heredado
+                  - tooltip "Usa todos los valores globales del ejercicio"
+              - cell [ref=e191]:
+                - button "Editar pagos.ejemplo.com" [ref=e192] [cursor=pointer]
+            - row [ref=e196]:
+              - cell [ref=e197]:
+                - checkbox "Seleccionar admin.ejemplo.com" [ref=e198] [cursor=pointer]
+              - cell "admin.ejemplo.com VPN vpn-corp" [ref=e199]:
+                - generic [ref=e200]: admin.ejemplo.com
+                - generic [ref=e201]: VPN vpn-corp
+              - cell "Web app" [ref=e202]
+              - cell [ref=e206]:
+                - generic [ref=e207]:
+                  - text: Listo
+                  - tooltip "Tiene todo lo necesario para testearse"
+              - cell [ref=e208]:
+                - generic [ref=e209]:
+                  - text: Modificado
+                  - tooltip "Cambió al menos un valor global del ejercicio"
+              - cell [ref=e210]:
+                - button "Editar admin.ejemplo.com" [ref=e211] [cursor=pointer]
+            - row [ref=e215]:
+              - cell [ref=e216]:
+                - checkbox "Seleccionar blog.ejemplo.com" [ref=e217] [cursor=pointer]
+              - cell "blog.ejemplo.com" [ref=e218]
+              - cell "Web app" [ref=e220]
+              - cell [ref=e224]:
+                - generic [ref=e225]:
+                  - text: Listo
+                  - tooltip "Tiene todo lo necesario para testearse"
+              - cell [ref=e226]:
+                - generic [ref=e227]:
+                  - text: Heredado
+                  - tooltip "Usa todos los valores globales del ejercicio"
+              - cell [ref=e228]:
+                - button "Editar blog.ejemplo.com" [ref=e229] [cursor=pointer]
+            - row [ref=e233]:
+              - cell [ref=e234]:
+                - checkbox "Seleccionar App ejemplo (Android)" [ref=e235] [cursor=pointer]
+              - cell "App ejemplo (Android)" [ref=e236]
+              - cell "App móvil" [ref=e238]
+              - cell [ref=e242]:
+                - generic [ref=e243]:
+                  - text: Listo
+                  - tooltip "Tiene todo lo necesario para testearse"
+              - cell [ref=e244]:
+                - generic [ref=e245]:
+                  - text: Heredado
+                  - tooltip "Usa todos los valores globales del ejercicio"
+              - cell [ref=e246]:
+                - button "Editar App ejemplo (Android)" [ref=e247] [cursor=pointer]
+            - row [ref=e251]:
+              - cell [ref=e252]:
+                - checkbox "Seleccionar checkout.ejemplo.com" [ref=e253] [cursor=pointer]
+              - cell "checkout.ejemplo.com" [ref=e254]
+              - cell "Web app" [ref=e256]
+              - cell [ref=e260]:
+                - generic [ref=e261]:
+                  - text: Listo
+                  - tooltip "Tiene todo lo necesario para testearse"
+              - cell [ref=e262]:
+                - generic [ref=e263]:
+                  - text: Heredado
+                  - tooltip "Usa todos los valores globales del ejercicio"
+              - cell [ref=e264]:
+                - button "Editar checkout.ejemplo.com" [ref=e265] [cursor=pointer]
+            - row [ref=e269]:
+              - cell [ref=e270]:
+                - checkbox "Seleccionar cdn.ejemplo.com" [ref=e271] [cursor=pointer]
+              - cell "cdn.ejemplo.com" [ref=e272]
+              - cell "Dominio" [ref=e274]
+              - cell [ref=e279]:
+                - generic [ref=e280]:
+                  - text: Listo
+                  - tooltip "Tiene todo lo necesario para testearse"
+              - cell [ref=e281]:
+                - generic [ref=e282]:
+                  - text: Heredado
+                  - tooltip "Usa todos los valores globales del ejercicio"
+              - cell [ref=e283]:
+                - button "Editar cdn.ejemplo.com" [ref=e284] [cursor=pointer]
+            - row [ref=e288]:
+              - cell [ref=e289]:
+                - checkbox "Seleccionar api.ejemplo.com/v2" [ref=e290] [cursor=pointer]
+              - cell "api.ejemplo.com/v2 VPN vpn-corp" [ref=e291]:
+                - generic [ref=e292]: api.ejemplo.com/v2
+                - generic [ref=e293]: VPN vpn-corp
+              - cell "API" [ref=e294]
+              - cell [ref=e299]:
+                - generic [ref=e300]:
+                  - text: Listo
+                  - tooltip "Tiene todo lo necesario para testearse"
+              - cell [ref=e301]:
+                - generic [ref=e302]:
+                  - text: Modificado
+                  - tooltip "Cambió al menos un valor global del ejercicio"
+              - cell [ref=e303]:
+                - button "Editar api.ejemplo.com/v2" [ref=e304] [cursor=pointer]
+            - row [ref=e308]:
+              - cell [ref=e309]:
+                - checkbox "Seleccionar 203.0.113.10" [ref=e310] [cursor=pointer]
+              - cell "203.0.113.10 VPN vpn-infra" [ref=e311]:
+                - generic [ref=e312]: 203.0.113.10
+                - generic [ref=e313]: VPN vpn-infra
+              - cell "IP o red" [ref=e314]
+              - cell [ref=e321]:
+                - generic [ref=e322]:
+                  - text: Listo
+                  - tooltip "Tiene todo lo necesario para testearse"
+              - cell [ref=e323]:
+                - generic [ref=e324]:
+                  - text: Heredado
+                  - tooltip "Usa todos los valores globales del ejercicio"
+              - cell [ref=e325]:
+                - button "Editar 203.0.113.10" [ref=e326] [cursor=pointer]
+            - row [ref=e330]:
+              - cell [ref=e331]:
+                - checkbox "Seleccionar soporte.ejemplo.com" [ref=e332] [cursor=pointer]
+              - cell "soporte.ejemplo.com" [ref=e333]
+              - cell "Web app" [ref=e335]
+              - cell [ref=e339]:
+                - generic [ref=e340]:
+                  - text: Listo
+                  - tooltip "Tiene todo lo necesario para testearse"
+              - cell [ref=e341]:
+                - generic [ref=e342]:
+                  - text: Heredado
+                  - tooltip "Usa todos los valores globales del ejercicio"
+              - cell [ref=e343]:
+                - button "Editar soporte.ejemplo.com" [ref=e344] [cursor=pointer]
+        - generic [ref=e348]: Mostrando 12 de 12 assets

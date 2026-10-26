@@ -1,0 +1,121 @@
+- generic [ref=f1e2]:
+  - navigation "Navegación principal" [ref=f1e3]:
+    - generic "Strike" [ref=f1e4]: S
+    - link "Ejercicios" [ref=f1e5] [cursor=pointer]:
+      - /url: "#"
+    - link "Assets" [ref=f1e8] [cursor=pointer]:
+      - /url: "#"
+    - link "Hallazgos" [ref=f1e12] [cursor=pointer]:
+      - /url: "#"
+    - link "Reportes" [ref=f1e15] [cursor=pointer]:
+      - /url: "#"
+    - link "Configuración" [ref=f1e19] [cursor=pointer]:
+      - /url: "#"
+  - main [ref=f1e23]:
+    - generic [ref=f1e24]:
+      - paragraph [ref=f1e25]: Pentesting continuo
+      - generic [ref=f1e26]:
+        - generic [ref=f1e27]:
+          - heading "Ejercicios" [level=1] [ref=f1e28]
+          - generic [ref=f1e29]: 6 en total
+        - button "Crear ejercicio" [ref=f1e30] [cursor=pointer]
+      - search [ref=f1e32]:
+        - searchbox "Buscar ejercicios" [ref=f1e37]
+        - button "Buscar" [ref=f1e38] [cursor=pointer]
+      - tablist [ref=f1e39]:
+        - tab "Todos6" [selected] [ref=f1e40] [cursor=pointer]
+        - tab "Activos3" [ref=f1e41] [cursor=pointer]
+        - tab "Pausados1" [ref=f1e42] [cursor=pointer]
+        - tab "Borradores2" [ref=f1e43] [cursor=pointer]
+      - table [ref=f1e46]:
+        - rowgroup [ref=f1e47]:
+          - row [ref=f1e48]:
+            - columnheader "Ejercicio" [ref=f1e49]
+            - columnheader "Estado" [ref=f1e50]
+            - columnheader "Frecuencia" [ref=f1e51]
+            - columnheader "Última ejecución" [ref=f1e52]
+            - columnheader "Assets" [ref=f1e53]
+            - columnheader "Abrir" [ref=f1e54]
+        - rowgroup [ref=f1e56]:
+          - row "Abrir Revisión plataforma e-commerce" [ref=f1e57] [cursor=pointer]:
+            - cell "Revisión plataforma e-commerce Antes de un lanzamiento" [ref=f1e58]:
+              - generic [ref=f1e59]: Revisión plataforma e-commerce
+              - generic [ref=f1e60]: Antes de un lanzamiento
+            - cell [ref=f1e61]:
+              - generic [ref=f1e62]:
+                - text: Activo
+                - tooltip "Corre según sus fechas y recurrencia"
+            - cell "Trimestral" [ref=f1e63]
+            - cell "14 ago 2026" [ref=f1e64]
+            - cell "12 assets" [ref=f1e65]
+            - cell [ref=f1e67]
+          - row "Abrir Auditoría SOC 2" [ref=f1e71] [cursor=pointer]:
+            - cell "Auditoría SOC 2 Auditoría o cumplimiento" [ref=f1e72]:
+              - generic [ref=f1e73]: Auditoría SOC 2
+              - generic [ref=f1e74]: Auditoría o cumplimiento
+            - cell [ref=f1e75]:
+              - generic [ref=f1e76]:
+                - text: Pausado
+                - tooltip "Suspendido hasta que lo reanudes"
+            - cell "Anual" [ref=f1e77]
+            - cell "2 mar 2026" [ref=f1e78]
+            - cell "8 assets" [ref=f1e79]
+            - cell [ref=f1e81]
+          - row "Abrir Lanzamiento app móvil" [ref=f1e85] [cursor=pointer]:
+            - cell "Lanzamiento app móvil Antes de un lanzamiento" [ref=f1e86]:
+              - generic [ref=f1e87]: Lanzamiento app móvil
+              - generic [ref=f1e88]: Antes de un lanzamiento
+            - cell [ref=f1e89]:
+              - generic [ref=f1e90]:
+                - text: Borrador
+                - tooltip "Faltan datos para activarlo"
+            - cell "Sin fechas" [ref=f1e91]
+            - cell "Sin ejecuciones" [ref=f1e92]
+            - cell [ref=f1e93]:
+              - generic [ref=f1e94]:
+                - text: 5 assets
+                - generic [ref=f1e95]:
+                  - text: 2 pendientes
+                  - 'tooltip "Assets en borrador: les faltan datos para poder testearse"'
+            - cell [ref=f1e96]
+          - row "Abrir Revisión mensual de APIs" [ref=f1e100] [cursor=pointer]:
+            - cell "Revisión mensual de APIs Revisión periódica" [ref=f1e101]:
+              - generic [ref=f1e102]: Revisión mensual de APIs
+              - generic [ref=f1e103]: Revisión periódica
+            - cell [ref=f1e104]:
+              - generic [ref=f1e105]:
+                - text: Activo
+                - tooltip "Corre según sus fechas y recurrencia"
+            - cell "Mensual" [ref=f1e106]
+            - cell "20 oct 2026" [ref=f1e107]
+            - cell "4 assets" [ref=f1e108]
+            - cell [ref=f1e110]
+          - row "Abrir Migración a nube híbrida" [ref=f1e114] [cursor=pointer]:
+            - cell "Migración a nube híbrida Cambio de infraestructura" [ref=f1e115]:
+              - generic [ref=f1e116]: Migración a nube híbrida
+              - generic [ref=f1e117]: Cambio de infraestructura
+            - cell [ref=f1e118]:
+              - generic [ref=f1e119]:
+                - text: Borrador
+                - tooltip "Faltan datos para activarlo"
+            - cell "Semestral" [ref=f1e120]
+            - cell "Sin ejecuciones" [ref=f1e121]
+            - cell [ref=f1e122]:
+              - generic [ref=f1e123]:
+                - text: 9 assets
+                - generic [ref=f1e124]:
+                  - text: 4 pendientes
+                  - 'tooltip "Assets en borrador: les faltan datos para poder testearse"'
+            - cell [ref=f1e125]
+          - row "Abrir Portal de clientes" [ref=f1e129] [cursor=pointer]:
+            - cell "Portal de clientes Revisión periódica" [ref=f1e130]:
+              - generic [ref=f1e131]: Portal de clientes
+              - generic [ref=f1e132]: Revisión periódica
+            - cell [ref=f1e133]:
+              - generic [ref=f1e134]:
+                - text: Activo
+                - tooltip "Corre según sus fechas y recurrencia"
+            - cell "Mensual" [ref=f1e135]
+            - cell "3 oct 2026" [ref=f1e136]
+            - cell "6 assets" [ref=f1e137]
+            - cell [ref=f1e139]

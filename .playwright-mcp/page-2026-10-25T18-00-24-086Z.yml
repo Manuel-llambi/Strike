@@ -1,0 +1,234 @@
+- generic [ref=f3e2]:
+  - navigation "Navegación principal" [ref=f3e3]:
+    - generic "Strike" [ref=f3e4]: S
+    - link "Ejercicios" [ref=f3e5] [cursor=pointer]:
+      - /url: lista-ejercicios.html
+    - link "Assets" [ref=f3e8] [cursor=pointer]:
+      - /url: "#"
+    - link "Hallazgos" [ref=f3e12] [cursor=pointer]:
+      - /url: "#"
+    - link "Reportes" [ref=f3e15] [cursor=pointer]:
+      - /url: "#"
+    - link "Configuración" [ref=f3e19] [cursor=pointer]:
+      - /url: "#"
+  - main [ref=f3e23]:
+    - generic [ref=f3e24]:
+      - navigation "Ruta" [ref=f3e25]:
+        - paragraph [ref=f3e26]:
+          - link "Ejercicios" [ref=f3e27] [cursor=pointer]:
+            - /url: lista-ejercicios.html
+          - generic [aria-hidden] [ref=f3e28]: /
+          - generic [ref=f3e29]: Migración a nube híbrida
+      - generic [ref=f3e30]:
+        - generic [ref=f3e31]:
+          - heading "Migración a nube híbrida" [level=1] [ref=f3e32]
+          - generic [ref=f3e34]:
+            - text: Borrador
+            - tooltip "Faltan datos para activarlo"
+        - button "Editar ejercicio" [ref=f3e36] [cursor=pointer]
+      - generic [ref=f3e40]:
+        - paragraph [ref=f3e41]:
+          - generic [ref=f3e44]: "4 assets en borrador: faltan credenciales. El ejercicio pasa a Activo cuando esté completo."
+        - button "Ver borradores" [ref=f3e45] [cursor=pointer]
+      - region [ref=f3e46]:
+        - generic [ref=f3e47]:
+          - heading "Configuración" [level=2] [ref=f3e48]
+          - button "Editar" [ref=f3e49] [cursor=pointer]
+        - generic [ref=f3e50]:
+          - generic [ref=f3e51]:
+            - term [ref=f3e52]: Objetivo
+            - definition [ref=f3e53]: Cambio importante en el sistema
+          - generic [ref=f3e54]:
+            - term [ref=f3e55]: Fechas y recurrencia
+            - definition [ref=f3e56]: Desde 1 dic 2026 · Semestral
+          - generic [ref=f3e57]:
+            - term [ref=f3e58]: Hacker humano
+            - definition [ref=f3e59]: Sí
+        - generic [ref=f3e60]:
+          - generic [ref=f3e61]:
+            - text: Global
+            - tooltip "Estos valores se aplican a todos los assets. Un asset que cambia alguno queda como Modificado."
+          - generic [ref=f3e62]:
+            - generic [ref=f3e63]:
+              - term [ref=f3e64]: Profundidad
+              - definition [ref=f3e65]: Alta
+            - generic [ref=f3e66]:
+              - term [ref=f3e67]: Franjas horarias
+              - definition [ref=f3e68]: 22:00 a 06:00
+            - generic [ref=f3e69]:
+              - term [ref=f3e70]: Exclusiones
+              - definition [ref=f3e71]: Ninguna
+      - region [ref=f3e72]:
+        - generic [ref=f3e73]:
+          - generic [ref=f3e74]:
+            - heading "Assets9" [level=2] [ref=f3e75]
+            - group "Vista" [ref=f3e76]:
+              - button "Lista" [pressed] [ref=f3e77] [cursor=pointer]
+              - button "Diagrama" [ref=f3e79] [cursor=pointer]
+          - button "Agregar assets" [ref=f3e85] [cursor=pointer]
+      - generic [ref=f3e87]:
+        - searchbox "Buscar assets" [ref=f3e92]
+        - button "Modificados 1" [ref=f3e93] [cursor=pointer]:
+          - text: Modificados
+          - generic [ref=f3e94]: "1"
+        - button "Borradores 4" [ref=f3e95] [cursor=pointer]:
+          - text: Borradores
+          - generic [ref=f3e96]: "4"
+      - generic [ref=f3e97]:
+        - table [ref=f3e98]:
+          - rowgroup [ref=f3e99]:
+            - row [ref=f3e100]:
+              - columnheader [ref=f3e101]:
+                - checkbox "Seleccionar todos los assets visibles" [ref=f3e102] [cursor=pointer]
+              - columnheader "Asset" [ref=f3e103]
+              - columnheader "Tipo" [ref=f3e104]
+              - columnheader "Estado" [ref=f3e105]
+              - columnheader "Herencia" [ref=f3e106]
+              - columnheader "Editar" [ref=f3e107]
+          - rowgroup [ref=f3e109]:
+            - row [ref=f3e110]:
+              - cell [ref=f3e111]:
+                - checkbox "Seleccionar 203.0.113.10" [ref=f3e112] [cursor=pointer]
+              - cell "203.0.113.10 VPN vpn-infra" [ref=f3e113]:
+                - generic [ref=f3e114]: 203.0.113.10
+                - generic [ref=f3e115]: VPN vpn-infra
+              - cell "IP o red" [ref=f3e116]
+              - cell [ref=f3e123]:
+                - generic [ref=f3e124]:
+                  - text: Borrador
+                  - tooltip "Faltan credenciales para poder testearlo"
+              - cell [ref=f3e125]:
+                - generic [ref=f3e126]:
+                  - text: Heredado
+                  - tooltip "Usa todos los valores globales del ejercicio"
+              - cell [ref=f3e127]:
+                - button "Editar 203.0.113.10" [ref=f3e128] [cursor=pointer]
+            - row [ref=f3e132]:
+              - cell [ref=f3e133]:
+                - checkbox "Seleccionar api.ejemplo.com/v1" [ref=f3e134] [cursor=pointer]
+              - cell "api.ejemplo.com/v1 VPN vpn-corp" [ref=f3e135]:
+                - generic [ref=f3e136]: api.ejemplo.com/v1
+                - generic [ref=f3e137]: VPN vpn-corp
+              - cell "API" [ref=f3e138]
+              - cell [ref=f3e143]:
+                - generic [ref=f3e144]:
+                  - text: Listo
+                  - tooltip "Tiene todo lo necesario para testearse"
+              - cell [ref=f3e145]:
+                - generic [ref=f3e146]:
+                  - text: Heredado
+                  - tooltip "Usa todos los valores globales del ejercicio"
+              - cell [ref=f3e147]:
+                - button "Editar api.ejemplo.com/v1" [ref=f3e148] [cursor=pointer]
+            - row [ref=f3e152]:
+              - cell [ref=f3e153]:
+                - checkbox "Seleccionar api.ejemplo.com/v2" [ref=f3e154] [cursor=pointer]
+              - cell "api.ejemplo.com/v2 VPN vpn-corp" [ref=f3e155]:
+                - generic [ref=f3e156]: api.ejemplo.com/v2
+                - generic [ref=f3e157]: VPN vpn-corp
+              - cell "API" [ref=f3e158]
+              - cell [ref=f3e163]:
+                - generic [ref=f3e164]:
+                  - text: Listo
+                  - tooltip "Tiene todo lo necesario para testearse"
+              - cell [ref=f3e165]:
+                - generic [ref=f3e166]:
+                  - text: Heredado
+                  - tooltip "Usa todos los valores globales del ejercicio"
+              - cell [ref=f3e167]:
+                - button "Editar api.ejemplo.com/v2" [ref=f3e168] [cursor=pointer]
+            - row [ref=f3e172]:
+              - cell [ref=f3e173]:
+                - checkbox "Seleccionar pagos.ejemplo.com" [ref=f3e174] [cursor=pointer]
+              - cell "pagos.ejemplo.com VPN vpn-pagos" [ref=f3e175]:
+                - generic [ref=f3e176]: pagos.ejemplo.com
+                - generic [ref=f3e177]: VPN vpn-pagos
+              - cell "API" [ref=f3e178]
+              - cell [ref=f3e183]:
+                - generic [ref=f3e184]:
+                  - text: Borrador
+                  - tooltip "Faltan credenciales para poder testearlo"
+              - cell [ref=f3e185]:
+                - generic [ref=f3e186]:
+                  - text: Heredado
+                  - tooltip "Usa todos los valores globales del ejercicio"
+              - cell [ref=f3e187]:
+                - button "Editar pagos.ejemplo.com" [ref=f3e188] [cursor=pointer]
+            - row [ref=f3e192]:
+              - cell [ref=f3e193]:
+                - checkbox "Seleccionar admin.ejemplo.com" [ref=f3e194] [cursor=pointer]
+              - cell "admin.ejemplo.com VPN vpn-corp" [ref=f3e195]:
+                - generic [ref=f3e196]: admin.ejemplo.com
+                - generic [ref=f3e197]: VPN vpn-corp
+              - cell "Web app" [ref=f3e198]
+              - cell [ref=f3e203]:
+                - generic [ref=f3e204]:
+                  - text: Borrador
+                  - tooltip "Faltan credenciales para poder testearlo"
+              - cell [ref=f3e205]:
+                - generic [ref=f3e206]:
+                  - text: Heredado
+                  - tooltip "Usa todos los valores globales del ejercicio"
+              - cell [ref=f3e207]:
+                - button "Editar admin.ejemplo.com" [ref=f3e208] [cursor=pointer]
+            - row [ref=f3e212]:
+              - cell [ref=f3e213]:
+                - checkbox "Seleccionar cdn.ejemplo.com" [ref=f3e214] [cursor=pointer]
+              - cell "cdn.ejemplo.com" [ref=f3e215]
+              - cell "Dominio" [ref=f3e217]
+              - cell [ref=f3e222]:
+                - generic [ref=f3e223]:
+                  - text: Listo
+                  - tooltip "Tiene todo lo necesario para testearse"
+              - cell [ref=f3e224]:
+                - generic [ref=f3e225]:
+                  - text: Modificado
+                  - tooltip "Cambió al menos un valor global del ejercicio"
+              - cell [ref=f3e226]:
+                - button "Editar cdn.ejemplo.com" [ref=f3e227] [cursor=pointer]
+            - row [ref=f3e231]:
+              - cell [ref=f3e232]:
+                - checkbox "Seleccionar tienda.ejemplo.com" [ref=f3e233] [cursor=pointer]
+              - cell "tienda.ejemplo.com" [ref=f3e234]
+              - cell "Web app" [ref=f3e236]
+              - cell [ref=f3e241]:
+                - generic [ref=f3e242]:
+                  - text: Listo
+                  - tooltip "Tiene todo lo necesario para testearse"
+              - cell [ref=f3e243]:
+                - generic [ref=f3e244]:
+                  - text: Heredado
+                  - tooltip "Usa todos los valores globales del ejercicio"
+              - cell [ref=f3e245]:
+                - button "Editar tienda.ejemplo.com" [ref=f3e246] [cursor=pointer]
+            - row [ref=f3e250]:
+              - cell [ref=f3e251]:
+                - checkbox "Seleccionar soporte.ejemplo.com" [ref=f3e252] [cursor=pointer]
+              - cell "soporte.ejemplo.com" [ref=f3e253]
+              - cell "Web app" [ref=f3e255]
+              - cell [ref=f3e260]:
+                - generic [ref=f3e261]:
+                  - text: Borrador
+                  - tooltip "Faltan credenciales para poder testearlo"
+              - cell [ref=f3e262]:
+                - generic [ref=f3e263]:
+                  - text: Heredado
+                  - tooltip "Usa todos los valores globales del ejercicio"
+              - cell [ref=f3e264]:
+                - button "Editar soporte.ejemplo.com" [ref=f3e265] [cursor=pointer]
+            - row [ref=f3e269]:
+              - cell [ref=f3e270]:
+                - checkbox "Seleccionar checkout.ejemplo.com" [ref=f3e271] [cursor=pointer]
+              - cell "checkout.ejemplo.com" [ref=f3e272]
+              - cell "Web app" [ref=f3e274]
+              - cell [ref=f3e279]:
+                - generic [ref=f3e280]:
+                  - text: Listo
+                  - tooltip "Tiene todo lo necesario para testearse"
+              - cell [ref=f3e281]:
+                - generic [ref=f3e282]:
+                  - text: Heredado
+                  - tooltip "Usa todos los valores globales del ejercicio"
+              - cell [ref=f3e283]:
+                - button "Editar checkout.ejemplo.com" [ref=f3e284] [cursor=pointer]
+        - generic [ref=f3e288]: Mostrando 9 de 9 assets

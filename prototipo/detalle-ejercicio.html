@@ -1,0 +1,1370 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Strike · Detalle del ejercicio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+  :root {
+    --rail: #050a0f;
+    --rail-ink: #f5f5f8;
+    --page: #f5f5f8;
+    --card: #ffffff;
+    --sunken: #eceef3;
+    --ink: #050a0f;
+    --ink-muted: #46515c;
+    --ink-subtle: #5a6570;
+    --border: #dfe2e8;
+    --border-strong: #7d8791;
+    --focus: #00697a;
+    --accent-text: #00697a;
+    --cyan: #80edfa;
+    --cyan-hover: #76dae6;
+
+    --global-bg: #dff9fd; --global-ink: #00596a; --global-border: #00697a;
+    --modified-bg: #f1e4ff; --modified-ink: #4b1f84; --modified-border: #7c3fc9;
+    --success-bg: #dff5e6; --success-ink: #0b5a2a; --success-border: #1d8a48;
+    --warning-bg: #fff1cc; --warning-ink: #6b4400; --warning-border: #b36b00;
+    --paused-bg: #eceef3;  --paused-ink: #46515c;  --paused-border: #7d8791;
+
+    --ease: cubic-bezier(0.4, 0, 0.2, 1);
+    --t-hover: 250ms;
+  }
+
+  * { box-sizing: border-box; border-radius: 0; }
+  html, body { margin: 0; }
+  html { scrollbar-gutter: stable; }
+  body {
+    font-family: "DM Sans", system-ui, sans-serif;
+    font-size: 14px; line-height: 20px;
+    color: var(--ink);
+    background: var(--page);
+    -webkit-font-smoothing: antialiased;
+  }
+  svg.lucide { width: 16px; height: 16px; stroke-width: 1.5; flex: none; }
+  [hidden] { display: none !important; }
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+  :focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+
+  /* Layout */
+  .app { display: flex; min-height: 100vh; }
+  .rail {
+    width: 64px; flex: none; background: var(--rail); color: var(--rail-ink);
+    display: flex; flex-direction: column; align-items: center; padding: 16px 0; gap: 8px;
+    position: sticky; top: 0; height: 100vh;
+  }
+  .rail-logo {
+    width: 32px; height: 32px; display: grid; place-items: center; margin-bottom: 16px;
+    font-family: "JetBrains Mono", monospace; font-size: 12px; font-weight: 500;
+    background: var(--cyan); color: var(--rail);
+  }
+  .rail a {
+    width: 40px; height: 40px; display: grid; place-items: center; color: var(--rail-ink);
+    opacity: .64; transition: opacity var(--t-hover) var(--ease), background var(--t-hover) var(--ease);
+  }
+  .rail a:hover { opacity: 1; background: #101a22; }
+  .rail a[aria-current="page"] { opacity: 1; background: #16222c; box-shadow: inset 2px 0 0 var(--cyan); }
+  .rail .spacer { flex: 1; }
+
+  main { flex: 1; min-width: 0; padding: 24px 40px 64px; }
+  .container { max-width: 1120px; margin: 0 auto; display: flex; flex-direction: column; gap: 16px; }
+
+  /* Header */
+  .crumbs { display: flex; gap: 6px; margin: 0; color: var(--ink-muted); }
+  .crumbs a { color: var(--ink-muted); text-decoration: none; transition: color var(--t-hover) var(--ease); }
+  .crumbs a:hover { color: var(--ink); text-decoration: underline; text-underline-offset: 2px; }
+  .page-head { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+  .page-title { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+  h1 { font-size: 24px; line-height: 32px; font-weight: 500; margin: 0; }
+  .head-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+  .runs { display: flex; align-items: center; gap: 8px 16px; flex-wrap: wrap; margin: -4px 0 0; color: var(--ink-muted); }
+  .runs strong { color: var(--ink); font-weight: 500; }
+  .dot { color: var(--border-strong); }
+
+  /* Buttons and links */
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    font: 500 14px/20px "DM Sans", sans-serif; padding: 9px 14px;
+    border: 1px solid transparent; cursor: pointer; white-space: nowrap;
+    transition: background var(--t-hover) var(--ease), border-color var(--t-hover) var(--ease), color var(--t-hover) var(--ease);
+  }
+  .btn-primary { background: var(--cyan); color: var(--ink); }
+  .btn-primary:hover { background: var(--cyan-hover); }
+  .btn-secondary { background: var(--card); color: var(--ink); border-color: var(--border-strong); }
+  .btn-secondary:hover { background: var(--sunken); }
+  .btn-sm { padding: 5px 10px; }
+  .link {
+    background: none; border: 0; padding: 0; cursor: pointer;
+    font: 500 14px/20px "DM Sans", sans-serif; color: var(--accent-text); text-decoration: underline; text-underline-offset: 2px;
+    transition: color var(--t-hover) var(--ease);
+  }
+  .link:hover { color: var(--ink); }
+  .icon-btn {
+    width: 32px; height: 32px; display: grid; place-items: center;
+    background: none; border: 0; color: var(--ink-muted); cursor: pointer;
+    transition: background var(--t-hover) var(--ease), color var(--t-hover) var(--ease);
+  }
+  .icon-btn:hover { background: var(--sunken); color: var(--ink); }
+
+  /* Notice */
+  .notice { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; padding: 12px 16px; border: 1px solid; }
+  .notice p { display: flex; gap: 8px; margin: 0; }
+  .notice svg.lucide { margin-top: 2px; }
+  .notice.warning { background: var(--warning-bg); color: var(--warning-ink); border-color: var(--warning-border); }
+  .notice.warning .link { color: var(--warning-ink); }
+
+  /* Configuration card */
+  .card { background: var(--card); border: 1px solid var(--border); padding: 16px; }
+  .card-head { margin-bottom: 12px; }
+  .card-head h2 { font-size: 16px; line-height: 24px; font-weight: 500; margin: 0; }
+  .config-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px 24px; margin: 0; }
+  .config-grid div { min-width: 0; }
+  .config-grid dt { display: flex; align-items: center; gap: 6px; color: var(--ink-muted); }
+  .config-grid dd { margin: 2px 0 0; font-weight: 500; }
+  .muted { color: var(--ink-muted); }
+
+  /* Assets toolbar */
+  .assets-head { margin-top: 8px; }
+  .assets-head h2 { font-size: 18px; line-height: 24px; font-weight: 500; margin: 0; }
+  .assets-head h2 .count { color: var(--ink-muted); font-weight: 400; margin-left: 4px; }
+
+  /* View switcher styled as underline tabs, with the add action on the same row */
+  .view-row {
+    display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+    border-bottom: 1px solid var(--border);
+  }
+  .view-row > .btn { margin-bottom: -1px; }
+  .view-tabs { display: flex; }
+  .view-tabs button {
+    display: inline-flex; align-items: center; gap: 8px; padding: 9px 18px; cursor: pointer;
+    background: none; border: 0; box-shadow: inset 0 -2px 0 var(--border);
+    font: 400 14px/20px "DM Sans", sans-serif; color: var(--ink-muted);
+    transition: color var(--t-hover) var(--ease), box-shadow var(--t-hover) var(--ease);
+  }
+  .view-tabs button:hover { color: var(--ink); }
+  .view-tabs button[aria-pressed="true"] { color: var(--ink); font-weight: 500; box-shadow: inset 0 -2px 0 var(--ink); }
+
+  .toolbar { display: flex; gap: 8px; flex-wrap: wrap; }
+  .search {
+    flex: 1; min-width: 240px; display: flex; align-items: center; gap: 8px; padding: 0 12px;
+    background: var(--card); border: 1px solid var(--border-strong); color: var(--ink-subtle);
+    transition: border-color var(--t-hover) var(--ease);
+  }
+  .search:hover { border-color: var(--ink-muted); }
+  .search:focus-within { outline: 2px solid var(--focus); outline-offset: 2px; }
+  .search input {
+    flex: 1; border: 0; outline: 0; background: transparent; height: 38px; min-width: 0;
+    font: 14px/20px "DM Sans", sans-serif; color: var(--ink);
+  }
+  .search input::placeholder { color: var(--ink-subtle); }
+  .filter-wrap { position: relative; }
+  .filter {
+    display: inline-flex; align-items: center; gap: 8px; padding: 9px 14px; cursor: pointer;
+    background: var(--card); border: 1px solid var(--border-strong); font: 500 14px/20px "DM Sans", sans-serif; color: var(--ink);
+    transition: background var(--t-hover) var(--ease), border-color var(--t-hover) var(--ease), color var(--t-hover) var(--ease);
+  }
+  .filter:hover, .filter[aria-expanded="true"] { background: var(--sunken); }
+  .filter.is-active { background: var(--ink); border-color: var(--ink); color: var(--card); }
+  .filter-count { min-width: 20px; padding: 0 6px; background: var(--card); color: var(--ink); font-size: 12px; line-height: 20px; text-align: center; }
+  .filter-menu {
+    position: absolute; right: 0; top: calc(100% + 4px); z-index: 5; width: 240px; padding: 8px 0;
+    background: var(--card); border: 1px solid var(--border-strong);
+    animation: slide-in 250ms var(--ease);
+  }
+  .filter-menu fieldset { margin: 0; padding: 4px 0; border: 0; }
+  .filter-menu fieldset + fieldset { border-top: 1px solid var(--border); margin-top: 4px; padding-top: 8px; }
+  .filter-menu legend { padding: 4px 16px; font-size: 12px; line-height: 16px; font-weight: 500; color: var(--ink-muted); }
+  .filter-option { display: flex; align-items: center; gap: 10px; padding: 8px 16px; cursor: pointer; transition: background var(--t-hover) var(--ease); }
+  .filter-option:hover { background: var(--sunken); }
+  .filter-option input { width: 16px; height: 16px; margin: 0; accent-color: var(--ink); }
+  .filter-option span { flex: 1; }
+  .filter-option .n { flex: none; color: var(--ink-muted); }
+  .filter-foot { display: flex; justify-content: flex-end; padding: 8px 16px 4px; border-top: 1px solid var(--border); margin-top: 4px; }
+
+  .selection {
+    display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 8px 8px 8px 16px;
+    background: var(--global-bg); border: 1px solid var(--global-border); color: var(--global-ink);
+    animation: slide-in 250ms var(--ease);
+  }
+  .selection-info { display: flex; align-items: center; gap: 16px; font-weight: 500; }
+  .selection .link { color: var(--global-ink); }
+  @keyframes slide-in { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
+
+  /* Table */
+  .table-wrap { position: relative; background: var(--card); border: 1px solid var(--border); }
+  table { width: 100%; border-collapse: collapse; }
+  th {
+    text-align: left; font-size: 12px; line-height: 16px; font-weight: 500; color: var(--ink-muted);
+    background: var(--sunken); padding: 12px 16px; border-bottom: 1px solid var(--border);
+  }
+  td { padding: 8px 16px; border-bottom: 1px solid var(--border); vertical-align: middle; height: 48px; }
+  tbody tr { transition: background var(--t-hover) var(--ease); }
+  tbody tr:hover { background: var(--sunken); }
+  tbody tr.is-selected { background: var(--global-bg); }
+  .check-cell { width: 48px; padding-right: 0; }
+  .check-cell input { width: 16px; height: 16px; margin: 0; display: block; accent-color: var(--ink); cursor: pointer; }
+  .asset-name { font-weight: 500; word-break: break-all; }
+  .asset-vpn { color: var(--ink-subtle); font-size: 12px; line-height: 16px; }
+  .type { display: inline-flex; align-items: center; gap: 8px; color: var(--ink-muted); white-space: nowrap; }
+  .edit-cell { width: 56px; text-align: right; padding-left: 0; padding-right: 8px; }
+  .edit-cell .icon-btn { margin-left: auto; }
+  .table-foot { padding: 12px 16px; color: var(--ink-muted); border-top: 1px solid var(--border); }
+  .empty { padding: 40px 16px; text-align: center; color: var(--ink-muted); }
+
+  /* Badge (word only, tooltip on hover/focus) */
+  .badge {
+    position: relative; display: inline-flex; align-items: center; padding: 2px 8px; cursor: help; white-space: nowrap;
+    font-size: 12px; line-height: 16px; font-weight: 500; border: 1px solid;
+  }
+  .badge.activo, .badge.listo { background: var(--success-bg); color: var(--success-ink); border-color: var(--success-border); }
+  .badge.borrador, .badge.pendiente { background: var(--warning-bg); color: var(--warning-ink); border-color: var(--warning-border); }
+  .badge.pausado { background: var(--paused-bg); color: var(--paused-ink); border-color: var(--paused-border); }
+  .badge.modificado { background: var(--modified-bg); color: var(--modified-ink); border-color: var(--modified-border); }
+  .badge.heredado { background: var(--card); color: var(--ink-muted); border-color: var(--border-strong); }
+  .global-mark { position: relative; display: inline-flex; color: var(--global-ink); cursor: help; }
+  .global-mark:hover, .global-mark:focus-visible { z-index: 3; }
+  .global-mark .tip { width: 280px; white-space: normal; }
+  .global-mark:hover .tip, .global-mark:focus-visible .tip { opacity: 1; transform: none; }
+
+  .tip {
+    position: absolute; left: 0; top: calc(100% + 8px); z-index: 2;
+    background: var(--ink); color: var(--rail-ink); font-size: 12px; line-height: 16px; font-weight: 400;
+    padding: 6px 8px; white-space: nowrap; pointer-events: none;
+    opacity: 0; transform: translateY(-4px);
+    transition: opacity var(--t-hover) var(--ease), transform var(--t-hover) var(--ease);
+  }
+  .badge:hover, .badge:focus-visible { z-index: 3; }
+  .badge:hover .tip, .badge:focus-visible .tip { opacity: 1; transform: none; }
+  td .tip { left: auto; right: calc(100% + 8px); top: 50%; transform: translate(4px, -50%); }
+  td .badge:hover .tip, td .badge:focus-visible .tip { transform: translate(0, -50%); }
+
+  #rows.is-entering { animation: rows-in 280ms var(--ease); }
+  @keyframes rows-in { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+
+  /* Diagram view */
+  .group-by select { width: auto; }
+  .diagram { background: var(--card); border: 1px solid var(--border); }
+  /* Free-navigation canvas: drag to pan, wheel to zoom; the grid follows pan and zoom */
+  .canvas {
+    position: relative; height: min(720px, max(480px, calc(100vh - 160px))); overflow: hidden;
+    cursor: grab; touch-action: none; user-select: none;
+    background-color: var(--page);
+    background-image: radial-gradient(circle, #b4bac2 1.5px, transparent 2px);
+    background-size: 40px 40px;
+  }
+  .canvas.is-panning { cursor: grabbing; }
+  .canvas:focus-visible { outline-offset: -2px; }
+  .stage { position: absolute; left: 0; top: 0; transform-origin: 0 0; display: flex; align-items: center; gap: 64px; width: max-content; padding: 32px; }
+  .canvas-hint { color: var(--ink-subtle); font-size: 12px; line-height: 16px; margin-right: 8px; }
+  .links { position: absolute; left: 0; top: 0; pointer-events: none; overflow: visible; }
+  .links path { fill: none; stroke: var(--border-strong); stroke-width: 1; }
+  .links path.is-mod { stroke: var(--modified-border); stroke-width: 1.5; stroke-dasharray: 4 3; }
+  .tree-groups { display: flex; flex-direction: column; gap: 24px; }
+  .group-row { display: flex; align-items: center; gap: 64px; }
+  .asset-list { display: flex; flex-direction: column; gap: 8px; }
+  .node { position: relative; z-index: 1; background: var(--card); border: 1px solid var(--border); }
+  .node-meta { display: block; color: var(--ink-muted); font-size: 12px; line-height: 16px; }
+  .ex-node { width: 216px; display: flex; flex-direction: column; align-items: flex-start; gap: 8px; padding: 16px; border-color: var(--border-strong); }
+  .ex-node .node-eyebrow { display: flex; align-items: center; gap: 6px; color: var(--ink-muted); }
+  .ex-node strong { font-size: 16px; line-height: 24px; font-weight: 500; }
+  .group-node { width: 184px; display: flex; align-items: flex-start; gap: 10px; padding: 12px; background: var(--sunken); border-color: var(--border-strong); }
+  .group-node svg.lucide { margin-top: 2px; color: var(--ink-muted); }
+  .group-node strong { display: block; font-weight: 500; }
+  .asset-node {
+    width: 340px; display: flex; align-items: center; gap: 8px; padding: 10px 12px; cursor: pointer; text-align: left;
+    font: 14px/20px "DM Sans", sans-serif; color: var(--ink);
+    transition: border-color var(--t-hover) var(--ease), background var(--t-hover) var(--ease);
+  }
+  .asset-node:hover { border-color: var(--border-strong); background: var(--sunken); }
+  .asset-node-name { flex: 1; min-width: 0; font-weight: 500; overflow-wrap: anywhere; }
+  .asset-node-name small { display: block; font-weight: 400; font-size: 12px; line-height: 16px; color: var(--ink-subtle); }
+  .asset-node .badge { cursor: inherit; }
+  .asset-node > svg.lucide { color: var(--ink-subtle); opacity: 0; transition: opacity var(--t-hover) var(--ease); }
+  .asset-node:hover > svg.lucide, .asset-node:focus-visible > svg.lucide { opacity: 1; }
+  .diagram-empty { margin: auto; color: var(--ink-muted); }
+  .diagram-foot { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; padding: 8px 8px 8px 16px; border-top: 1px solid var(--border); color: var(--ink-muted); }
+  .legend { display: flex; align-items: center; gap: 8px 24px; flex-wrap: wrap; margin: 0; padding: 0; list-style: none; }
+  .legend li { display: flex; align-items: center; gap: 8px; }
+  .legend .line { width: 24px; border-top: 1px solid var(--border-strong); }
+  .legend .line.is-mod { border-top: 1.5px dashed var(--modified-border); }
+  .zoom { display: flex; align-items: center; gap: 4px; }
+  .zoom output { min-width: 48px; text-align: center; font-variant-numeric: tabular-nums; }
+
+  /* Side panel: edit asset */
+  body:has(dialog[open]) { overflow: hidden; }
+  .panel {
+    width: min(480px, 100%); max-width: 100%; height: 100%; max-height: 100%;
+    margin: 0 0 0 auto; padding: 0; border: 0; border-left: 1px solid var(--border);
+    background: var(--card); color: var(--ink); box-shadow: -8px 0 24px rgba(5, 10, 15, 0.18);
+  }
+  .panel[open] { display: flex; flex-direction: column; animation: panel-in 400ms cubic-bezier(0.22, 1, 0.36, 1); }
+  .panel::backdrop { background: rgba(5, 10, 15, 0.48); animation: fade-in 400ms cubic-bezier(0.22, 1, 0.36, 1); }
+  .panel.is-closing { animation: panel-out 200ms var(--ease) forwards; }
+  .panel.is-closing::backdrop { animation: fade-out 200ms var(--ease) forwards; }
+  @keyframes panel-in { from { transform: translateX(100%); } to { transform: none; } }
+  @keyframes panel-out { to { transform: translateX(100%); } }
+  @keyframes fade-in { from { opacity: 0; } }
+  @keyframes fade-out { to { opacity: 0; } }
+  .panel form { display: flex; flex-direction: column; flex: 1; min-height: 0; }
+  .panel-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; padding: 20px 24px; border-bottom: 1px solid var(--border); }
+  .panel-head .icon-btn { margin-right: -8px; flex: none; }
+  .panel-head .icon-btn svg.lucide { width: 20px; height: 20px; }
+  .panel-eyebrow { margin: 0; color: var(--ink-muted); }
+  .panel-head h2 { font-size: 18px; line-height: 24px; font-weight: 500; margin: 2px 0 0; word-break: break-all; }
+  .panel-meta { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
+  .panel-body { flex: 1; min-height: 0; overflow-y: auto; padding: 20px 24px 32px; display: flex; flex-direction: column; gap: 24px; }
+  .panel-section { display: flex; flex-direction: column; gap: 16px; }
+  .panel-section + .panel-section { padding-top: 24px; border-top: 1px solid var(--border); }
+  .section-title { font-size: 14px; line-height: 20px; font-weight: 500; margin: 0; }
+  .section-desc { margin: -12px 0 0; color: var(--ink-muted); }
+  .panel-foot { display: flex; justify-content: flex-end; gap: 8px; padding: 16px 24px; border-top: 1px solid var(--border); }
+
+  .field { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+  .fieldset { margin: 0; padding: 0; border: 0; min-width: 0; }
+  .fieldset legend { padding: 0; margin-bottom: 8px; }
+  .field-label { display: flex; align-items: center; gap: 6px; font-weight: 500; }
+  .field-help { margin: 0; font-size: 12px; line-height: 16px; color: var(--ink-muted); }
+  .field-error { display: flex; align-items: center; gap: 6px; margin: 0; font-size: 12px; line-height: 16px; color: #8c1414; }
+  .control {
+    width: 100%; height: 40px; padding: 0 12px; background: var(--card); color: var(--ink);
+    border: 1px solid var(--border-strong); font: 14px/20px "DM Sans", sans-serif;
+    transition: border-color var(--t-hover) var(--ease), box-shadow var(--t-hover) var(--ease);
+  }
+  .control:hover { border-color: var(--ink-muted); }
+  .control:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+  .control::placeholder { color: var(--ink-subtle); }
+  .control[aria-invalid="true"] { border-color: #c62828; }
+  .is-modified .control { border-color: var(--modified-border); box-shadow: inset 0 0 0 1px var(--modified-border); }
+  .select { position: relative; }
+  .select select { appearance: none; padding-right: 36px; cursor: pointer; }
+  .select svg.lucide { position: absolute; right: 12px; top: 12px; pointer-events: none; color: var(--ink-muted); }
+  input[type="time"].control::-webkit-calendar-picker-indicator { cursor: pointer; opacity: .7; }
+  .row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .sub-label { display: block; margin-bottom: 6px; font-size: 12px; line-height: 16px; color: var(--ink-muted); }
+  .with-suffix { display: flex; align-items: center; gap: 8px; color: var(--ink-muted); }
+  .with-suffix .control { width: 112px; }
+  .revert { position: relative; align-self: flex-start; color: var(--modified-ink); }
+  .revert:hover .tip, .revert:focus-visible .tip { opacity: 1; transform: none; }
+
+  .choice-list { display: flex; flex-direction: column; gap: 8px; }
+  .choice {
+    display: flex; gap: 12px; padding: 12px; cursor: pointer; border: 1px solid var(--border-strong);
+    transition: background var(--t-hover) var(--ease), border-color var(--t-hover) var(--ease), box-shadow var(--t-hover) var(--ease);
+  }
+  .choice:hover { background: var(--sunken); }
+  .choice:has(input:checked) { border-color: var(--ink); box-shadow: inset 0 0 0 1px var(--ink); }
+  .choice:has(input:focus-visible) { outline: 2px solid var(--focus); outline-offset: 2px; }
+  .choice input { width: 16px; height: 16px; margin: 2px 0 0; flex: none; accent-color: var(--ink); }
+  .choice strong { display: block; font-weight: 500; }
+  .choice small { display: block; margin-top: 2px; font-size: 14px; line-height: 20px; color: var(--ink-muted); }
+  .cred-box { display: flex; flex-direction: column; gap: 16px; margin-top: 8px; padding: 16px; background: var(--page); border: 1px solid var(--border); animation: slide-in 250ms var(--ease); }
+  /* Tabs (sliding indicator), same as the list and the create modal */
+  .tabs { position: relative; display: flex; gap: 24px; border-bottom: 1px solid var(--border); }
+  .tab {
+    background: none; border: 0; padding: 8px 0 10px; cursor: pointer;
+    font: 14px/20px "DM Sans", sans-serif; color: var(--ink-muted);
+    transition: color var(--t-hover) var(--ease);
+  }
+  .tab:hover { color: var(--ink); }
+  .tab[aria-selected="true"] { color: var(--ink); }
+  .tab-indicator {
+    position: absolute; left: 0; bottom: -1px; height: 2px; width: 1px;
+    background: var(--ink); transform-origin: left;
+    transition: transform 320ms var(--ease);
+  }
+  .suggest { position: relative; cursor: help; text-decoration: underline dotted; text-underline-offset: 3px; }
+  .suggest:hover, .suggest:focus-visible { z-index: 3; }
+  .suggest:hover .tip, .suggest:focus-visible .tip { opacity: 1; transform: none; }
+
+  /* Confirm dialog: global value change */
+  .confirm {
+    width: min(440px, calc(100% - 32px)); padding: 0; border: 1px solid var(--border);
+    background: var(--card); color: var(--ink); box-shadow: 0 8px 24px rgba(5, 10, 15, 0.18);
+  }
+  .confirm[open] { animation: modal-in 400ms cubic-bezier(0.22, 1, 0.36, 1); }
+  .confirm::backdrop { background: rgba(5, 10, 15, 0.32); animation: fade-in 400ms cubic-bezier(0.22, 1, 0.36, 1); }
+  @keyframes modal-in { from { opacity: 0; transform: translateY(8px) scale(.98); } to { opacity: 1; transform: none; } }
+  .confirm-body { display: flex; flex-direction: column; gap: 16px; padding: 24px; }
+  .confirm h2 { font-size: 18px; line-height: 24px; font-weight: 500; margin: 0; }
+  .confirm p { margin: 0; color: var(--ink-muted); }
+  .changes { display: flex; flex-direction: column; gap: 8px; margin: 0; }
+  .changes div { padding: 12px; background: var(--page); border: 1px solid var(--border); }
+  .changes dt { display: flex; align-items: center; gap: 6px; color: var(--ink-muted); }
+  .changes dt svg.lucide { color: var(--global-ink); }
+  .changes dd { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin: 4px 0 0; font-weight: 500; }
+  .changes .old { color: var(--ink-muted); font-weight: 400; text-decoration: line-through; }
+  .changes dd svg.lucide { color: var(--ink-muted); }
+  .confirm-foot { display: flex; justify-content: flex-end; gap: 8px; padding: 16px 24px; border-top: 1px solid var(--border); }
+  .pw { position: relative; }
+  .pw .control { padding-right: 44px; }
+  .pw .icon-btn { position: absolute; right: 4px; top: 4px; }
+  .check-row { display: flex; align-items: center; gap: 8px; cursor: pointer; }
+  .check-row input { width: 16px; height: 16px; margin: 0; accent-color: var(--ink); }
+  .secure-note { display: flex; gap: 8px; margin: 0; font-size: 12px; line-height: 16px; color: var(--ink-muted); }
+  .secure-note svg.lucide { width: 14px; height: 14px; margin-top: 1px; }
+  .panel .notice p span { flex: 1; }
+
+  .toast {
+    position: fixed; left: 50%; bottom: 24px; z-index: 20; display: flex; align-items: center; gap: 8px;
+    max-width: calc(100vw - 32px); padding: 10px 16px; background: var(--ink); color: var(--rail-ink);
+    transform: translateX(-50%); animation: toast-in 250ms var(--ease);
+  }
+  @keyframes toast-in { from { opacity: 0; transform: translate(-50%, 8px); } to { opacity: 1; transform: translateX(-50%); } }
+
+  @media (max-width: 860px) {
+    .config-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 720px) {
+    main { padding: 16px 16px 40px; }
+    .rail { display: none; }
+    .config-grid { grid-template-columns: 1fr; }
+    .table-wrap { overflow-x: auto; }
+    table { min-width: 680px; }
+    .search { min-width: 100%; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { transition: none !important; animation: none !important; }
+  }
+</style>
+</head>
+<body>
+<div class="app">
+  <nav class="rail" aria-label="Navegación principal">
+    <div class="rail-logo" aria-label="Strike">S</div>
+    <a href="lista-ejercicios.html" aria-current="page" aria-label="Ejercicios"><i data-lucide="crosshair"></i></a>
+    <a href="#" aria-label="Assets"><i data-lucide="server"></i></a>
+    <a href="#" aria-label="Hallazgos"><i data-lucide="shield-alert"></i></a>
+    <a href="#" aria-label="Reportes"><i data-lucide="file-text"></i></a>
+    <div class="spacer"></div>
+    <a href="#" aria-label="Configuración"><i data-lucide="settings"></i></a>
+  </nav>
+
+  <main>
+    <div class="container">
+      <nav aria-label="Ruta">
+        <p class="crumbs"><a href="lista-ejercicios.html">Ejercicios</a><span aria-hidden="true">/</span><span id="crumbName" aria-current="page"></span></p>
+      </nav>
+
+      <header class="page-head">
+        <div class="page-title">
+          <h1 id="exName"></h1>
+          <span id="exStatus"></span>
+        </div>
+        <div class="head-actions" id="headActions"></div>
+      </header>
+
+      <p class="runs" id="runs" hidden></p>
+
+      <div class="notice warning" id="draftNotice" hidden>
+        <p><i data-lucide="triangle-alert"></i><span></span></p>
+        <button class="link" type="button" id="seeDrafts">Ver pendientes</button>
+      </div>
+
+      <section class="card" aria-labelledby="configTitle">
+        <div class="card-head">
+          <h2 id="configTitle">Configuración</h2>
+        </div>
+        <dl class="config-grid" id="config"></dl>
+      </section>
+
+      <section class="assets-head" aria-labelledby="assetsTitle">
+        <h2 id="assetsTitle">Assets<span class="count" id="assetCount"></span></h2>
+      </section>
+
+      <div class="toolbar">
+        <label class="search">
+          <i data-lucide="search"></i>
+          <input id="q" type="search" placeholder="Buscar por nombre, tipo o VPN" aria-label="Buscar assets">
+        </label>
+        <div class="filter-wrap">
+          <button class="filter" type="button" id="filterBtn" aria-haspopup="true" aria-expanded="false" aria-controls="filterMenu">
+            <i data-lucide="list-filter"></i>Filtrar<span class="filter-count" id="filterCount" hidden></span>
+          </button>
+          <div class="filter-menu" id="filterMenu" hidden>
+            <fieldset>
+              <legend>Estado</legend>
+              <label class="filter-option"><input type="checkbox" data-group="status" value="listo"><span>Listo</span><span class="n" data-count="status:listo"></span></label>
+              <label class="filter-option"><input type="checkbox" data-group="status" value="pendiente"><span>Pendiente</span><span class="n" data-count="status:pendiente"></span></label>
+            </fieldset>
+            <fieldset>
+              <legend>Herencia</legend>
+              <label class="filter-option"><input type="checkbox" data-group="inheritance" value="heredado"><span>Heredado</span><span class="n" data-count="inheritance:heredado"></span></label>
+              <label class="filter-option"><input type="checkbox" data-group="inheritance" value="modificado"><span>Modificado</span><span class="n" data-count="inheritance:modificado"></span></label>
+            </fieldset>
+            <div class="filter-foot"><button class="link" type="button" id="clearFilters">Limpiar filtros</button></div>
+          </div>
+        </div>
+        <div class="select group-by" data-diagram-only hidden>
+          <select class="control" id="groupBy" aria-label="Agrupar por">
+            <option value="type">Agrupar por tipo</option>
+            <option value="status">Agrupar por estado</option>
+            <option value="inheritance">Agrupar por herencia</option>
+          </select>
+          <i data-lucide="chevron-down"></i>
+        </div>
+        <button class="btn btn-secondary" type="button" data-diagram-only hidden><i data-lucide="folder-plus"></i>Nuevo grupo</button>
+      </div>
+
+      <div class="view-row">
+        <div class="view-tabs" role="group" aria-label="Vista">
+          <button type="button" data-view="list" aria-pressed="true"><i data-lucide="list"></i>Lista</button>
+          <button type="button" data-view="diagram" aria-pressed="false"><i data-lucide="network"></i>Diagrama</button>
+        </div>
+        <button class="btn btn-secondary" type="button"><i data-lucide="plus"></i>Agregar assets</button>
+      </div>
+
+      <div class="selection" id="selection" hidden>
+        <div class="selection-info">
+          <span id="selCount" aria-live="polite"></span>
+          <button class="link" type="button" id="clearSel">Quitar selección</button>
+        </div>
+        <button class="btn btn-secondary btn-sm" type="button" data-edit-batch><i data-lucide="pencil"></i>Editar</button>
+      </div>
+
+      <div class="diagram" id="diagram" hidden>
+        <div class="canvas" id="canvas" tabindex="0" role="region" aria-label="Diagrama del ejercicio. Arrastrá o usá las flechas para moverte; rueda del mouse, + o − para hacer zoom.">
+          <div class="stage" id="stage"></div>
+        </div>
+        <div class="diagram-foot">
+          <ul class="legend" aria-label="Referencias">
+            <li><span class="line" aria-hidden="true"></span>Heredado: usa los valores globales</li>
+            <li><span class="line is-mod" aria-hidden="true"></span>Modificado: cambió un valor global</li>
+          </ul>
+          <div class="zoom">
+            <span class="canvas-hint">Arrastrá para moverte · Rueda para hacer zoom</span>
+            <button class="icon-btn" type="button" data-zoom="-1" aria-label="Alejar"><i data-lucide="zoom-out"></i></button>
+            <output id="zoomLevel" aria-live="polite">100%</output>
+            <button class="icon-btn" type="button" data-zoom="1" aria-label="Acercar"><i data-lucide="zoom-in"></i></button>
+            <button class="icon-btn" type="button" data-zoom="fit" aria-label="Ajustar a la pantalla"><i data-lucide="scan"></i></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="table-wrap" id="tableWrap">
+        <table>
+          <thead>
+            <tr>
+              <th class="check-cell"><input type="checkbox" id="checkAll" aria-label="Seleccionar todos los assets visibles"></th>
+              <th>Asset</th>
+              <th>Tipo</th>
+              <th>Estado</th>
+              <th>Herencia</th>
+              <th class="edit-cell"><span class="sr-only">Editar</span></th>
+            </tr>
+          </thead>
+          <tbody id="rows"></tbody>
+        </table>
+        <div class="table-foot" id="tableFoot"></div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<dialog class="panel" id="assetPanel" aria-labelledby="panelTitle">
+  <form id="assetForm" novalidate>
+    <header class="panel-head">
+      <div>
+        <p class="panel-eyebrow">Editar asset</p>
+        <h2 id="panelTitle"></h2>
+        <div class="panel-meta" id="panelMeta"></div>
+      </div>
+      <button class="icon-btn" type="button" data-close-panel aria-label="Cerrar"><i data-lucide="x"></i></button>
+    </header>
+
+    <div class="panel-body">
+      <div class="notice warning" id="panelNotice" hidden>
+        <p><i data-lucide="triangle-alert"></i><span></span></p>
+      </div>
+
+      <section class="panel-section" aria-labelledby="ownTitle">
+        <h3 class="section-title" id="ownTitle">Propios del asset</h3>
+        <p class="section-desc">Solo aplican a este asset.</p>
+
+        <fieldset class="fieldset">
+          <legend class="field-label">Credenciales</legend>
+          <div class="choice-list">
+            <label class="choice"><input type="radio" name="credMode" value="load"><span><strong>Cargar credenciales</strong><small>Elegí una del búnker o cargá nuevas.</small></span></label>
+            <label class="choice"><input type="radio" name="credMode" value="none"><span><strong>No requiere login</strong><small>Se testea sin iniciar sesión.</small></span></label>
+          </div>
+
+          <div class="cred-box" id="credLoad" hidden>
+            <div class="tabs" role="tablist" aria-label="Origen de las credenciales" id="credTabs">
+              <button class="tab" role="tab" type="button" data-source="bunker" aria-selected="true" aria-controls="credBunker">Del búnker</button>
+              <button class="tab" role="tab" type="button" data-source="new" aria-selected="false" aria-controls="credNew">Nuevas</button>
+              <span class="tab-indicator" id="credIndicator" aria-hidden="true"></span>
+            </div>
+            <div class="field" id="credBunker">
+              <label class="sub-label" for="credRef">Credencial guardada</label>
+              <div class="select">
+                <select class="control" id="credRef">
+                  <option value="">Elegí una credencial</option>
+                </select>
+                <i data-lucide="chevron-down"></i>
+              </div>
+              <p class="field-help">Se buscan por nombre, nunca por valor.</p>
+            </div>
+            <div class="field" id="credNew" hidden>
+              <div>
+                <label class="sub-label" for="credUser">Usuario</label>
+                <input class="control" id="credUser" type="text" autocomplete="off" placeholder="Ej.: qa@ejemplo.com">
+              </div>
+              <div>
+                <label class="sub-label" for="credPass">Contraseña</label>
+                <div class="pw">
+                  <input class="control" id="credPass" type="password" autocomplete="new-password">
+                  <button class="icon-btn" type="button" id="togglePass" aria-label="Mostrar contraseña" aria-pressed="false"><i data-lucide="eye"></i></button>
+                </div>
+              </div>
+              <label class="check-row"><input type="checkbox" id="credSave" checked>Guardar en el búnker para reutilizarlas</label>
+            </div>
+            <p class="secure-note"><i data-lucide="lock"></i>Se guardan cifradas y siempre enmascaradas. Revelarlas o copiarlas queda registrado.</p>
+          </div>
+        </fieldset>
+
+        <div class="field">
+          <label class="field-label" for="rateLimit">Rate limit</label>
+          <div class="with-suffix">
+            <input class="control" id="rateLimit" type="number" min="1" step="1" inputmode="numeric" aria-describedby="rateHelp rateError">
+            <span>solicitudes por segundo</span>
+          </div>
+          <p class="field-error" id="rateError" hidden><i data-lucide="circle-alert"></i>Ingresá un número mayor a 0.</p>
+          <p class="field-help"><span class="suggest" tabindex="0" id="rateHelp"><span id="rateText"></span><span class="tip" role="tooltip">Recomendación del sistema</span></span></p>
+        </div>
+
+        <div class="field">
+          <label class="field-label" for="vpn">VPN</label>
+          <div class="select">
+            <select class="control" id="vpn">
+              <option value="">Sin VPN</option>
+            </select>
+            <i data-lucide="chevron-down"></i>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel-section" aria-labelledby="globalTitle">
+        <h3 class="section-title" id="globalTitle">Valores globales</h3>
+        <p class="section-desc">Vienen del ejercicio. Si cambiás uno, este asset queda como Modificado.</p>
+
+        <div class="field" data-global="depth">
+          <label class="field-label" for="aDepth"><span data-global-mark></span>Profundidad</label>
+          <div class="select">
+            <select class="control" id="aDepth">
+              <option>Baja</option><option>Media</option><option>Alta</option>
+            </select>
+            <i data-lucide="chevron-down"></i>
+          </div>
+          <button class="link revert" type="button" data-revert="depth" hidden>Volver a valor original<span class="tip" role="tooltip"></span></button>
+        </div>
+
+        <div class="field" data-global="window">
+          <label class="field-label" for="aWindowMode"><span data-global-mark></span>Franjas horarias</label>
+          <div class="select">
+            <select class="control" id="aWindowMode">
+              <option value="any">Cualquier horario</option>
+              <option value="range">Elegir rango</option>
+            </select>
+            <i data-lucide="chevron-down"></i>
+          </div>
+          <div class="row-2" id="windowRange" hidden>
+            <div><label class="sub-label" for="aFrom">Desde</label><input class="control" id="aFrom" type="time"></div>
+            <div><label class="sub-label" for="aTo">Hasta</label><input class="control" id="aTo" type="time"></div>
+          </div>
+          <p class="field-error" id="windowError" hidden><i data-lucide="circle-alert"></i>Elegí un horario de fin distinto al de inicio.</p>
+          <button class="link revert" type="button" data-revert="window" hidden>Volver a valor original<span class="tip" role="tooltip"></span></button>
+        </div>
+      </section>
+    </div>
+
+    <footer class="panel-foot">
+      <button class="btn btn-secondary" type="button" data-close-panel>Cancelar</button>
+      <button class="btn btn-primary" type="submit">Guardar cambios</button>
+    </footer>
+  </form>
+</dialog>
+
+<dialog class="confirm" id="confirmGlobal" aria-labelledby="confirmTitle" aria-describedby="confirmDesc">
+  <div class="confirm-body">
+    <h2 id="confirmTitle">Modificaste un valor global</h2>
+    <dl class="changes" id="confirmChanges"></dl>
+    <p id="confirmDesc"></p>
+  </div>
+  <div class="confirm-foot">
+    <button class="btn btn-secondary" type="button" id="confirmBack">Volver</button>
+    <button class="btn btn-primary" type="button" id="confirmOk">Confirmar y guardar</button>
+  </div>
+</dialog>
+
+<div class="toast" id="toast" role="status" hidden><i data-lucide="check"></i><span></span></div>
+
+<script>
+  const POOL = [
+    { name: "tienda.ejemplo.com", type: "web" },
+    { name: "api.ejemplo.com/v1", type: "api", vpn: "vpn-corp" },
+    { name: "App ejemplo (iOS)", type: "mobile" },
+    { name: "pagos.ejemplo.com", type: "api", vpn: "vpn-pagos" },
+    { name: "admin.ejemplo.com", type: "web", vpn: "vpn-corp" },
+    { name: "blog.ejemplo.com", type: "web" },
+    { name: "App ejemplo (Android)", type: "mobile" },
+    { name: "checkout.ejemplo.com", type: "web" },
+    { name: "cdn.ejemplo.com", type: "domain" },
+    { name: "api.ejemplo.com/v2", type: "api", vpn: "vpn-corp" },
+    { name: "203.0.113.10", type: "ip", vpn: "vpn-infra" },
+    { name: "soporte.ejemplo.com", type: "web" },
+  ];
+
+  const EXERCISES = {
+    "Revisión plataforma e-commerce": {
+      goal: "Antes de un lanzamiento", status: "activo", dates: "Desde 14 ago 2026 · Trimestral", human: "Sí",
+      depth: "Alta", window: "22:00 a 06:00",
+      last: "14 ago 2026", next: "14 nov 2026",
+      pick: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], modified: [1, 4, 9], drafts: [],
+    },
+    "Auditoría SOC 2": {
+      goal: "Auditoría o cumplimiento", status: "pausado", dates: "Desde 2 mar 2026 · Anual", human: "No",
+      depth: "Alta", window: "Cualquier horario",
+      last: "2 mar 2026", next: "",
+      pick: [0, 1, 3, 4, 7, 9, 10, 11], modified: [10], drafts: [],
+    },
+    "Lanzamiento app móvil": {
+      goal: "Antes de un lanzamiento", status: "borrador", dates: "", human: "No",
+      depth: "Alta", window: "Cualquier horario",
+      last: "", next: "",
+      pick: [2, 6, 1, 9, 0], modified: [], drafts: [6, 9],
+    },
+    "Revisión mensual de APIs": {
+      goal: "Revisión periódica", status: "activo", dates: "Desde 20 ene 2026 · Mensual", human: "No",
+      depth: "Media", window: "09:00 a 18:00",
+      last: "20 oct 2026", next: "20 nov 2026",
+      pick: [1, 3, 9, 10], modified: [3], drafts: [],
+    },
+    "Migración a nube híbrida": {
+      goal: "Cambio importante en el sistema", status: "borrador", dates: "Desde 1 dic 2026 · Semestral", human: "Sí",
+      depth: "Alta", window: "22:00 a 06:00",
+      last: "", next: "",
+      pick: [10, 1, 9, 3, 4, 8, 0, 11, 7], modified: [8], drafts: [10, 3, 4, 11],
+    },
+    "Portal de clientes": {
+      goal: "Revisión periódica", status: "activo", dates: "Desde 3 ene 2026 · Mensual", human: "No",
+      depth: "Media", window: "Cualquier horario",
+      last: "3 oct 2026", next: "3 nov 2026",
+      pick: [11, 0, 5, 7, 2, 6], modified: [], drafts: [],
+    },
+  };
+
+  const STATUS = {
+    activo:   { label: "Activo",   tip: "Corre según sus fechas y recurrencia" },
+    pausado:  { label: "Pausado",  tip: "Suspendido hasta que lo reanudes" },
+    borrador: { label: "Borrador", tip: "Faltan datos para activarlo" },
+  };
+
+  const ASSET_STATUS = {
+    listo:    { label: "Listo",    tip: "Tiene todo lo necesario para testearse" },
+    pendiente: { label: "Pendiente", tip: "Faltan credenciales para poder testearlo" },
+  };
+
+  const INHERITANCE = {
+    modificado: { label: "Modificado", tip: "Cambió al menos un valor global del ejercicio" },
+    heredado:   { label: "Heredado",   tip: "Usa todos los valores globales del ejercicio" },
+  };
+
+  const TYPES = {
+    web: ["Web app", "app-window"], api: ["API", "braces"], mobile: ["App móvil", "smartphone"],
+    domain: ["Dominio", "link"], ip: ["IP o red", "network"],
+  };
+
+  const $ = (id) => document.getElementById(id);
+  const norm = (s) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
+  const plural = (n, one, many) => `${n} ${n === 1 ? one : many}`;
+  const badge = (cls, label, tip) =>
+    `<span class="badge ${cls}" tabindex="0">${label}<span class="tip" role="tooltip">${tip}</span></span>`;
+
+  const requested = new URLSearchParams(location.search).get("ej");
+  const name = requested in EXERCISES ? requested : Object.keys(EXERCISES)[0];
+  const ex = EXERCISES[name];
+  const VPNS = ["vpn-corp", "vpn-pagos", "vpn-infra"];
+  const BUNKER = ["QA tienda · usuario de prueba", "Admin staging", "API key de integración", "Tester móvil"];
+  const RATE_BY_TYPE = { web: 10, api: 20, mobile: 10, domain: 5, ip: 5 };
+
+  // Values the assets inherit
+  const exGlobals = () => ({ depth: ex.depth, window: ex.window });
+  const GLOBAL_LABELS = { depth: "Profundidad", window: "Franjas horarias" };
+
+  const assets = ex.pick.map((i) => {
+    const a = { id: i, ...POOL[i], rate: RATE_BY_TYPE[POOL[i].type] };
+    a.overrides = ex.modified.includes(i) ? { depth: ex.depth === "Alta" ? "Media" : "Alta" } : {};
+    a.cred = ex.drafts.includes(i) ? null
+      : ["domain", "ip"].includes(a.type) ? { mode: "none" }
+      : { mode: "load", source: "bunker", ref: BUNKER[i % BUNKER.length] };
+    a.status = ex.drafts.includes(i) ? "pendiente" : "listo";
+    a.inheritance = ex.modified.includes(i) ? "modificado" : "heredado";
+    return a;
+  });
+
+  let query = "";
+  const filters = { status: new Set(), inheritance: new Set() };
+
+  const GLOBAL_TIP = "Valor global: se aplica a todos los assets. Un asset que lo cambia queda como Modificado.";
+  const globalMark = `<span class="global-mark" tabindex="0"><i data-lucide="globe"></i><span class="sr-only">Valor global.</span><span class="tip" role="tooltip">${GLOBAL_TIP}</span></span>`;
+  const selected = new Set();
+
+  function renderHeader() {
+    document.title = `Strike · ${name}`;
+    $("exName").textContent = $("crumbName").textContent = name;
+    const s = STATUS[ex.status];
+    $("exStatus").innerHTML = badge(ex.status, s.label, s.tip);
+
+    const edit = `<button class="btn btn-secondary" type="button" data-edit-exercise><i data-lucide="pencil"></i>Editar ejercicio</button>`;
+    // Secondary actions first, primary action last
+    const byStatus = {
+      activo: `<button class="btn btn-secondary" type="button" data-toggle-pause><i data-lucide="pause"></i>Pausar</button>
+               ${edit}
+               <button class="btn btn-primary" type="button"><i data-lucide="play"></i>Corrida manual</button>`,
+      pausado: `${edit}<button class="btn btn-primary" type="button" data-toggle-pause><i data-lucide="play"></i>Reanudar</button>`,
+      borrador: edit,
+    };
+    $("headActions").innerHTML = byStatus[ex.status];
+
+    $("runs").hidden = !ex.last;
+    $("runs").innerHTML = ex.last ? `
+      <span>Última ejecución <strong>${ex.last}</strong></span>
+      <span class="dot" aria-hidden="true">·</span>
+      <span>Próxima <strong>${ex.status === "pausado" ? "En pausa" : ex.next}</strong></span>
+      <span class="dot" aria-hidden="true">·</span>
+      <button class="link" type="button">Historial de corridas</button>` : "";
+
+    const drafts = assets.filter((a) => a.status === "pendiente").length;
+    const missing = [];
+    if (drafts) missing.push(`${plural(drafts, "asset pendiente", "assets pendientes")}: faltan credenciales.`);
+    if (!ex.dates) missing.push("Faltan las fechas.");
+    $("draftNotice").hidden = ex.status !== "borrador" || !missing.length;
+    $("draftNotice").querySelector("span").textContent =
+      `${missing.join(" ")} El ejercicio pasa a Activo cuando esté completo.`;
+    $("seeDrafts").hidden = !drafts;
+  }
+
+  function renderConfig() {
+    const item = ([label, value, global]) => `<div><dt>${global ? globalMark : ""}${label}</dt><dd>${value}</dd></div>`;
+    $("config").innerHTML = [
+      ["Objetivo", ex.goal],
+      ["Fechas y recurrencia", ex.dates || '<span class="muted">Sin definir</span>'],
+      ["Hacker humano", ex.human],
+      ["Profundidad", ex.depth, true],
+      ["Franjas horarias", ex.window, true],
+    ].map(item).join("");
+  }
+
+  function visibleAssets() {
+    const q = norm(query.trim());
+    return assets.filter((a) =>
+      (!filters.status.size || filters.status.has(a.status)) &&
+      (!filters.inheritance.size || filters.inheritance.has(a.inheritance)) &&
+      (!q || norm(`${a.name} ${TYPES[a.type][0]} ${a.vpn || ""}`).includes(q)));
+  }
+
+  function renderRows() {
+    const list = visibleAssets();
+    $("assetCount").textContent = assets.length;
+    for (const el of document.querySelectorAll("[data-count]")) {
+      const [group, value] = el.dataset.count.split(":");
+      el.textContent = assets.filter((a) => a[group] === value).length;
+    }
+
+    $("rows").innerHTML = list.length ? list.map((a) => {
+      const [typeLabel, typeIcon] = TYPES[a.type];
+      const st = ASSET_STATUS[a.status], inh = INHERITANCE[a.inheritance];
+      const checked = selected.has(a.id);
+      return `
+        <tr class="${checked ? "is-selected" : ""}">
+          <td class="check-cell"><input type="checkbox" data-id="${a.id}" ${checked ? "checked" : ""} aria-label="Seleccionar ${a.name}"></td>
+          <td><div class="asset-name">${a.name}</div>${a.vpn ? `<div class="asset-vpn">VPN ${a.vpn}</div>` : ""}</td>
+          <td><span class="type"><i data-lucide="${typeIcon}"></i>${typeLabel}</span></td>
+          <td>${badge(a.status, st.label, st.tip)}</td>
+          <td>${badge(a.inheritance, inh.label, inh.tip)}</td>
+          <td class="edit-cell"><button class="icon-btn" type="button" data-edit-asset="${a.id}" aria-label="Editar ${a.name}"><i data-lucide="pencil"></i></button></td>
+        </tr>`;
+    }).join("") : `<tr><td colspan="6" class="empty">No hay assets que coincidan con la búsqueda.</td></tr>`;
+
+    $("tableFoot").textContent = `Mostrando ${list.length} de ${plural(assets.length, "asset", "assets")}`;
+    renderSelection(list);
+    if (view === "diagram") renderDiagram(list);
+    lucide.createIcons();
+  }
+
+  /* Diagram view: exercise → groups → assets */
+  let view = "list";
+  let zoom = 1, panX = 0, panY = 0;
+  let treeKey = "";
+  const ZOOM_MIN = 0.3, ZOOM_MAX = 2, GRID = 40;
+
+  const GROUPINGS = {
+    type: { of: (a) => a.type, order: Object.keys(TYPES), label: (k) => TYPES[k][0], icon: (k) => TYPES[k][1] },
+    status: { of: (a) => a.status, order: ["pendiente", "listo"], label: (k) => ASSET_STATUS[k].label, icon: (k) => (k === "listo" ? "circle-check" : "circle-alert") },
+    inheritance: { of: (a) => a.inheritance, order: ["modificado", "heredado"], label: (k) => INHERITANCE[k].label, icon: (k) => (k === "modificado" ? "pencil-line" : "corner-down-right") },
+  };
+
+  function renderDiagram(list = visibleAssets()) {
+    const g = GROUPINGS[$("groupBy").value];
+    const groups = g.order.map((k) => [k, list.filter((a) => g.of(a) === k)]).filter(([, items]) => items.length);
+    const st = STATUS[ex.status];
+    const modified = assets.filter((a) => a.inheritance === "modificado").length;
+    const pending = assets.filter((a) => a.status === "pendiente").length;
+    const meta = [plural(assets.length, "asset", "assets")];
+    if (modified) meta.push(plural(modified, "modificado", "modificados"));
+    if (pending) meta.push(plural(pending, "pendiente", "pendientes"));
+
+    const assetNode = (a) => {
+      const states = [a.status === "pendiente" && "Pendiente", a.inheritance === "modificado" && "Modificado"].filter(Boolean);
+      return `
+        <button class="node asset-node" type="button" data-edit-asset="${a.id}" data-mod="${a.inheritance === "modificado"}"
+          aria-label="Editar ${a.name}${states.length ? `, ${states.join(", ")}` : ""}">
+          <span class="asset-node-name">${a.name}${a.vpn ? `<small>VPN ${a.vpn}</small>` : ""}</span>
+          ${a.status === "pendiente" ? `<span class="badge pendiente">Pendiente</span>` : ""}
+          ${a.inheritance === "modificado" ? `<span class="badge modificado">Modificado</span>` : ""}
+          <i data-lucide="pencil"></i>
+        </button>`;
+    };
+
+    $("stage").innerHTML = !list.length
+      ? `<p class="diagram-empty">No hay assets que coincidan con la búsqueda.</p>`
+      : `<svg class="links" id="links" aria-hidden="true"></svg>
+        <div class="node ex-node" id="exNode">
+          <span class="node-eyebrow"><i data-lucide="crosshair"></i>Ejercicio</span>
+          <strong>${name}</strong>
+          ${badge(ex.status, st.label, st.tip)}
+          <span class="node-meta">${meta.join(" · ")}</span>
+        </div>
+        <div class="tree-groups">
+          ${groups.map(([k, items]) => `
+            <div class="group-row">
+              <div class="node group-node">
+                <i data-lucide="${g.icon(k)}"></i>
+                <div><strong>${g.label(k)}</strong><span class="node-meta">${plural(items.length, "asset", "assets")}</span></div>
+              </div>
+              <div class="asset-list">${items.map(assetNode).join("")}</div>
+            </div>`).join("")}
+        </div>`;
+    lucide.createIcons();
+    drawLinks();
+    // Re-frame only when the tree itself changes (not after editing an asset)
+    const key = `${$("groupBy").value}|${list.map((a) => a.id).join()}`;
+    if (key !== treeKey) { treeKey = key; fitZoom(); }
+  }
+
+  // Orthogonal connectors: a stub from the parent, a vertical trunk, a branch per child
+  function drawLinks() {
+    const svg = $("links");
+    if (!svg) return;
+    const stage = $("stage"), origin = stage.getBoundingClientRect();
+    const box = (el) => {
+      const r = el.getBoundingClientRect();
+      return { left: (r.left - origin.left) / zoom, right: (r.right - origin.left) / zoom, cy: (r.top + r.height / 2 - origin.top) / zoom };
+    };
+    const paths = [];
+    const connect = (parent, children, isMod = () => false) => {
+      const p = box(parent), cs = children.map(box);
+      const x = p.right + (cs[0].left - p.right) / 2;
+      const ys = [p.cy, ...cs.map((c) => c.cy)];
+      paths.push(`<path d="M${p.right} ${p.cy} H${x} M${x} ${Math.min(...ys)} V${Math.max(...ys)}"/>`);
+      children.forEach((el, i) => paths.push(`<path class="${isMod(el) ? "is-mod" : ""}" d="M${x} ${cs[i].cy} H${cs[i].left}"/>`));
+    };
+    connect($("exNode"), [...stage.querySelectorAll(".group-node")]);
+    for (const row of stage.querySelectorAll(".group-row")) {
+      connect(row.querySelector(".group-node"), [...row.querySelectorAll(".asset-node")], (el) => el.dataset.mod === "true");
+    }
+    svg.setAttribute("width", stage.offsetWidth);
+    svg.setAttribute("height", stage.offsetHeight);
+    svg.innerHTML = paths.join("");
+  }
+
+  function applyView() {
+    $("stage").style.transform = `translate(${panX}px, ${panY}px) scale(${zoom})`;
+    const canvas = $("canvas");
+    canvas.style.backgroundSize = `${GRID * zoom}px ${GRID * zoom}px`;
+    canvas.style.backgroundPosition = `${panX}px ${panY}px`;
+    $("zoomLevel").textContent = `${Math.round(zoom * 100)}%`;
+  }
+
+  // Zoom keeping the point under (cx, cy) fixed; defaults to the canvas center
+  function zoomAt(value, cx = $("canvas").clientWidth / 2, cy = $("canvas").clientHeight / 2) {
+    const next = Math.min(ZOOM_MAX, Math.max(ZOOM_MIN, value));
+    panX = cx - (cx - panX) * (next / zoom);
+    panY = cy - (cy - panY) * (next / zoom);
+    zoom = next;
+    applyView();
+  }
+
+  function fitZoom() {
+    const canvas = $("canvas"), stage = $("stage");
+    const w = stage.offsetWidth, h = stage.offsetHeight;
+    zoom = Math.max(ZOOM_MIN, Math.min(canvas.clientWidth / w, canvas.clientHeight / h, 1));
+    panX = (canvas.clientWidth - w * zoom) / 2;
+    panY = (canvas.clientHeight - h * zoom) / 2;
+    applyView();
+  }
+
+  function setView(next) {
+    view = next;
+    for (const b of document.querySelectorAll("[data-view]")) b.setAttribute("aria-pressed", b.dataset.view === view);
+    for (const el of document.querySelectorAll("[data-diagram-only]")) el.hidden = view !== "diagram";
+    $("tableWrap").hidden = view !== "list";
+    $("diagram").hidden = view !== "diagram";
+    renderRows();
+  }
+
+  function renderSelection(list = visibleAssets()) {
+    const n = selected.size;
+    $("selection").hidden = !n || view === "diagram";
+    $("selCount").textContent = `${plural(n, "seleccionado", "seleccionados")}`;
+    const visibleSelected = list.filter((a) => selected.has(a.id)).length;
+    $("checkAll").checked = !!list.length && visibleSelected === list.length;
+    $("checkAll").indeterminate = visibleSelected > 0 && visibleSelected < list.length;
+  }
+
+  function animateRows() {
+    const rows = $("rows");
+    rows.classList.remove("is-entering");
+    void rows.offsetWidth;
+    rows.classList.add("is-entering");
+  }
+
+  function applyFilters() {
+    for (const input of $("filterMenu").querySelectorAll("input")) input.checked = filters[input.dataset.group].has(input.value);
+    const n = filters.status.size + filters.inheritance.size;
+    $("filterCount").hidden = !n;
+    $("filterCount").textContent = n;
+    $("filterBtn").classList.toggle("is-active", !!n);
+    renderRows(); animateRows();
+  }
+
+  function toggleMenu(open) {
+    $("filterMenu").hidden = !open;
+    $("filterBtn").setAttribute("aria-expanded", open);
+  }
+
+  $("rows").addEventListener("change", (ev) => {
+    const id = Number(ev.target.dataset.id);
+    if (ev.target.checked) selected.add(id); else selected.delete(id);
+    ev.target.closest("tr").classList.toggle("is-selected", ev.target.checked);
+    renderSelection();
+  });
+  $("checkAll").addEventListener("change", (ev) => {
+    for (const a of visibleAssets()) if (ev.target.checked) selected.add(a.id); else selected.delete(a.id);
+    renderRows();
+  });
+  $("clearSel").addEventListener("click", () => { selected.clear(); renderRows(); });
+
+  $("filterBtn").addEventListener("click", () => toggleMenu($("filterMenu").hidden));
+  $("filterMenu").addEventListener("change", (ev) => {
+    const set = filters[ev.target.dataset.group];
+    if (ev.target.checked) set.add(ev.target.value); else set.delete(ev.target.value);
+    applyFilters();
+  });
+  $("clearFilters").addEventListener("click", () => {
+    filters.status.clear(); filters.inheritance.clear();
+    applyFilters();
+  });
+  document.addEventListener("click", (ev) => { if (!ev.target.closest(".filter-wrap")) toggleMenu(false); });
+  document.addEventListener("keydown", (ev) => {
+    if (ev.key === "Escape" && !$("filterMenu").hidden) { toggleMenu(false); $("filterBtn").focus(); }
+  });
+  $("seeDrafts").addEventListener("click", () => {
+    filters.status = new Set(["pendiente"]);
+    filters.inheritance.clear();
+    applyFilters();
+    $("assetsTitle").scrollIntoView({ behavior: "smooth", block: "start" });
+  });
+  $("q").addEventListener("input", (ev) => { query = ev.target.value; renderRows(); });
+
+  $("headActions").addEventListener("click", (ev) => {
+    if (!ev.target.closest("[data-toggle-pause]")) return;
+    ex.status = ex.status === "activo" ? "pausado" : "activo";
+    renderHeader();
+    lucide.createIcons();
+  });
+
+  /* Side panel: edit one asset */
+  const PANEL_GLOBAL_TIP = "Valor global del ejercicio. Si lo cambiás acá, este asset queda como Modificado.";
+  const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)");
+  const form = $("assetForm");
+  let editing = null;
+  let credSource = "bunker";
+
+  for (const el of form.querySelectorAll("[data-global-mark]")) {
+    el.outerHTML = `<span class="global-mark" tabindex="0"><i data-lucide="globe"></i><span class="sr-only">Valor global.</span><span class="tip" role="tooltip">${PANEL_GLOBAL_TIP}</span></span>`;
+  }
+  $("credRef").insertAdjacentHTML("beforeend", BUNKER.map((b) => `<option>${b}</option>`).join(""));
+  $("vpn").insertAdjacentHTML("beforeend", VPNS.map((v) => `<option>${v}</option>`).join(""));
+
+  const credReady = (c) => !!c && (c.mode === "none" ||
+    (c.mode === "load" && (c.source === "bunker" ? !!c.ref : !!(c.user && c.pass))));
+
+  function setWindow(value) {
+    const m = value.match(/(\d\d:\d\d) a (\d\d:\d\d)/);
+    $("aWindowMode").value = m ? "range" : "any";
+    $("aFrom").value = m ? m[1] : "09:00";
+    $("aTo").value = m ? m[2] : "18:00";
+  }
+
+  function readGlobals() {
+    return {
+      depth: $("aDepth").value,
+      window: $("aWindowMode").value === "any" ? "Cualquier horario" : `${$("aFrom").value} a ${$("aTo").value}`,
+    };
+  }
+
+  function readCred() {
+    const mode = form.elements.credMode.value;
+    if (!mode) return null;
+    if (mode === "none") return { mode };
+    return credSource === "bunker"
+      ? { mode, source: "bunker", ref: $("credRef").value }
+      : { mode, source: "new", user: $("credUser").value.trim(), pass: $("credPass").value };
+  }
+
+  function syncPanel() {
+    const g = exGlobals(), cur = readGlobals(), cred = readCred();
+    $("credLoad").hidden = cred?.mode !== "load";
+    for (const t of form.querySelectorAll("[data-source]")) t.setAttribute("aria-selected", t.dataset.source === credSource);
+    $("credBunker").hidden = credSource !== "bunker";
+    $("credNew").hidden = credSource !== "new";
+    moveCredIndicator();
+    $("windowRange").hidden = $("aWindowMode").value === "any";
+
+    for (const key of Object.keys(g)) {
+      const changed = cur[key] !== g[key];
+      const field = form.querySelector(`[data-global="${key}"]`);
+      field.classList.toggle("is-modified", changed);
+      const revert = field.querySelector(".revert");
+      revert.hidden = !changed;
+      revert.querySelector(".tip").textContent = `Valor original: ${g[key] || "Ninguna"}`;
+    }
+
+    const ready = credReady(cred);
+    const reason = !cred ? "Faltan credenciales. Elegí cómo se resuelven para que el asset quede Listo."
+      : cred.source === "bunker" ? "Elegí una credencial del búnker para que el asset quede Listo."
+      : "Completá usuario y contraseña para que el asset quede Listo.";
+    $("panelNotice").hidden = ready;
+    $("panelNotice").querySelector("span").textContent = reason;
+  }
+
+  function moveCredIndicator() {
+    const active = $("credTabs").querySelector('.tab[aria-selected="true"]');
+    if (active.offsetWidth) $("credIndicator").style.transform = `translateX(${active.offsetLeft}px) scaleX(${active.offsetWidth})`;
+  }
+
+  function setError(input, errorId, show) {
+    input.setAttribute("aria-invalid", show);
+    $(errorId).hidden = !show;
+    return !show;
+  }
+
+  function validatePanel() {
+    const rate = Number($("rateLimit").value);
+    const checks = [
+      setError($("rateLimit"), "rateError", !Number.isInteger(rate) || rate < 1),
+      setError($("aTo"), "windowError", $("aWindowMode").value === "range" && (!$("aFrom").value || $("aFrom").value === $("aTo").value)),
+    ];
+    const firstInvalid = form.querySelector('[aria-invalid="true"]');
+    if (firstInvalid) firstInvalid.focus();
+    return checks.every(Boolean);
+  }
+
+  function openAssetPanel(id) {
+    editing = assets.find((a) => a.id === id);
+    const a = editing, eff = { ...exGlobals(), ...a.overrides }, c = a.cred || {};
+    const [typeLabel, typeIcon] = TYPES[a.type];
+
+    $("panelTitle").textContent = a.name;
+    $("panelMeta").innerHTML = `<span class="type"><i data-lucide="${typeIcon}"></i>${typeLabel}</span>`;
+
+    for (const r of form.elements.credMode) r.checked = r.value === c.mode;
+    credSource = c.source || "bunker";
+    $("credRef").value = c.ref || "";
+    $("credUser").value = c.user || "";
+    $("credPass").value = c.pass || "";
+    setPassVisible(false);
+    $("rateLimit").value = a.rate;
+    $("rateText").textContent = `Sugerido para ${typeLabel}: ${RATE_BY_TYPE[a.type]}. Bajalo si el sistema es sensible a la carga.`;
+    $("vpn").value = a.vpn || "";
+    $("aDepth").value = eff.depth;
+    setWindow(eff.window);
+    for (const input of form.querySelectorAll("[aria-invalid]")) input.removeAttribute("aria-invalid");
+    for (const err of form.querySelectorAll(".field-error")) err.hidden = true;
+
+    form.querySelector(".panel-body").scrollTop = 0;
+    $("assetPanel").showModal();
+    syncPanel();
+    lucide.createIcons();
+    // A pending asset opens on what blocks it
+    if (a.status === "pendiente") form.querySelector('input[name="credMode"]:checked, input[name="credMode"]').focus();
+  }
+
+  function closePanel() {
+    const panel = $("assetPanel");
+    if (!panel.open || panel.classList.contains("is-closing")) return;
+    const done = () => {
+      panel.classList.remove("is-closing");
+      panel.close();
+      [...document.querySelectorAll(`[data-edit-asset="${editing.id}"]`)].find((el) => el.offsetParent)?.focus();
+    };
+    if (reducedMotion.matches) return done();
+    panel.classList.add("is-closing");
+    panel.addEventListener("animationend", function end(ev) {
+      if (ev.target !== panel) return;
+      panel.removeEventListener("animationend", end);
+      done();
+    });
+  }
+
+  function setPassVisible(show) {
+    $("credPass").type = show ? "text" : "password";
+    $("togglePass").setAttribute("aria-pressed", show);
+    $("togglePass").setAttribute("aria-label", show ? "Ocultar contraseña" : "Mostrar contraseña");
+    $("togglePass").innerHTML = `<i data-lucide="${show ? "eye-off" : "eye"}"></i>`;
+    lucide.createIcons();
+  }
+
+  let toastTimer;
+  function toast(message) {
+    const t = $("toast");
+    t.querySelector("span").textContent = message;
+    t.hidden = true; void t.offsetWidth; t.hidden = false;
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => { t.hidden = true; }, 4000);
+  }
+
+  for (const id of ["rows", "stage"]) {
+    $(id).addEventListener("click", (ev) => {
+      const btn = ev.target.closest("[data-edit-asset]");
+      if (btn) openAssetPanel(Number(btn.dataset.editAsset));
+    });
+  }
+  for (const b of document.querySelectorAll("[data-view]")) b.addEventListener("click", () => setView(b.dataset.view));
+  $("groupBy").addEventListener("change", () => renderDiagram());
+  $("diagram").addEventListener("click", (ev) => {
+    const btn = ev.target.closest("[data-zoom]");
+    if (!btn) return;
+    if (btn.dataset.zoom === "fit") fitZoom(); else zoomAt(zoom * (btn.dataset.zoom > 0 ? 1.2 : 1 / 1.2));
+  });
+
+  // Free navigation: wheel zooms toward the cursor, dragging the background pans
+  $("canvas").addEventListener("wheel", (ev) => {
+    ev.preventDefault();
+    const r = $("canvas").getBoundingClientRect();
+    zoomAt(zoom * Math.exp(-ev.deltaY * 0.0015), ev.clientX - r.left, ev.clientY - r.top);
+  }, { passive: false });
+
+  let drag = null;
+  $("canvas").addEventListener("pointerdown", (ev) => {
+    if (ev.button !== 0 || ev.target.closest("button, .badge")) return;
+    drag = { x: ev.clientX - panX, y: ev.clientY - panY };
+    $("canvas").setPointerCapture(ev.pointerId);
+    $("canvas").classList.add("is-panning");
+  });
+  $("canvas").addEventListener("pointermove", (ev) => {
+    if (!drag) return;
+    panX = ev.clientX - drag.x;
+    panY = ev.clientY - drag.y;
+    applyView();
+  });
+  for (const type of ["pointerup", "pointercancel"]) {
+    $("canvas").addEventListener(type, () => { drag = null; $("canvas").classList.remove("is-panning"); });
+  }
+  $("canvas").addEventListener("keydown", (ev) => {
+    if (ev.target !== $("canvas")) return;
+    const step = 48, moves = { ArrowLeft: [step, 0], ArrowRight: [-step, 0], ArrowUp: [0, step], ArrowDown: [0, -step] };
+    if (moves[ev.key]) { panX += moves[ev.key][0]; panY += moves[ev.key][1]; applyView(); }
+    else if (ev.key === "+" || ev.key === "=") zoomAt(zoom * 1.2);
+    else if (ev.key === "-") zoomAt(zoom / 1.2);
+    else if (ev.key === "0") fitZoom();
+    else return;
+    ev.preventDefault();
+  });
+  document.fonts.ready.then(drawLinks);
+  form.addEventListener("input", syncPanel);
+  form.addEventListener("change", syncPanel);
+  form.addEventListener("click", (ev) => {
+    if (ev.target.closest("[data-close-panel]")) return closePanel();
+    const source = ev.target.closest("[data-source]");
+    if (source) {
+      credSource = source.dataset.source;
+      syncPanel();
+      (credSource === "bunker" ? $("credRef") : $("credUser")).focus();
+      return;
+    }
+    const revert = ev.target.closest("[data-revert]");
+    if (revert) {
+      const g = exGlobals(), key = revert.dataset.revert;
+      if (key === "depth") $("aDepth").value = g.depth;
+      if (key === "window") { setWindow(g.window); setError($("aTo"), "windowError", false); }
+      syncPanel();
+      form.querySelector(`[data-global="${key}"] .control`).focus();
+    }
+  });
+  $("togglePass").addEventListener("click", () => setPassVisible($("credPass").type === "password"));
+  $("assetPanel").addEventListener("cancel", (ev) => { ev.preventDefault(); closePanel(); });
+  $("assetPanel").addEventListener("click", (ev) => { if (ev.target === $("assetPanel")) closePanel(); });
+
+  // Changing a global value on an asset asks for a second confirmation
+  function globalChanges() {
+    const before = { ...exGlobals(), ...editing.overrides }, cur = readGlobals();
+    return Object.keys(cur).filter((k) => cur[k] !== before[k]).map((k) => [k, before[k], cur[k]]);
+  }
+
+  function openConfirm(changes) {
+    const g = exGlobals();
+    $("confirmChanges").innerHTML = changes.map(([k, from, to]) => `
+      <div>
+        <dt><i data-lucide="globe"></i>${GLOBAL_LABELS[k]}</dt>
+        <dd><span class="old">${from}</span><i data-lucide="arrow-right"></i><span>${to}</span></dd>
+      </div>`).join("");
+    const stillModified = Object.keys(g).some((k) => readGlobals()[k] !== g[k]);
+    $("confirmDesc").textContent = stillModified
+      ? `${editing.name} deja de usar el valor del ejercicio y queda como Modificado. El resto de los assets no cambia.`
+      : `${editing.name} vuelve a usar los valores del ejercicio y queda como Heredado.`;
+    $("confirmGlobal").showModal();
+    lucide.createIcons();
+  }
+
+  $("confirmBack").addEventListener("click", () => $("confirmGlobal").close());
+  $("confirmOk").addEventListener("click", () => { $("confirmGlobal").close(); saveAsset(); });
+
+  form.addEventListener("submit", (ev) => {
+    ev.preventDefault();
+    if (!validatePanel()) return;
+    const changes = globalChanges();
+    if (changes.length) openConfirm(changes); else saveAsset();
+  });
+
+  function saveAsset() {
+    const a = editing, g = exGlobals(), cur = readGlobals();
+    a.overrides = Object.fromEntries(Object.entries(cur).filter(([k, v]) => v !== g[k]));
+    a.cred = readCred();
+    a.rate = Number($("rateLimit").value);
+    a.vpn = $("vpn").value || undefined;
+    a.status = credReady(a.cred) ? "listo" : "pendiente";
+    a.inheritance = Object.keys(a.overrides).length ? "modificado" : "heredado";
+
+    let message = `Guardaste los cambios de ${a.name}.`;
+    // E8: a draft becomes Active on its own once nothing is missing
+    if (ex.status === "borrador" && ex.dates && !assets.some((x) => x.status === "pendiente")) {
+      ex.status = "activo";
+      message += " El ejercicio pasó a Activo.";
+    }
+    renderHeader();
+    renderRows();
+    closePanel();
+    toast(message);
+  }
+
+  renderHeader();
+  renderConfig();
+  renderRows();
+</script>
+</body>
+</html>

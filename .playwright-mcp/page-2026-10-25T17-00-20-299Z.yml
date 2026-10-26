@@ -1,0 +1,386 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - navigation "Navegación principal" [ref=e3]:
+      - generic "Strike" [ref=e4]: S
+      - link "Ejercicios" [ref=e5] [cursor=pointer]:
+        - /url: "#"
+      - link "Assets" [ref=e8] [cursor=pointer]:
+        - /url: "#"
+      - link "Hallazgos" [ref=e12] [cursor=pointer]:
+        - /url: "#"
+      - link "Reportes" [ref=e15] [cursor=pointer]:
+        - /url: "#"
+      - link "Configuración" [ref=e19] [cursor=pointer]:
+        - /url: "#"
+    - main [ref=e23]:
+      - generic [ref=e24]:
+        - paragraph [ref=e25]: Pentesting continuo
+        - generic [ref=e26]:
+          - generic [ref=e27]:
+            - heading "Ejercicios" [level=1] [ref=e28]
+            - generic [ref=e29]: 6 en total
+          - button "Crear ejercicio" [ref=e30] [cursor=pointer]
+        - search [ref=e32]:
+          - searchbox "Buscar ejercicios" [ref=e37]
+          - button "Buscar" [ref=e38] [cursor=pointer]
+        - tablist [ref=e39]:
+          - tab "Todos6" [selected] [ref=e40] [cursor=pointer]
+          - tab "Activos3" [ref=e41] [cursor=pointer]
+          - tab "Pausados1" [ref=e42] [cursor=pointer]
+          - tab "Borradores2" [ref=e43] [cursor=pointer]
+        - table [ref=e46]:
+          - rowgroup [ref=e47]:
+            - row [ref=e48]:
+              - columnheader "Ejercicio" [ref=e49]
+              - columnheader "Estado" [ref=e50]
+              - columnheader "Frecuencia" [ref=e51]
+              - columnheader "Última ejecución" [ref=e52]
+              - columnheader "Assets" [ref=e53]
+              - columnheader "Abrir" [ref=e54]
+          - rowgroup [ref=e56]:
+            - row "Abrir Revisión plataforma e-commerce" [ref=e57] [cursor=pointer]:
+              - cell "Revisión plataforma e-commerce Antes de un lanzamiento" [ref=e58]:
+                - generic [ref=e59]: Revisión plataforma e-commerce
+                - generic [ref=e60]: Antes de un lanzamiento
+              - cell [ref=e61]:
+                - generic [ref=e62]:
+                  - text: Activo
+                  - tooltip "Corre según sus fechas y recurrencia"
+              - cell "Trimestral" [ref=e63]
+              - cell "14 ago 2026" [ref=e64]
+              - cell "12 assets" [ref=e65]
+              - cell [ref=e67]
+            - row "Abrir Auditoría SOC 2" [ref=e71] [cursor=pointer]:
+              - cell "Auditoría SOC 2 Auditoría o cumplimiento" [ref=e72]:
+                - generic [ref=e73]: Auditoría SOC 2
+                - generic [ref=e74]: Auditoría o cumplimiento
+              - cell [ref=e75]:
+                - generic [ref=e76]:
+                  - text: Pausado
+                  - tooltip "Suspendido hasta que lo reanudes"
+              - cell "Anual" [ref=e77]
+              - cell "2 mar 2026" [ref=e78]
+              - cell "8 assets" [ref=e79]
+              - cell [ref=e81]
+            - row "Abrir Lanzamiento app móvil" [ref=e85] [cursor=pointer]:
+              - cell "Lanzamiento app móvil Antes de un lanzamiento" [ref=e86]:
+                - generic [ref=e87]: Lanzamiento app móvil
+                - generic [ref=e88]: Antes de un lanzamiento
+              - cell [ref=e89]:
+                - generic [ref=e90]:
+                  - text: Borrador
+                  - tooltip "Faltan datos para activarlo"
+              - cell "Sin fechas" [ref=e91]
+              - cell "Sin ejecuciones" [ref=e92]
+              - cell [ref=e93]:
+                - generic [ref=e94]:
+                  - text: 5 assets
+                  - generic [ref=e95]:
+                    - text: 2 pendientes
+                    - 'tooltip "Assets en borrador: les faltan datos para poder testearse"'
+              - cell [ref=e96]
+            - row "Abrir Revisión mensual de APIs" [ref=e100] [cursor=pointer]:
+              - cell "Revisión mensual de APIs Revisión periódica" [ref=e101]:
+                - generic [ref=e102]: Revisión mensual de APIs
+                - generic [ref=e103]: Revisión periódica
+              - cell [ref=e104]:
+                - generic [ref=e105]:
+                  - text: Activo
+                  - tooltip "Corre según sus fechas y recurrencia"
+              - cell "Mensual" [ref=e106]
+              - cell "20 oct 2026" [ref=e107]
+              - cell "4 assets" [ref=e108]
+              - cell [ref=e110]
+            - row "Abrir Migración a nube híbrida" [ref=e114] [cursor=pointer]:
+              - cell "Migración a nube híbrida Cambio de infraestructura" [ref=e115]:
+                - generic [ref=e116]: Migración a nube híbrida
+                - generic [ref=e117]: Cambio de infraestructura
+              - cell [ref=e118]:
+                - generic [ref=e119]:
+                  - text: Borrador
+                  - tooltip "Faltan datos para activarlo"
+              - cell "Semestral" [ref=e120]
+              - cell "Sin ejecuciones" [ref=e121]
+              - cell [ref=e122]:
+                - generic [ref=e123]:
+                  - text: 9 assets
+                  - generic [ref=e124]:
+                    - text: 4 pendientes
+                    - 'tooltip "Assets en borrador: les faltan datos para poder testearse"'
+              - cell [ref=e125]
+            - row "Abrir Portal de clientes" [ref=e129] [cursor=pointer]:
+              - cell "Portal de clientes Revisión periódica" [ref=e130]:
+                - generic [ref=e131]: Portal de clientes
+                - generic [ref=e132]: Revisión periódica
+              - cell [ref=e133]:
+                - generic [ref=e134]:
+                  - text: Activo
+                  - tooltip "Corre según sus fechas y recurrencia"
+              - cell "Mensual" [ref=e135]
+              - cell "3 oct 2026" [ref=e136]
+              - cell "6 assets" [ref=e137]
+              - cell [ref=e139]
+  - dialog [ref=e172]:
+    - generic [ref=e173]:
+      - banner [ref=e174]:
+        - generic [ref=e175]:
+          - heading "Crear ejercicio" [level=2] [ref=e176]
+          - paragraph [ref=e177]: Sumá los assets que vas a testear. Heredan los valores globales del paso anterior; después podés ajustarlos uno por uno.
+        - button "Cerrar" [ref=e178] [cursor=pointer]
+      - list "Pasos" [ref=e182]:
+        - listitem [ref=e183]: 1 Valores del ejercicio y globales
+        - listitem [aria-hidden] [ref=e184]
+        - listitem [ref=e187]: 2 Assets
+      - generic [ref=e189]:
+        - tablist "Origen de los assets" [ref=e190]:
+          - tab "Elegir existentes" [ref=e191] [cursor=pointer]
+          - tab "Importar nuevos15" [selected] [ref=e192] [cursor=pointer]
+        - tabpanel "Importar nuevos15" [ref=e194]:
+          - button [aria-hidden] [ref=e195]
+          - generic [ref=e196]:
+            - generic [ref=e197]: 15 líneas agregadas a la lista
+            - button "Agregar más" [ref=e198] [cursor=pointer]
+        - region [ref=e200]:
+          - generic [ref=e201]:
+            - heading "Assets del ejercicio" [level=3] [ref=e202]
+            - generic [ref=e203]: 15 nuevos
+          - table [ref=e205]:
+            - rowgroup [ref=e206]:
+              - row [ref=e207]:
+                - columnheader "Asset" [ref=e208]
+                - columnheader "Tipo" [ref=e209]
+                - columnheader "Estado" [ref=e210]
+                - columnheader "Acciones" [ref=e211]
+            - rowgroup [ref=e213]:
+              - row [ref=e214]:
+                - cell "app0.ejemplo.com" [ref=e215]
+                - cell [ref=e216]:
+                  - combobox "Tipo de app0.ejemplo.com" [ref=e218] [cursor=pointer]:
+                    - option "Web app"
+                    - option "API"
+                    - option "App móvil"
+                    - option "Dominio" [selected]
+                    - option "IP o red"
+                - cell [ref=e219]:
+                  - generic [ref=e220]:
+                    - text: Nuevo · borrador
+                    - tooltip "Nace con valores por defecto y credenciales pendientes"
+                - cell [ref=e221]:
+                  - button "Quitar app0.ejemplo.com" [ref=e223] [cursor=pointer]
+              - row [ref=e227]:
+                - cell "app1.ejemplo.com" [ref=e228]
+                - cell [ref=e229]:
+                  - combobox "Tipo de app1.ejemplo.com" [ref=e231] [cursor=pointer]:
+                    - option "Web app"
+                    - option "API"
+                    - option "App móvil"
+                    - option "Dominio" [selected]
+                    - option "IP o red"
+                - cell [ref=e232]:
+                  - generic [ref=e233]:
+                    - text: Nuevo · borrador
+                    - tooltip "Nace con valores por defecto y credenciales pendientes"
+                - cell [ref=e234]:
+                  - button "Quitar app1.ejemplo.com" [ref=e236] [cursor=pointer]
+              - row [ref=e240]:
+                - cell "app2.ejemplo.com" [ref=e241]
+                - cell [ref=e242]:
+                  - combobox "Tipo de app2.ejemplo.com" [ref=e244] [cursor=pointer]:
+                    - option "Web app"
+                    - option "API"
+                    - option "App móvil"
+                    - option "Dominio" [selected]
+                    - option "IP o red"
+                - cell [ref=e245]:
+                  - generic [ref=e246]:
+                    - text: Nuevo · borrador
+                    - tooltip "Nace con valores por defecto y credenciales pendientes"
+                - cell [ref=e247]:
+                  - button "Quitar app2.ejemplo.com" [ref=e249] [cursor=pointer]
+              - row [ref=e253]:
+                - cell "app3.ejemplo.com" [ref=e254]
+                - cell [ref=e255]:
+                  - combobox "Tipo de app3.ejemplo.com" [ref=e257] [cursor=pointer]:
+                    - option "Web app"
+                    - option "API"
+                    - option "App móvil"
+                    - option "Dominio" [selected]
+                    - option "IP o red"
+                - cell [ref=e258]:
+                  - generic [ref=e259]:
+                    - text: Nuevo · borrador
+                    - tooltip "Nace con valores por defecto y credenciales pendientes"
+                - cell [ref=e260]:
+                  - button "Quitar app3.ejemplo.com" [ref=e262] [cursor=pointer]
+              - row [ref=e266]:
+                - cell "app4.ejemplo.com" [ref=e267]
+                - cell [ref=e268]:
+                  - combobox "Tipo de app4.ejemplo.com" [ref=e270] [cursor=pointer]:
+                    - option "Web app"
+                    - option "API"
+                    - option "App móvil"
+                    - option "Dominio" [selected]
+                    - option "IP o red"
+                - cell [ref=e271]:
+                  - generic [ref=e272]:
+                    - text: Nuevo · borrador
+                    - tooltip "Nace con valores por defecto y credenciales pendientes"
+                - cell [ref=e273]:
+                  - button "Quitar app4.ejemplo.com" [ref=e275] [cursor=pointer]
+              - row [ref=e279]:
+                - cell "app5.ejemplo.com" [ref=e280]
+                - cell [ref=e281]:
+                  - combobox "Tipo de app5.ejemplo.com" [ref=e283] [cursor=pointer]:
+                    - option "Web app"
+                    - option "API"
+                    - option "App móvil"
+                    - option "Dominio" [selected]
+                    - option "IP o red"
+                - cell [ref=e284]:
+                  - generic [ref=e285]:
+                    - text: Nuevo · borrador
+                    - tooltip "Nace con valores por defecto y credenciales pendientes"
+                - cell [ref=e286]:
+                  - button "Quitar app5.ejemplo.com" [ref=e288] [cursor=pointer]
+              - row [ref=e292]:
+                - cell "app6.ejemplo.com" [ref=e293]
+                - cell [ref=e294]:
+                  - combobox "Tipo de app6.ejemplo.com" [ref=e296] [cursor=pointer]:
+                    - option "Web app"
+                    - option "API"
+                    - option "App móvil"
+                    - option "Dominio" [selected]
+                    - option "IP o red"
+                - cell [ref=e297]:
+                  - generic [ref=e298]:
+                    - text: Nuevo · borrador
+                    - tooltip "Nace con valores por defecto y credenciales pendientes"
+                - cell [ref=e299]:
+                  - button "Quitar app6.ejemplo.com" [ref=e301] [cursor=pointer]
+              - row [ref=e305]:
+                - cell "app7.ejemplo.com" [ref=e306]
+                - cell [ref=e307]:
+                  - combobox "Tipo de app7.ejemplo.com" [ref=e309] [cursor=pointer]:
+                    - option "Web app"
+                    - option "API"
+                    - option "App móvil"
+                    - option "Dominio" [selected]
+                    - option "IP o red"
+                - cell [ref=e310]:
+                  - generic [ref=e311]:
+                    - text: Nuevo · borrador
+                    - tooltip "Nace con valores por defecto y credenciales pendientes"
+                - cell [ref=e312]:
+                  - button "Quitar app7.ejemplo.com" [ref=e314] [cursor=pointer]
+              - row [ref=e318]:
+                - cell "app8.ejemplo.com" [ref=e319]
+                - cell [ref=e320]:
+                  - combobox "Tipo de app8.ejemplo.com" [ref=e322] [cursor=pointer]:
+                    - option "Web app"
+                    - option "API"
+                    - option "App móvil"
+                    - option "Dominio" [selected]
+                    - option "IP o red"
+                - cell [ref=e323]:
+                  - generic [ref=e324]:
+                    - text: Nuevo · borrador
+                    - tooltip "Nace con valores por defecto y credenciales pendientes"
+                - cell [ref=e325]:
+                  - button "Quitar app8.ejemplo.com" [ref=e327] [cursor=pointer]
+              - row [ref=e331]:
+                - cell "app9.ejemplo.com" [ref=e332]
+                - cell [ref=e333]:
+                  - combobox "Tipo de app9.ejemplo.com" [ref=e335] [cursor=pointer]:
+                    - option "Web app"
+                    - option "API"
+                    - option "App móvil"
+                    - option "Dominio" [selected]
+                    - option "IP o red"
+                - cell [ref=e336]:
+                  - generic [ref=e337]:
+                    - text: Nuevo · borrador
+                    - tooltip "Nace con valores por defecto y credenciales pendientes"
+                - cell [ref=e338]:
+                  - button "Quitar app9.ejemplo.com" [ref=e340] [cursor=pointer]
+              - row [ref=e344]:
+                - cell "app10.ejemplo.com" [ref=e345]
+                - cell [ref=e346]:
+                  - combobox "Tipo de app10.ejemplo.com" [ref=e348] [cursor=pointer]:
+                    - option "Web app"
+                    - option "API"
+                    - option "App móvil"
+                    - option "Dominio" [selected]
+                    - option "IP o red"
+                - cell [ref=e349]:
+                  - generic [ref=e350]:
+                    - text: Nuevo · borrador
+                    - tooltip "Nace con valores por defecto y credenciales pendientes"
+                - cell [ref=e351]:
+                  - button "Quitar app10.ejemplo.com" [ref=e353] [cursor=pointer]
+              - row [ref=e357]:
+                - cell "app11.ejemplo.com" [ref=e358]
+                - cell [ref=e359]:
+                  - combobox "Tipo de app11.ejemplo.com" [ref=e361] [cursor=pointer]:
+                    - option "Web app"
+                    - option "API"
+                    - option "App móvil"
+                    - option "Dominio" [selected]
+                    - option "IP o red"
+                - cell [ref=e362]:
+                  - generic [ref=e363]:
+                    - text: Nuevo · borrador
+                    - tooltip "Nace con valores por defecto y credenciales pendientes"
+                - cell [ref=e364]:
+                  - button "Quitar app11.ejemplo.com" [ref=e366] [cursor=pointer]
+              - row [ref=e370]:
+                - cell "app12.ejemplo.com" [ref=e371]
+                - cell [ref=e372]:
+                  - combobox "Tipo de app12.ejemplo.com" [ref=e374] [cursor=pointer]:
+                    - option "Web app"
+                    - option "API"
+                    - option "App móvil"
+                    - option "Dominio" [selected]
+                    - option "IP o red"
+                - cell [ref=e375]:
+                  - generic [ref=e376]:
+                    - text: Nuevo · borrador
+                    - tooltip "Nace con valores por defecto y credenciales pendientes"
+                - cell [ref=e377]:
+                  - button "Quitar app12.ejemplo.com" [ref=e379] [cursor=pointer]
+              - row [ref=e383]:
+                - cell "app13.ejemplo.com" [ref=e384]
+                - cell [ref=e385]:
+                  - combobox "Tipo de app13.ejemplo.com" [ref=e387] [cursor=pointer]:
+                    - option "Web app"
+                    - option "API"
+                    - option "App móvil"
+                    - option "Dominio" [selected]
+                    - option "IP o red"
+                - cell [ref=e388]:
+                  - generic [ref=e389]:
+                    - text: Nuevo · borrador
+                    - tooltip "Nace con valores por defecto y credenciales pendientes"
+                - cell [ref=e390]:
+                  - button "Quitar app13.ejemplo.com" [ref=e392] [cursor=pointer]
+              - row [ref=e396]:
+                - cell "app14.ejemplo.com" [ref=e397]
+                - cell [ref=e398]:
+                  - combobox "Tipo de app14.ejemplo.com" [ref=e400] [cursor=pointer]:
+                    - option "Web app"
+                    - option "API"
+                    - option "App móvil"
+                    - option "Dominio" [selected]
+                    - option "IP o red"
+                - cell [ref=e401]:
+                  - generic [ref=e402]:
+                    - text: Nuevo · borrador
+                    - tooltip "Nace con valores por defecto y credenciales pendientes"
+                - cell [ref=e403]:
+                  - button "Quitar app14.ejemplo.com" [ref=e405] [cursor=pointer]
+          - paragraph [ref=e409]:
+            - generic [ref=e412]: 15 assets nuevos quedarán en borrador hasta que cargues sus credenciales.
+      - contentinfo [ref=e413]:
+        - generic [ref=e414]: Paso 2 de 2
+        - generic [ref=e415]:
+          - button "Volver" [ref=e416] [cursor=pointer]
+          - button "Crear ejercicio" [ref=e417] [cursor=pointer]
