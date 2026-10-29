@@ -448,9 +448,9 @@
   }
   @keyframes toast-in { from { opacity: 0; transform: translate(-50%, 8px); } to { opacity: 1; transform: translateX(-50%); } }
 
-  /* Success toast (an asset's global value was changed), bottom left */
+  /* Success toast (an asset's global value was changed), bottom right like the exercise list's */
   .success-toast {
-    position: fixed; left: 88px; bottom: 24px; z-index: 20;
+    position: fixed; right: 24px; bottom: 24px; z-index: 20;
     display: flex; align-items: flex-start; gap: 12px; width: min(400px, calc(100vw - 32px));
     padding: 12px 8px 12px 16px; background: var(--success-bg); color: var(--success-ink);
     border: 1px solid var(--success-border); animation: success-in 400ms cubic-bezier(0.22, 1, 0.36, 1);
@@ -476,7 +476,7 @@
   @media (max-width: 720px) {
     main { padding: 16px 16px 40px; }
     .rail { display: none; }
-    .success-toast { left: 16px; bottom: 16px; }
+    .success-toast { right: 16px; bottom: 16px; }
     .config-grid { grid-template-columns: 1fr; }
     .table-wrap { overflow-x: auto; }
     table { min-width: 680px; }
@@ -1486,7 +1486,7 @@
     toastTimer = setTimeout(() => { t.hidden = true; }, 4000);
   }
 
-  // Success toast (bottom left): same behavior as the one in the exercise list
+  // Success toast (bottom right): same behavior as the one in the exercise list
   const SUCCESS_MS = 6000;
   let successTimer = null;
 
@@ -1646,7 +1646,7 @@
     if (!changes.length) return toast(`Guardaste los cambios de ${a.name}.${activated}`);
     const edited = changes.map(([k, , to]) => `${GLOBAL_LABELS[k]} a ${to}`).join(" y ");
     showSuccess("Valor global modificado con éxito",
-      `Cambiaste ${edited} en ${a.name}. El resto de los assets no cambia.${activated}`);
+      `Cambiaste ${edited} en ${a.name}.${activated}`);
   }
 
   // E8: a draft becomes Active on its own once nothing is missing; returns the toast suffix
