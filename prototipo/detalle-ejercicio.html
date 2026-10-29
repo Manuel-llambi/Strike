@@ -448,12 +448,35 @@
   }
   @keyframes toast-in { from { opacity: 0; transform: translate(-50%, 8px); } to { opacity: 1; transform: translateX(-50%); } }
 
+  /* Success toast (an asset's global value was changed), bottom left */
+  .success-toast {
+    position: fixed; left: 88px; bottom: 24px; z-index: 20;
+    display: flex; align-items: flex-start; gap: 12px; width: min(400px, calc(100vw - 32px));
+    padding: 12px 8px 12px 16px; background: var(--success-bg); color: var(--success-ink);
+    border: 1px solid var(--success-border); animation: success-in 400ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .success-toast[hidden] { display: none; }
+  .success-toast.is-closing { animation: success-out 200ms var(--ease) forwards; }
+  .success-toast > svg.lucide { margin-top: 2px; }
+  .success-toast-body { flex: 1; min-width: 0; }
+  .success-toast-title { margin: 0; font-weight: 500; }
+  .success-toast-text { margin: 2px 0 0; }
+  .success-toast-close {
+    flex: none; width: 32px; height: 32px; margin-top: -6px; display: grid; place-items: center;
+    background: none; border: 0; color: var(--success-ink); cursor: pointer;
+    transition: background var(--t-hover) var(--ease);
+  }
+  .success-toast-close:hover { background: #c6ebd2; }
+  @keyframes success-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+  @keyframes success-out { to { opacity: 0; transform: translateY(4px); } }
+
   @media (max-width: 860px) {
     .config-grid { grid-template-columns: 1fr 1fr; }
   }
   @media (max-width: 720px) {
     main { padding: 16px 16px 40px; }
     .rail { display: none; }
+    .success-toast { left: 16px; bottom: 16px; }
     .config-grid { grid-template-columns: 1fr; }
     .table-wrap { overflow-x: auto; }
     table { min-width: 680px; }
@@ -875,6 +898,16 @@
 </dialog>
 
 <div class="toast" id="toast" role="status" hidden><i data-lucide="check"></i><span></span></div>
+<div role="status" aria-live="polite" aria-atomic="true">
+  <div class="success-toast" id="successToast" hidden>
+    <i data-lucide="circle-check"></i>
+    <div class="success-toast-body">
+      <p class="success-toast-title" id="successToastTitle"></p>
+      <p class="success-toast-text" id="successToastText"></p>
+    </div>
+    <button class="success-toast-close" type="button" id="successToastClose" aria-label="Cerrar aviso"><i data-lucide="x"></i></button>
+  </div>
+</div>
 
 <script>
   const POOL = [
@@ -1453,6 +1486,44 @@
     toastTimer = setTimeout(() => { t.hidden = true; }, 4000);
   }
 
+  // Success toast (bottom left): same behavior as the one in the exercise list
+  const SUCCESS_MS = 6000;
+  let successTimer = null;
+
+  function showSuccess(title, text) {
+    const t = $("successToast");
+    $("toast").hidden = true;
+    $("successToastTitle").textContent = title;
+    $("successToastText").textContent = text;
+    t.classList.remove("is-closing");
+    t.hidden = true; void t.offsetWidth; t.hidden = false;
+    lucide.createIcons();
+    startSuccessTimer();
+  }
+
+  function startSuccessTimer() {
+    clearTimeout(successTimer);
+    successTimer = setTimeout(hideSuccess, SUCCESS_MS);
+  }
+
+  function hideSuccess() {
+    const t = $("successToast");
+    clearTimeout(successTimer);
+    if (t.hidden || t.classList.contains("is-closing")) return;
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches) { t.hidden = true; return; }
+    t.classList.add("is-closing");
+    t.addEventListener("animationend", () => {
+      t.classList.remove("is-closing");
+      t.hidden = true;
+    }, { once: true });
+  }
+
+  $("successToastClose").addEventListener("click", hideSuccess);
+  // Pause auto-dismiss while the user reads or interacts with the toast
+  for (const ev of ["mouseenter", "focusin"]) $("successToast").addEventListener(ev, () => clearTimeout(successTimer));
+  $("successToast").addEventListener("mouseleave", () => { if (!$("successToast").contains(document.activeElement)) startSuccessTimer(); });
+  $("successToast").addEventListener("focusout", (ev) => { if (!$("successToast").contains(ev.relatedTarget)) startSuccessTimer(); });
+
   for (const id of ["rows", "stage"]) {
     $(id).addEventListener("click", (ev) => {
       const btn = ev.target.closest("[data-edit-asset]");
@@ -1560,7 +1631,7 @@
   });
 
   function saveAsset() {
-    const a = editing, g = exGlobals(), cur = readGlobals();
+    const a = editing, g = exGlobals(), cur = readGlobals(), changes = globalChanges();
     a.overrides = Object.fromEntries(Object.entries(cur).filter(([k, v]) => v !== g[k]));
     a.cred = readCred();
     a.rate = Number($("rateLimit").value);
@@ -1568,11 +1639,14 @@
     a.status = credReady(a.cred) ? "listo" : "pendiente";
     a.inheritance = Object.keys(a.overrides).length ? "modificado" : "heredado";
 
-    const message = `Guardaste los cambios de ${a.name}.${activateIfComplete()}`;
+    const activated = activateIfComplete();
     renderHeader();
     renderRows();
     closePanel();
-    toast(message);
+    if (!changes.length) return toast(`Guardaste los cambios de ${a.name}.${activated}`);
+    const edited = changes.map(([k, , to]) => `${GLOBAL_LABELS[k]} a ${to}`).join(" y ");
+    showSuccess("Valor global modificado con éxito",
+      `Cambiaste ${edited} en ${a.name}. El resto de los assets no cambia.${activated}`);
   }
 
   // E8: a draft becomes Active on its own once nothing is missing; returns the toast suffix
